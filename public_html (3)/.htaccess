@@ -1,0 +1,36 @@
+<IfModule mod_rewrite.c>
+    # Enable URL rewriting
+    RewriteEngine On
+
+    # Check if the request is not already for the public directory or its content
+    RewriteCond %{REQUEST_URI} !^/public/
+
+    # Rewrite all incoming requests to the public directory without showing /public in the URL
+    # This will redirect any request like https://v2.dosel.co.in/something to https://v2.dosel.co.in/public/something
+    RewriteRule ^(.*)$ /public/$1 [L,QSA]
+
+    # Handle Authorization Header if present in the request
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect trailing slashes if it's not a directory
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Front Controller: Route everything that is not an actual file or directory to public/index.php
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ /public/index.php [L]
+     Header always set Server "Hidden"
+
+</IfModule>
+
+# Prevent access to the .env file for security reasons
+<FilesMatch "(\.env|\.git|\.htaccess|composer\.json|composer\.lock|package\.json|package-lock\.json|artisan)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+<IfModule mod_headers.c>
+  Header always set Server "Hidden"
+</IfModule>
