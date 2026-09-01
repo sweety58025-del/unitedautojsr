@@ -586,6 +586,7 @@ Description: Ducatibox - Car Service & Auto Repair Template
         //     document.body.classList.add("theme-style--light");
         // }
 
+        if (icon) {
         icon.onclick = function() {
             document.body.classList.toggle("theme-style--light");
             if (document.body.classList.contains("theme-style--light")){
@@ -595,6 +596,7 @@ Description: Ducatibox - Car Service & Auto Repair Template
                 icon.innerHTML = '<span><i class="bi bi-moon-fill"></i></span>';
                 localStorage.setItem("theme", "light");
             }
+        }
         }
 
     });      

@@ -5,7 +5,8 @@
 	jQuery(document).ready(function () {
 
         // Pricetable Toggler
-        var e = document.getElementById("filt-monthly"),
+            if (!document.getElementById("filt-monthly")) { return; }
+            var e = document.getElementById("filt-monthly"),
             d = document.getElementById("filt-yearly"),
             t = document.getElementById("switcher"),
             m = document.getElementById("monthly"),

@@ -40,6 +40,7 @@
             <div class="card-header pb-0"><h4>Permission List</h4></div>
             <div class="card-body">
                 <div class="dt-ext">
+                    <div class="table-responsive">
                     <table class="table table-bordered table-bordered dt-responsive nowrap"  id="responsive-datatable">
                       <thead>
                         <tr>
@@ -105,6 +106,7 @@
                         </tbody>
 
                     </table>
+                    </div>
                 </div>
             </div>
         </div>

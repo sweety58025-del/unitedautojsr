@@ -104,7 +104,6 @@
         <script src="{{ asset('js/hero-slider.js') }}"></script>
 
         <!-- PASS D: FAQ Accordion -->
-        <script src="{{ asset('js/accordion.js') }}"></script>
 
         <!-- PASS E: Tabs & Gallery Filter -->
         <script src="{{ asset('js/tabs-gallery-filter.js') }}"></script>

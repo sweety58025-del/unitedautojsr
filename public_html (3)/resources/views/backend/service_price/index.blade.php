@@ -18,6 +18,7 @@
         </div>
         @endif
 
+        <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -65,6 +66,7 @@
             </tbody>
 
         </table>
+        </div>
 
     </div>
 </div>

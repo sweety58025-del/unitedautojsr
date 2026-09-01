@@ -26,8 +26,8 @@
         <div class="wptb-image-single wow fadeInUp d-none d-sm-block">
             <div class="wptb-item--inner">
                 <div class="wptb-item--image">
-                    <img src="{{ asset('front/assets/img/slider/car-2.png') }}" alt="img">
-                    <img src="{{ asset('front/assets/img/slider/car-light.png') }}" alt="img" class="car-light">
+                    <img src="{{ asset('front/assets/img/slider/car-2.png') }}" alt="img" style="position:absolute;left:50%;transform:translateX(-50%);bottom:0;max-width:100%;height:auto;">
+                    <img src="{{ asset('front/assets/img/slider/car-light.png') }}" alt="img" class="car-light" style="position:absolute;left:50%;transform:translateX(-50%);bottom:120px;max-width:100%;height:auto;">
                 </div>
             </div>
         </div>

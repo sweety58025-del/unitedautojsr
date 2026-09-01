@@ -76,6 +76,7 @@ value="{{ old('name', $editBrand->name ?? '') }}">
 </div>
 @endif
 
+<div class="table-responsive">
 <table class="table table-bordered">
 
 <thead>
@@ -130,6 +131,7 @@ Delete
 </tbody>
 
 </table>
+</div>
 
 </div>
 </div>

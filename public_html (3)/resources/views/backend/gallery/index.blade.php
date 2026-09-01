@@ -81,6 +81,7 @@ value="{{ old('name',$editGallery->name ?? '') }}">
 </div>
 @endif
 
+<div class="table-responsive">
 <table class="table table-bordered">
 
 <thead>
@@ -135,6 +136,7 @@ Delete
 </tbody>
 
 </table>
+</div>
 
 </div>
 </div>
