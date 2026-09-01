@@ -10,10 +10,14 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        if (!User::where('email', 'admin@example.com')->exists()) {
-            User::create([
+        $this->call([
+            PermissionSeeder::class,
+        ]);
+
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            [
                 'name'              => 'Admin User',
-                'email'             => 'admin@example.com',
                 'email_verified_at' => now(),
                 'password'          => Hash::make(env('SEED_ADMIN_PASSWORD', Str::random(16))),
                 'phone'             => '9876543210',
@@ -26,11 +30,14 @@ class DatabaseSeeder extends Seeder
                 'is_active'         => 'yes',
                 'user_type'         => 'admin',
                 'remember_token'    => '',
-            ]);
+            ]
+        );
+
+        if (! $admin->hasRole('Super Admin')) {
+            $admin->assignRole('Super Admin');
         }
 
         $this->call([
-            PermissionSeeder::class,
             HeroBannerSeeder::class,
             AboutWebsiteSeeder::class,
             CategoryAndServiceSeeder::class,

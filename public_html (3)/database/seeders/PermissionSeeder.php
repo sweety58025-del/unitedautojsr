@@ -2,41 +2,60 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\PermissionCategory;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
     public function run(): void
     {
-        PermissionCategory::truncate();
-
-        // Some installs use the Spatie permission package with table name 'permissions'.
-        // Attempt to delete existing rows if that table exists; otherwise skip.
-        try {
-            if (\Schema::hasTable('permissions')) {
-                DB::table('permissions')->delete();
-            }
-        } catch (\Throwable $e) {
-            // ignore if table doesn't exist
+        if (\Schema::hasTable('permission_categories')) {
+            PermissionCategory::query()->delete();
         }
 
-        $pc = PermissionCategory::create([
+        $general = PermissionCategory::firstOrCreate([
             'name' => 'General',
-            'slug' => 'general'
+            'slug' => 'general',
         ]);
 
-        // minimal permissions (if permissions table exists insert friendly defaults)
-        try {
-            if (\Schema::hasTable('permissions')) {
-                DB::table('permissions')->insert([
-                    ['name' => 'view-dashboard', 'guard_name' => 'web', 'permission_category_id' => $pc->id, 'created_at' => now(), 'updated_at' => now()],
-                    ['name' => 'manage-users', 'guard_name' => 'web', 'permission_category_id' => $pc->id, 'created_at' => now(), 'updated_at' => now()],
-                ]);
+        $permissions = [
+            'view-dashboard',
+            'manage-users',
+            'show-category',
+            'add-category',
+            'edit-category',
+            'delete-category',
+            'show-service',
+            'add-service',
+            'edit-service',
+            'delete-service',
+            'show-subcategory',
+            'add-subcategory',
+            'edit-subcategory',
+            'delete-subcategory',
+            'View User',
+            'Add User',
+            'Edit User',
+            'Delete User',
+        ];
+
+        if (\Schema::hasTable('permissions')) {
+            DB::table('permissions')->delete();
+
+            foreach ($permissions as $permissionName) {
+                Permission::firstOrCreate(
+                    ['name' => $permissionName, 'guard_name' => 'web'],
+                    ['permission_category_id' => $general->id]
+                );
             }
-        } catch (\Throwable $e) {
-            // swallow errors if permissions table doesn't match expected schema
+        }
+
+        if (\Schema::hasTable('roles')) {
+            $adminRole = Role::firstOrCreate(['name' => 'Super Admin', 'guard_name' => 'web']);
+            $adminRole->syncPermissions($permissions);
         }
     }
 }
