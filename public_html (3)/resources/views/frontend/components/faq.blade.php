@@ -10,9 +10,9 @@
                 <div class="faq-accordion" id="faqAccordion">
                     <!-- FAQ Item 1 - Open by default -->
                     <div class="faq-item open">
-                        <button class="faq-header" onclick="toggleAccordion(this)">
+                        <button class="faq-header" type="button" aria-expanded="true">
                             <h4 class="faq-question">What services do you offer for car maintenance?</h4>
-                            <span class="faq-icon">▼</span>
+                            <span class="faq-icon" aria-hidden="true">▼</span>
                         </button>
                         <div class="faq-answer">
                             <p>We offer car dry cleaning, ceramic & Teflon coating, anti-rust treatment, paint protection film (PPF), interior detailing, and full body polishing. Our comprehensive services ensure your vehicle stays in peak condition.</p>
@@ -21,9 +21,9 @@
 
                     <!-- FAQ Item 2 -->
                     <div class="faq-item">
-                        <button class="faq-header" onclick="toggleAccordion(this)">
+                        <button class="faq-header" type="button" aria-expanded="false">
                             <h4 class="faq-question">How long does ceramic coating last on my car?</h4>
-                            <span class="faq-icon">▼</span>
+                            <span class="faq-icon" aria-hidden="true">▼</span>
                         </button>
                         <div class="faq-answer">
                             <p>Premium ceramic coatings typically last 3-5 years depending on maintenance and environmental conditions. Proper care and regular washing will help extend the lifespan of the coating.</p>
@@ -32,9 +32,9 @@
 
                     <!-- FAQ Item 3 -->
                     <div class="faq-item">
-                        <button class="faq-header" onclick="toggleAccordion(this)">
+                        <button class="faq-header" type="button" aria-expanded="false">
                             <h4 class="faq-question">Is paint protection film (PPF) worth it?</h4>
-                            <span class="faq-icon">▼</span>
+                            <span class="faq-icon" aria-hidden="true">▼</span>
                         </button>
                         <div class="faq-answer">
                             <p>Yes, PPF is excellent protection against rock chips, scratches, and environmental damage. It preserves your car's paint and resale value, making it a worthwhile investment for new or high-value vehicles.</p>
@@ -43,9 +43,9 @@
 
                     <!-- FAQ Item 4 -->
                     <div class="faq-item">
-                        <button class="faq-header" onclick="toggleAccordion(this)">
+                        <button class="faq-header" type="button" aria-expanded="false">
                             <h4 class="faq-question">How often should I get my car dry cleaned?</h4>
-                            <span class="faq-icon">▼</span>
+                            <span class="faq-icon" aria-hidden="true">▼</span>
                         </button>
                         <div class="faq-answer">
                             <p>We recommend dry cleaning your car every 2-3 months, or more frequently if you drive in dusty or polluted areas. Regular dry cleaning maintains your vehicle's interior cleanliness and air quality.</p>
@@ -69,14 +69,16 @@
 
     .faq-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
         gap: var(--space-5);
         align-items: stretch;
+        min-width: 0;
     }
 
     .faq-content {
         display: flex;
         flex-direction: column;
+        min-width: 0;
     }
 
     .faq-eyebrow {
@@ -90,10 +92,11 @@
 
     .faq-title {
         color: var(--color-white);
-        font-size: var(--font-size-h2);
+        font-size: clamp(1.75rem, 2vw + 1rem, 2.25rem);
         font-family: var(--font-heading);
         font-weight: var(--font-weight-bold);
         margin-bottom: var(--space-4);
+        line-height: 1.2;
     }
 
     .faq-accordion {
@@ -126,6 +129,7 @@
         cursor: pointer;
         transition: background-color var(--transition-fast);
         text-align: left;
+        gap: var(--space-2);
     }
 
     .faq-header:hover {
@@ -140,9 +144,12 @@
     .faq-question {
         color: var(--color-white);
         margin: 0;
-        font-size: 16px;
+        font-size: clamp(0.9375rem, 1vw + 0.35rem, 1rem);
         font-weight: var(--font-weight-medium);
         font-family: var(--font-body);
+        line-height: 1.5;
+        min-width: 0;
+        word-break: break-word;
     }
 
     .faq-icon {
@@ -160,7 +167,7 @@
     .faq-answer {
         max-height: 0;
         overflow: hidden;
-        transition: max-height var(--transition-normal);
+        transition: max-height var(--transition-normal), padding var(--transition-normal);
     }
 
     .faq-item.open .faq-answer {
@@ -173,6 +180,7 @@
         font-size: 14px;
         line-height: 1.7;
         margin: 0;
+        word-break: break-word;
     }
 
     .faq-image {
@@ -182,6 +190,7 @@
         min-height: 500px;
         background-size: cover;
         background-position: center;
+        min-width: 0;
     }
 
     @media (max-width: 1024px) {
@@ -201,7 +210,7 @@
         }
 
         .faq-title {
-            font-size: 28px;
+            font-size: clamp(1.5rem, 4vw, 2rem);
         }
 
         .faq-header {
@@ -209,7 +218,7 @@
         }
 
         .faq-question {
-            font-size: 15px;
+            font-size: 0.95rem;
         }
 
         .faq-image {
@@ -223,7 +232,7 @@
         }
 
         .faq-title {
-            font-size: 24px;
+            font-size: 1.5rem;
         }
 
         .faq-grid {
@@ -235,7 +244,7 @@
         }
 
         .faq-question {
-            font-size: 14px;
+            font-size: 0.875rem;
         }
 
         .faq-image {
@@ -243,20 +252,3 @@
         }
     }
 </style>
-
-<script>
-function toggleAccordion(button) {
-    const item = button.closest('.faq-item');
-    const body = item.querySelector('.faq-answer');
-    
-    // Close other items in the same accordion
-    document.querySelectorAll('.faq-item').forEach(i => {
-        if (i !== item && i.classList.contains('open')) {
-            i.classList.remove('open');
-        }
-    });
-    
-    // Toggle current item
-    item.classList.toggle('open');
-}
-</script>

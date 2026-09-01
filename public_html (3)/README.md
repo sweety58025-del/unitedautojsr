@@ -1,61 +1,175 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# United Auto Laravel Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This repository contains a Laravel 12 application for the United Auto website. The actual application directory is:
 
-## About Laravel
+- `public_html (3)/`
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This README documents the real developer setup for this project only. It does not modify the website theme, UI, or application behavior.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Actual project root
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Use the Laravel app directory as the working directory for all commands:
 
-## Learning Laravel
+- `C:\Users\HP\UnitedAuto\unitedautojsr\public_html (3)`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Requirements
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- PHP 8.2+
+- Composer
+- Node.js
+- npm
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Verified local environment:
 
-## Laravel Sponsors
+- PHP 8.4.24
+- Node.js 24.18.0
+- npm 11.12.1
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Composer
 
-### Premium Partners
+The Composer configuration is in:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- `public_html (3)/composer.json`
 
-## Contributing
+This project declares:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- PHP `^8.2`
+- Laravel Framework `^12.0`
+- local dev dependencies such as `laravel/pail` and `phpunit`
 
-## Code of Conduct
+Scripts include:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```json
+"scripts": {
+  "dev": [
+    "Composer\\Config::disableProcessTimeout",
+    "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite --kill-others"
+  ],
+  "test": [
+    "@php artisan config:clear --ansi",
+    "@php artisan test"
+  ]
+}
+```
 
-## Security Vulnerabilities
+Use the local Composer wrapper if Composer is not available on PATH:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```powershell
+cd "public_html (3)"
+.\composer install
+.\composer dev
+```
 
-## License
+## Frontend / Vite
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The frontend config is in:
+
+- `public_html (3)/package.json`
+
+Scripts are:
+
+```json
+"scripts": {
+  "build": "vite build",
+  "dev": "vite"
+}
+```
+
+Install frontend deps with:
+
+```powershell
+cd "public_html (3)"
+npm install
+```
+
+## Environment and database
+
+The default environment template is:
+
+- `public_html (3)/.env.example`
+
+It uses SQLite by default:
+
+```env
+DB_CONNECTION=sqlite
+```
+
+Create the local env file from the template:
+
+```powershell
+cd "public_html (3)"
+Copy-Item .env.example .env
+php artisan key:generate
+```
+
+The database config is set in:
+
+- `public_html (3)/config/database.php`
+
+It supports the standard Laravel connections and defaults to SQLite for local development.
+
+## Database setup
+
+If using SQLite, ensure the file exists before running migrations:
+
+```powershell
+cd "public_html (3)"
+New-Item -Path .\database\database.sqlite -ItemType File -Force
+```
+
+Then run:
+
+```powershell
+php artisan migrate:fresh --seed
+```
+
+This was verified successfully in the current environment.
+
+## Storage
+
+A public storage link is not required for normal development unless a feature specifically needs uploaded files to be publicly accessible.
+
+Run only when needed:
+
+```powershell
+php artisan storage:link
+```
+
+## Git safety
+
+The project-level `.gitignore` already excludes the expected developer and generated files:
+
+- `.env`
+- `vendor/`
+- `node_modules/`
+- `public/build`
+- `public/storage`
+- `storage/*.key`
+
+## Correct local workflow
+
+Run commands from the actual Laravel app directory:
+
+```powershell
+cd "public_html (3)"
+.\composer install
+npm install
+Copy-Item .env.example .env
+php artisan key:generate
+php artisan migrate:fresh --seed
+.\composer dev
+```
+
+## Verified status
+
+- PHP runtime works: `php -v` returned PHP 8.4.24
+- SQLite extensions are available: `pdo_sqlite` and `sqlite3` were both present
+- Composer dependencies were installed and the project booted
+- Database migration and seeding succeeded
+- `npm run build` succeeded
+
+## Remaining local preview issue
+
+The browser preview was failing earlier because the PHP web runtime was not consistently seeing the SQLite extension. The fix is to ensure the same PHP runtime used by the web server has the SQLite PDO driver enabled. Once that runtime is correct, Laravel can serve the application normally.
+
+No Blade templates, CSS, JavaScript app logic, controllers, models, routes, or website design were modified as part of this setup audit.
