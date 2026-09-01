@@ -60,12 +60,15 @@ Description: Ducatibox - Car Service & Auto Repair Template
         
         // Active Mobile Responsive Menu : Add Class in body tag
         $('.mr_menu_toggle').on('click', function(e) {
-            $('body').addClass('mr_menu_active');
+            var isExpanded = $(this).attr('aria-expanded') === 'true';
+            $(this).attr('aria-expanded', isExpanded ? 'false' : 'true');
+            $('body').toggleClass('mr_menu_active', !isExpanded);
             e.stopPropagation();
             e.preventDefault();
         });
         $('.mr_menu_close').on('click', function(e) {
             $('body').removeClass('mr_menu_active');
+            $('.mr_menu_toggle').attr('aria-expanded', 'false');
             e.stopPropagation();
             e.preventDefault();
         });

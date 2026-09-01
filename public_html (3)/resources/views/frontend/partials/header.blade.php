@@ -118,7 +118,7 @@
                         </div>
                     </div> --}}
 
-                    <button type="button" class="mr_menu_toggle d-xl-none">
+                    <button type="button" class="mr_menu_toggle d-xl-none" aria-expanded="false" aria-controls="mobile-menu-panel">
                         <i class="bi bi-list"></i>
                     </button>
                 </div>
@@ -129,7 +129,7 @@
 <!-- End Main Header -->			
 
 <!-- Mobile Responsive Menu -->
-<div class="mr_menu">
+<div id="mobile-menu-panel" class="mr_menu">
     <button type="button" class="mr_menu_close"><i class="bi bi-x-lg"></i></button>
     <div class="logo"></div> <!-- Keep this div empty. Logo will come here by JavaScript -->
     <div class="mr_navmenu"></div> <!-- Keep this div empty. Menu will come here by JavaScript -->

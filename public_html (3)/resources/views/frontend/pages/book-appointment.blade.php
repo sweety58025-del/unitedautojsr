@@ -31,9 +31,9 @@
         <div class="booking-wizard-card mx-auto">
 
             <!-- Step indicator -->
-            <div class="booking-steps">
+            <div class="booking-steps" role="list">
                 <div class="booking-step is-active" data-step-indicator="1">
-                    <span class="booking-step-circle">1</span>
+                    <span class="booking-step-circle" aria-current="step">1</span>
                     <span class="booking-step-label">Service</span>
                 </div>
                 <div class="booking-step-line"></div>
@@ -235,7 +235,7 @@
                     </div>
                     <div class="booking-pane-actions booking-pane-actions-split">
                         <button type="button" class="btn-outline booking-back-btn">Back</button>
-                        <button type="submit" class="btn-two white">
+                        <button type="submit" class="btn-two white booking-submit-btn">
                             <span class="btn-wrap">
                                 <span class="text-first">Continue Booking</span>
                                 <span class="text-second"><i class="bi bi-check2"></i></span>
@@ -437,8 +437,16 @@
             });
             indicators.forEach(function (indicator) {
                 const num = Number(indicator.dataset.stepIndicator);
+                const circle = indicator.querySelector('.booking-step-circle');
                 indicator.classList.toggle('is-active', num === step);
                 indicator.classList.toggle('is-complete', num < step);
+                if (circle) {
+                    if (num === step) {
+                        circle.setAttribute('aria-current', 'step');
+                    } else {
+                        circle.removeAttribute('aria-current');
+                    }
+                }
             });
             currentStep = step;
             window.scrollTo({ top: form.offsetTop - 120, behavior: 'smooth' });
@@ -447,23 +455,68 @@
         function validateStep(step) {
             const pane = steps.find(function (p) { return Number(p.dataset.stepPane) === step; });
             const fields = pane.querySelectorAll('input[required], select[required]');
+            const actionArea = pane.querySelector('.booking-pane-actions') || pane.querySelector('.booking-pane-actions-split');
+            const nextButton = pane.querySelector('.booking-next-btn, .booking-submit-btn');
+            const inlineMessage = pane.querySelector('.booking-inline-error') || document.createElement('div');
             let valid = true;
 
+            inlineMessage.className = 'booking-inline-error';
+            inlineMessage.setAttribute('role', 'alert');
+            inlineMessage.setAttribute('aria-live', 'polite');
+            inlineMessage.textContent = 'Please fill in all required fields before continuing.';
+            inlineMessage.style.display = 'none';
+            inlineMessage.style.marginBottom = '12px';
+            inlineMessage.style.padding = '8px 12px';
+            inlineMessage.style.borderRadius = '4px';
+            inlineMessage.style.background = '#fdecec';
+            inlineMessage.style.color = '#a11c1c';
+            inlineMessage.style.border = '1px solid #f5b7b7';
+            inlineMessage.style.fontSize = '14px';
+
+            if (!inlineMessage.parentNode && actionArea) {
+                actionArea.insertBefore(inlineMessage, nextButton || actionArea.firstChild);
+            }
+
+            function clearInvalidState(event) {
+                const field = event.target;
+                if (field) {
+                    field.classList.remove('is-invalid');
+                    field.setAttribute('aria-invalid', 'false');
+                    if (field.value.trim()) {
+                        field.classList.remove('is-invalid');
+                        field.setAttribute('aria-invalid', 'false');
+                    }
+                }
+                if (pane.querySelectorAll('.is-invalid').length === 0) {
+                    inlineMessage.style.display = 'none';
+                }
+            }
+
             fields.forEach(function (field) {
+                field.addEventListener('input', clearInvalidState);
+                field.addEventListener('change', clearInvalidState);
+
                 if (field.type === 'radio') {
                     const group = pane.querySelectorAll('input[name="' + field.name + '"]');
                     const checked = Array.from(group).some(function (r) { return r.checked; });
-                    if (!checked) valid = false;
+                    if (!checked) {
+                        field.setAttribute('aria-invalid', 'true');
+                        valid = false;
+                    }
                 } else if (!field.value.trim()) {
                     field.classList.add('is-invalid');
+                    field.setAttribute('aria-invalid', 'true');
                     valid = false;
                 } else {
                     field.classList.remove('is-invalid');
+                    field.setAttribute('aria-invalid', 'false');
                 }
             });
 
             if (!valid) {
-                alert('Please fill in all required fields before continuing.');
+                inlineMessage.style.display = 'block';
+            } else {
+                inlineMessage.style.display = 'none';
             }
             return valid;
         }
@@ -480,6 +533,13 @@
             btn.addEventListener('click', function () {
                 if (currentStep > 1) showStep(currentStep - 1);
             });
+        });
+
+        form.addEventListener('submit', function () {
+            const submitButton = form.querySelector('.booking-submit-btn');
+            if (!submitButton) return;
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span><span>Booking...</span>';
         });
 
         function updateSummary() {

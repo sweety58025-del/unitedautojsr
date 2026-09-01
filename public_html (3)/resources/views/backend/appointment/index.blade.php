@@ -66,11 +66,10 @@
                                 </form>
                             </td>
                             <td>
-                                <form method="POST" action="{{ route('appointment.delete', $appointment->id) }}"
-                                    onsubmit="return confirm('Delete this appointment? This cannot be undone.');">
+                                <form id="delete-appointment-form-{{ $appointment->id }}" method="POST" action="{{ route('appointment.delete', $appointment->id) }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                 </form>
+                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAppointmentModal" data-delete-form-id="delete-appointment-form-{{ $appointment->id }}">Delete</button>
                             </td>
                         </tr>
 
@@ -86,10 +85,55 @@
 
                 </table>
 
+                {{ $appointments->links() }}
+
             </div>
         </div>
     </div>
 
 </div>
+
+<div class="modal fade" id="deleteAppointmentModal" tabindex="-1" aria-labelledby="deleteAppointmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteAppointmentModalLabel">Delete Appointment?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteAppointmentBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('deleteAppointmentModal');
+        const confirmDeleteButton = document.getElementById('confirmDeleteAppointmentBtn');
+        let deleteFormId = null;
+
+        if (modal) {
+            modal.addEventListener('show.bs.modal', function (event) {
+                const trigger = event.relatedTarget;
+                deleteFormId = trigger ? trigger.getAttribute('data-delete-form-id') : null;
+            });
+        }
+
+        if (confirmDeleteButton) {
+            confirmDeleteButton.addEventListener('click', function () {
+                if (!deleteFormId) return;
+                const form = document.getElementById(deleteFormId);
+                if (form) {
+                    form.submit();
+                }
+            });
+        }
+    });
+</script>
 
 @endsection
