@@ -19,7 +19,7 @@
         <div id="galleryGrid" class="grid grid-3">
             <!-- Gallery Item 1 -->
             <div class="gallery-item" data-category="before">
-                <div style="height: 250px; background: linear-gradient(135deg, #9e9e9e 0%, #757575 100%); border-radius: var(--radius-card); overflow: hidden; cursor: pointer; position: relative;">
+                <div style="height: 250px; background: linear-gradient(135deg, #4c4c4c 0%, #272727 100%); border-radius: var(--radius-card); overflow: hidden; cursor: pointer; position: relative;">
                     <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3);">
                         <span style="font-size: 48px; color: white;">🚗</span>
                     </div>
@@ -29,7 +29,7 @@
 
             <!-- Gallery Item 2 -->
             <div class="gallery-item" data-category="during">
-                <div style="height: 250px; background: linear-gradient(135deg, #ffb347 0%, #ffa500 100%); border-radius: var(--radius-card); overflow: hidden; cursor: pointer; position: relative;">
+                <div style="height: 250px; background: linear-gradient(135deg, #D70006 0%, #000000 100%); border-radius: var(--radius-card); overflow: hidden; cursor: pointer; position: relative;">
                     <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3);">
                         <span style="font-size: 48px; color: white;">🔧</span>
                     </div>
@@ -39,7 +39,7 @@
 
             <!-- Gallery Item 3 -->
             <div class="gallery-item" data-category="after">
-                <div style="height: 250px; background: linear-gradient(135deg, #e91c2d 0%, #dd3443 100%); border-radius: var(--radius-card); overflow: hidden; cursor: pointer; position: relative;">
+                <div style="height: 250px; background: linear-gradient(135deg, #D70006 0%, #000000 100%); border-radius: var(--radius-card); overflow: hidden; cursor: pointer; position: relative;">
                     <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3);">
                         <span style="font-size: 48px; color: white;">✨</span>
                     </div>
@@ -69,7 +69,7 @@
 
             <!-- Gallery Item 6 -->
             <div class="gallery-item" data-category="after">
-                <div style="height: 250px; background: linear-gradient(135deg, #e91c2d 0%, #dd3443 100%); border-radius: var(--radius-card); overflow: hidden; cursor: pointer; position: relative;">
+                <div style="height: 250px; background: linear-gradient(135deg, #D70006 0%, #000000 100%); border-radius: var(--radius-card); overflow: hidden; cursor: pointer; position: relative;">
                     <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3);">
                         <span style="font-size: 48px; color: white;">🎉</span>
                     </div>

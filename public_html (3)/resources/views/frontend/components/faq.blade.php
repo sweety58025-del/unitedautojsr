@@ -184,7 +184,7 @@
     }
 
     .faq-image {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #D70006 0%, #000000 100%);
         border-radius: var(--radius-card);
         overflow: hidden;
         min-height: 500px;

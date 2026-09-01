@@ -10,7 +10,7 @@
         <!-- Story Cards -->
         <div class="grid grid-4" style="margin-bottom: var(--space-5);">
             <div class="card">
-                <div style="height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white;">
+                <div style="height: 200px; background: linear-gradient(135deg, #D70006 0%, #000000 100%); display: flex; align-items: center; justify-content: center; color: white;">
                     <span style="font-size: 48px;">🚗</span>
                 </div>
                 <div class="card-body">
@@ -20,7 +20,7 @@
             </div>
 
             <div class="card">
-                <div style="height: 200px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; color: white;">
+                <div style="height: 200px; background: linear-gradient(135deg, #D70006 0%, #4c4c4c 100%); display: flex; align-items: center; justify-content: center; color: white;">
                     <span style="font-size: 48px;">🪑</span>
                 </div>
                 <div class="card-body">
@@ -30,7 +30,7 @@
             </div>
 
             <div class="card">
-                <div style="height: 200px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; color: white;">
+                <div style="height: 200px; background: linear-gradient(135deg, #000000 0%, #4c4c4c 100%); display: flex; align-items: center; justify-content: center; color: white;">
                     <span style="font-size: 48px;">🏆</span>
                 </div>
                 <div class="card-body">

@@ -123,10 +123,10 @@
         </div>
 
         <div style="text-align: center; margin-top: var(--space-5);">
-            <p style="color: #4A90E2; font-size: 14px; margin-bottom: var(--space-2);">
+            <p style="color: var(--color-primary-red); font-size: 14px; margin-bottom: var(--space-2);">
                 <strong>Note:</strong> Water spray car washing with vacuum cleaning.
             </p>
-            <p style="color: #4A90E2; font-size: 14px;">
+            <p style="color: var(--color-primary-red); font-size: 14px;">
                 <strong>Coupon Policy:</strong> Customer can use only three coupons in a day.
             </p>
         </div>
