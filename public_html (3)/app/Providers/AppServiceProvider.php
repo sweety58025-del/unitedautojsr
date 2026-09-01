@@ -106,6 +106,7 @@ class AppServiceProvider extends ServiceProvider
                 'company_phone' => '',
                 'company_email' => '',
                 'company_address' => '',
+                'categories' => collect(),
                 'company_city' => '',
                 'company_state' => '',
                 'company_pincode' => '',

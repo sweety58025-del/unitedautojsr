@@ -95,6 +95,9 @@
                             <li>
                                 <a href="{{ route('testimonial.index') }}" class="tp-link">Testimonials</a>
                             </li>
+                            <li>
+                                <a href="{{ route('appointment.index') }}" class="tp-link">Appointments</a>
+                            </li>
                         </ul>
                     </div>
                 </li> 

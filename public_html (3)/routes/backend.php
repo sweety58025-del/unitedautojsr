@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutWebsiteController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Backend\TestimonialController;
+use App\Http\Controllers\Backend\AppointmentController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
@@ -68,6 +69,10 @@ Route::middleware(['auth'])->prefix('backend')->group(function () {
     Route::get('testimonial/edit/{id}',[TestimonialController::class,'edit'])->name('testimonial.edit');
     Route::post('testimonial/update/{id}',[TestimonialController::class,'update'])->name('testimonial.update');
     Route::get('testimonial/delete/{id}',[TestimonialController::class,'destroy'])->name('testimonial.delete');
+
+    Route::get('appointments',[AppointmentController::class,'index'])->name('appointment.index');
+    Route::post('appointments/{id}/status',[AppointmentController::class,'updateStatus'])->name('appointment.status');
+    Route::post('appointments/{id}/delete',[AppointmentController::class,'destroy'])->name('appointment.delete');
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout.backend');
 

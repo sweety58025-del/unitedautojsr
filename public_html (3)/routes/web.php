@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HomeController;
@@ -21,6 +22,10 @@ Route::get('contact-us', [HomeController::class, 'contactUs'])->name('contact-us
 
 Route::get('/service/{slug}', [HomeController::class,'serviceDetails'])->name('service.details');
 Route::get('/service-category/{slug}', [HomeController::class,'serviceCategoryDetails'])->name('service-category.details');
+
+Route::get('/book-appointment', [AppointmentController::class, 'create'])->name('book-appointment');
+Route::post('/book-appointment', [AppointmentController::class, 'store'])->name('book-appointment.store');
+Route::get('/book-appointment/{appointment}/confirmation', [AppointmentController::class, 'confirmation'])->name('book-appointment.confirmation');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/backend', [AdminController::class, 'index'])->name('admindashboard.get');

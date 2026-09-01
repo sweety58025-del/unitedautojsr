@@ -88,6 +88,7 @@
                             <li class="menu-item"><a href="{{ route('service-price') }}">Service Prices</a></li>
                             <li class="menu-item"><a href="{{ route('gallery') }}">Gallery</a></li>
                             <li class="menu-item"><a href="{{ route('contact-us') }}">Contact</a></li>
+                            <li class="menu-item"><a href="{{ route('book-appointment') }}">Book Appointment</a></li>
 
                         </ul>
                     </div>
