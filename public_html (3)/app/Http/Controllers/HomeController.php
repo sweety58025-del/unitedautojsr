@@ -13,7 +13,7 @@ class HomeController extends Controller
 {
     public function aboutUs(){
         return view('frontend.pages.about-us',[
-            'about_us' => AboutWebsite::first()
+            'about_us' => AboutWebsite::firstRecord()
         ]);
     }
     public function servicePrice(){
@@ -22,13 +22,13 @@ class HomeController extends Controller
 
     public function contactUs(){
         return view('frontend.pages.contact-us',[
-            'contact_us' => CompanySetting::first()
+            'contact_us' => CompanySetting::firstRecord()
         ]);
     }
 
     public function gallery(){
         return view('frontend.pages.gallery',[
-            'gallery' => Gallery::latest()->get()
+            'gallery' => Gallery::allGalleries()
         ]);
     }
 

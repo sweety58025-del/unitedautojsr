@@ -4,10 +4,10 @@
 
 :root {
   /* ========== BRAND COLORS ========== */
-  --color-primary-red: #E91C2D;
-  --color-primary-red-dark: #DD3443;
-  --color-navy: #0D2958;
-  --color-navy-2: #172555;
+  --color-primary-red: #D70006;
+  --color-primary-red-dark: #B50005;
+  --color-navy: #000000;
+  --color-navy-2: #1A1A1A;
   --color-dark-bg: #2E2E2E;
   --color-dark-bg-alt: #1A1A1A;
   --color-text-muted: #666E85;

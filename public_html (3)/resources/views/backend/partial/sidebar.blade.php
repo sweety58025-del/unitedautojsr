@@ -1,6 +1,6 @@
 @php
     use App\Models\CompanySetting;
-    $logo = CompanySetting::first();
+    $logo = CompanySetting::firstRecord();
     $logo_image = "";
 @endphp
 @if ($logo)

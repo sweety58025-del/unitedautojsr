@@ -44,40 +44,57 @@ Description: Ducatibox - Car Service & Auto Repair Template
         }
 
         // Mobile Responsive Menu 
-        var mobileLogoContent = $('header .logo').html();
-        var mobileMenuContent = $('.mainnav').html();
-		$('.mr_menu .logo').append(mobileLogoContent);
-		$('.mr_menu .mr_navmenu').append(mobileMenuContent);
-        $( '.mr_menu .mr_navmenu ul.main-menu li.menu-item-has-children').append( $( "<span class='submenu_opener'><i class='bi bi-chevron-right'></i></span>" ) );
+        $('.mr_menu .mr_navmenu ul.main-menu li.menu-item-has-children').append( $( "<span class='submenu_opener'><i class='bi bi-chevron-right'></i></span>" ) );
 
         // Sub-Menu Open On-Click
         $('.mr_menu ul.main-menu li.menu-item-has-children .submenu_opener').on("click", function(e){
-            $(this).parent().toggleClass('nav_open');
+            var parentItem = $(this).parent();
+            var isOpen = parentItem.hasClass('nav_open');
+            parentItem.toggleClass('nav_open', !isOpen);
             $(this).siblings('ul').slideToggle();
+            $(this).closest('a').attr('aria-expanded', !isOpen ? 'true' : 'false');
             e.stopPropagation();
             e.preventDefault();
         });
-        
+
+        function openMobileMenu() {
+            $('body').addClass('mr_menu_active');
+            $('.mr_menu').attr('aria-hidden', 'false');
+            $('.mr_menu_toggle').attr('aria-expanded', 'true');
+        }
+
+        function closeMobileMenu() {
+            $('body').removeClass('mr_menu_active');
+            $('.mr_menu').attr('aria-hidden', 'true');
+            $('.mr_menu_toggle').attr('aria-expanded', 'false');
+            $('.mr_menu ul.main-menu li.menu-item-has-children').removeClass('nav_open');
+            $('.mr_menu ul.main-menu li.menu-item-has-children > ul').slideUp();
+            $('.mr_menu ul.main-menu li.menu-item-has-children > a').attr('aria-expanded', 'false');
+        }
+
         // Active Mobile Responsive Menu : Add Class in body tag
         $('.mr_menu_toggle').on('click', function(e) {
             var isExpanded = $(this).attr('aria-expanded') === 'true';
-            $(this).attr('aria-expanded', isExpanded ? 'false' : 'true');
-            $('body').toggleClass('mr_menu_active', !isExpanded);
+            if (isExpanded) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
             e.stopPropagation();
             e.preventDefault();
         });
-        $('.mr_menu_close').on('click', function(e) {
-            $('body').removeClass('mr_menu_active');
-            $('.mr_menu_toggle').attr('aria-expanded', 'false');
+
+        $('.mr_menu_close, .mobile-menu-backdrop').on('click', function(e) {
+            closeMobileMenu();
             e.stopPropagation();
             e.preventDefault();
         });
-        
-        // $('body').on('click', function(e) {
-        //     $('body').removeClass('mr_menu_active');
-        //     e.stopPropagation();
-        //     e.preventDefault();
-        // });
+
+        $(document).on('keydown', function(e) {
+            if (e.key === 'Escape' && $('body').hasClass('mr_menu_active')) {
+                closeMobileMenu();
+            }
+        });
 
 
         // Aside info bar
@@ -192,7 +209,7 @@ Description: Ducatibox - Car Service & Auto Repair Template
         var SwiperTestimonial = new Swiper('.swiper-testimonial', {
             loop: true,
             autoplay: {
-                delay: 4000,
+                delay: 6000,
             },
             speed: 1500,
             slidesPerView: 1,

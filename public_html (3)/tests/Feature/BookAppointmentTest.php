@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Appointment;
 use App\Models\Category;
+use App\Models\CompanySetting;
 use App\Models\Service;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -78,6 +79,17 @@ class BookAppointmentTest extends TestCase
             ->assertOk()
             ->assertSee('Mike Johnson')
             ->assertSee('Brake Inspection');
+    }
+
+    public function test_contact_page_renders_using_fallback_company_details_when_no_record_exists()
+    {
+        CompanySetting::query()->delete();
+
+        $response = $this->get(route('contact-us'));
+
+        $response->assertOk();
+        $response->assertSee('United Auto');
+        $response->assertSee('9876543210');
     }
 
     public function test_booking_requires_core_fields()

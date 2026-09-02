@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 
 class AboutWebsite extends Model
 {
@@ -23,4 +24,13 @@ class AboutWebsite extends Model
         'why_choose_content_4',
         'service_terms',
     ];
+
+    public static function firstRecord(): ?self
+    {
+        if (!Schema::hasTable((new self)->getTable())) {
+            return null;
+        }
+
+        return static::query()->first();
+    }
 }

@@ -1,6 +1,6 @@
 @php
     use App\Models\AboutWebsite;
-    $about = AboutWebsite::first();
+    $about = AboutWebsite::firstRecord();
     $about_image = $about ? $about->about_image : "";
 @endphp
 <section class="wptb-about-company-one bg-image-2" style="background-image: url('{{ asset('front/assets/img/background/bg-2.png') }}');">
@@ -11,7 +11,7 @@
                 <div class="wptb-image-single wow skewIn">
                     <div class="wptb-item--inner">
                         <div class="wptb-item--image">
-                            <img src="{{ asset($about_image) }}" alt="img" class="image-main">
+                            <img src="{{ asset($about_image) }}" alt="United Auto workshop team inspecting a vehicle" class="image-main">
                         </div>
 
                     </div>

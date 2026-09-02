@@ -84,7 +84,7 @@ class AppServiceProvider extends ServiceProvider
                 );
                 
                 // Share company settings
-                $companySetting = CompanySetting::first();
+                $companySetting = CompanySetting::firstRecord();
                 view()->share([
                     'favicon_icon' => $companySetting->favicon_icon ?? 'favicon.png',
                     'company_logo' => $companySetting->logo ?? 'logo.png',

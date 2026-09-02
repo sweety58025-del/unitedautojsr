@@ -1,6 +1,6 @@
 @php
     use App\Models\AboutWebsite;
-    $about = AboutWebsite::first();
+    $about = AboutWebsite::firstRecord();
 @endphp
 <section class="wptb-why-choose-one">
     <div class="container-fluid p-0">

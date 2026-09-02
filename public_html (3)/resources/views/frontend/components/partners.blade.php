@@ -1,6 +1,6 @@
 @php
     use App\Models\Brand;
-    $brands = Brand::all();
+    $brands = Brand::allBrands();
 @endphp
 
 <style>

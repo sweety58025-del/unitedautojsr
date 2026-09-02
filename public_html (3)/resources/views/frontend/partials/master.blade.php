@@ -1,18 +1,30 @@
 @php
     use App\Models\CompanySetting;
-    $company = CompanySetting::first();
+    $company = CompanySetting::firstRecord();
     $favicon_icon = $company?->favicon_icon ?? 'favicon.png';
     $logo_image = "";
 @endphp
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
     <head>
         <!-- Meta Tags -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Auto JSR">
-        <meta name="author" content="">
+        <meta name="description" content="@yield('meta_description', 'United Auto provides premium car servicing, detailing, paint protection, and maintenance in Jamshedpur.')">
+        <meta name="author" content="United Auto">
+        <meta name="robots" content="index, follow">
+        <link rel="canonical" href="{{ url('/') }}">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="United Auto">
+        <meta property="og:title" content="@yield('og_title', 'United Auto | Car Service & Detailing in Jamshedpur')">
+        <meta property="og:description" content="@yield('meta_description', 'United Auto provides premium car servicing, detailing, paint protection, and maintenance in Jamshedpur.')">
+        <meta property="og:url" content="{{ url('/') }}">
+        <meta property="og:image" content="{{ asset('assets/images/company/' . ($company->logo ?? 'logo.png')) }}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="@yield('og_title', 'United Auto | Car Service & Detailing in Jamshedpur')">
+        <meta name="twitter:description" content="@yield('meta_description', 'United Auto provides premium car servicing, detailing, paint protection, and maintenance in Jamshedpur.')">
+        <meta name="twitter:image" content="{{ asset('assets/images/company/' . ($company->logo ?? 'logo.png')) }}">
 
         <!-- Favicon and touch Icons -->
         <link href="{{ asset('assets/images/company/'.$favicon_icon) }}" rel="shortcut icon" type="image/png">

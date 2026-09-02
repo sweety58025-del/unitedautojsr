@@ -1,13 +1,19 @@
 @php
     use App\Models\CompanySetting;
-    $company = CompanySetting::first();
-    $logo_image = "";
+
+    $company = CompanySetting::firstRecord();
+    $logo_image = $company?->logo ?: 'logo.png';
+    $defaultAddress = 'Nagesh Tower, Near Goods Shed Road, Burma Mines, Jamshedpur - 831007';
+    $companyAddress = $company?->address ?: $defaultAddress;
+    $mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' . urlencode($companyAddress);
+
+    $socialLinks = [
+        'facebook' => env('UNITED_AUTO_FACEBOOK_URL'),
+        'instagram' => env('UNITED_AUTO_INSTAGRAM_URL'),
+        'x' => env('UNITED_AUTO_X_URL'),
+        'linkedin' => env('UNITED_AUTO_LINKEDIN_URL'),
+    ];
 @endphp
-@if ($company)
-    @php
-        $logo_image = $company->logo;
-    @endphp
-@endif
 <!-- Main Header -->
 <header class="header">
     <!-- Top Bar -->
@@ -18,19 +24,28 @@
                 <div class="left-box d-flex align-items-center">
                     <ul class="info-list">
                         <li><a href="mailto:{{ $company->email ?? '' }}"><span class="icon bi bi-envelope-fill"></span>{{ $company->email ?? '' }}</a></li>
-                        <li><a href="#"><span class="icon bi bi-geo-alt-fill"></span>{{ $company->address ?? '' }}</a></li>
+                        <li><a href="{{ $mapsUrl }}" target="_blank" rel="noopener noreferrer"><span class="icon bi bi-geo-alt-fill"></span>{{ $companyAddress }}</a></li>
                     </ul>
                 </div>
-                
+
                 <!-- Right Box -->
                 <div class="right-box d-flex align-items-center">
                     <!-- Social Box -->
                     <div class="social-box">
                         <ul>
-                            <li><a href="https://www.facebook.com/" class="bi bi-facebook"></a></li>
-                            <li><a href="https://www.instagram.com/" class="bi bi-instagram"></a></li>
-                            <li><a href="https://www.twitter.com/" class="bi bi-twitter-x"></a></li>
-                            <li><a href="https://www.linkedin.com/" class="bi bi-linkedin"></a></li>
+                            @foreach($socialLinks as $key => $url)
+                                @if($url)
+                                    @php
+                                        $socialIcon = [
+                                            'facebook' => 'bi bi-facebook',
+                                            'instagram' => 'bi bi-instagram',
+                                            'x' => 'bi bi-twitter-x',
+                                            'linkedin' => 'bi bi-linkedin',
+                                        ][$key] ?? 'bi bi-link-45deg';
+                                    @endphp
+                                    <li><a href="{{ $url }}" target="_blank" rel="noopener noreferrer" aria-label="Follow United Auto on {{ ucfirst($key) }}" class="{{ $socialIcon }}"></a></li>
+                                @endif
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -45,7 +60,7 @@
                 <!-- Left Part -->
                 <div class="header_left_part d-flex align-items-center">
                     <div class="logo">
-                        <a href="{{ url('/') }}" class="light_logo"><img src="{{ asset('assets/images/company/'.$logo_image) }}" style="height: 50px;" alt="logo"></a>
+                        <a href="{{ url('/') }}" class="light_logo"><img src="{{ asset('assets/images/company/'.$logo_image) }}" style="height: 50px;" alt="United Auto logo"></a>
                     </div>
                 </div>
 
@@ -61,9 +76,7 @@
 
                                 <ul class="sub-menu">
                                     @foreach($categories as $category)
-
                                         <li class="menu-item {{ $category->subcategories->count() ? 'menu-item-has-children' : '' }}">
-
                                             <a href="{{ route('service.details', $category->slug) }}">
                                                 {{ $category->name }}
                                             </a>
@@ -79,17 +92,17 @@
                                                     @endforeach
                                                 </ul>
                                             @endif
-
                                         </li>
-
                                     @endforeach
                                 </ul>
                             </li>
-                            <li class="menu-item"><a href="{{ route('service-price') }}">Service Prices</a></li>
+
+                            <li class="menu-item"><a href="{{ route('service-price') }}">Pricing</a></li>
                             <li class="menu-item"><a href="{{ route('gallery') }}">Gallery</a></li>
                             <li class="menu-item"><a href="{{ route('contact-us') }}">Contact</a></li>
-                            <li class="menu-item"><a href="{{ route('book-appointment') }}">Book Appointment</a></li>
-
+                            <li class="menu-item header-book-cta">
+                                <a href="{{ route('book-appointment') }}" class="header-book-button">Book Appointment</a>
+                            </li>
                         </ul>
                     </div>
 
@@ -105,32 +118,82 @@
                             </div>
                             <div class="wptb-item--holder">
                                 <p class="wptb-item--description">Need Help</p>
-                                <h5 class="wptb-item--title"> <a href="tel:+91-{{ $company->phone ?? '' }}">+91-{{ $company->phone ?? '' }}</a></h5>
+                                <h5 class="wptb-item--title"><a href="tel:+91-{{ $company->phone ?? '' }}">+91-{{ $company->phone ?? '' }}</a></h5>
                             </div>
                         </div>
                     </div>
 
-                    {{-- <div class="aside_open d-none d-xl-block">
-                        <div class="aside-open--inner">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div> --}}
-
-                    <button type="button" class="mr_menu_toggle d-xl-none" aria-expanded="false" aria-controls="mobile-menu-panel">
-                        <i class="bi bi-list"></i>
+                    <button type="button" class="mr_menu_toggle d-xl-none" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu-panel">
+                        <i class="bi bi-list" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
         </div>
     </div>
 </header>
-<!-- End Main Header -->			
+<!-- End Main Header -->
 
 <!-- Mobile Responsive Menu -->
-<div id="mobile-menu-panel" class="mr_menu">
-    <button type="button" class="mr_menu_close"><i class="bi bi-x-lg"></i></button>
-    <div class="logo"></div> <!-- Keep this div empty. Logo will come here by JavaScript -->
-    <div class="mr_navmenu"></div> <!-- Keep this div empty. Menu will come here by JavaScript -->
+<div class="mobile-menu-backdrop" aria-hidden="true"></div>
+<div id="mobile-menu-panel" class="mr_menu" aria-hidden="true">
+    <button type="button" class="mr_menu_close" aria-label="Close navigation">
+        <i class="bi bi-x-lg" aria-hidden="true"></i>
+    </button>
+
+    <div class="logo">
+        <a href="{{ url('/') }}" aria-label="United Auto home">
+            <img src="{{ asset('assets/images/company/'.$logo_image) }}" alt="United Auto logo">
+        </a>
+    </div>
+
+    <nav class="mr_navmenu" aria-label="Mobile navigation">
+        <ul class="main-menu">
+            <li class="menu-item"><a href="{{ url('/') }}">Home</a></li>
+            <li class="menu-item"><a href="{{ route('about-us') }}">About</a></li>
+
+            <li class="menu-item menu-item-has-children">
+                <a href="#" aria-expanded="false">Services</a>
+                <ul class="sub-menu">
+                    @foreach($categories as $category)
+                        <li class="menu-item {{ $category->subcategories->count() ? 'menu-item-has-children' : '' }}">
+                            <a href="{{ route('service.details', $category->slug) }}">{{ $category->name }}</a>
+                            @if($category->subcategories->count())
+                                <ul class="sub-menu">
+                                    @foreach($category->subcategories as $sub)
+                                        <li class="menu-item"><a href="{{ route('service-category.details', $sub->slug) }}">{{ $sub->name }}</a></li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            </li>
+
+            <li class="menu-item"><a href="{{ route('service-price') }}">Pricing</a></li>
+            <li class="menu-item"><a href="{{ route('gallery') }}">Gallery</a></li>
+            <li class="menu-item"><a href="{{ route('contact-us') }}">Contact</a></li>
+            <li class="menu-item mobile-book-item"><a href="{{ route('book-appointment') }}" class="mobile-book-button">Book Appointment</a></li>
+        </ul>
+    </nav>
+
+    <div class="mr_menu_cta">
+        <a href="tel:+91{{ $company->phone ?? '' }}" class="mobile-phone-cta">Call {{ $company->phone ?? 'Us' }}</a>
+        <a href="{{ route('book-appointment') }}" class="mobile-book-button">Book Appointment</a>
+    </div>
+
+    <div class="mr_menu_social" aria-label="United Auto social media links">
+        @foreach($socialLinks as $key => $url)
+            @if($url)
+                @php
+                    $socialIcon = [
+                        'facebook' => 'bi bi-facebook',
+                        'instagram' => 'bi bi-instagram',
+                        'x' => 'bi bi-twitter-x',
+                        'linkedin' => 'bi bi-linkedin',
+                    ][$key] ?? 'bi bi-link-45deg';
+                @endphp
+                <a href="{{ $url }}" target="_blank" rel="noopener noreferrer" aria-label="Follow United Auto on {{ ucfirst($key) }}" class="{{ $socialIcon }}"></a>
+            @endif
+        @endforeach
+    </div>
 </div>

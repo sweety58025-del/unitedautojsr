@@ -10,7 +10,7 @@ class AboutWebsiteController extends Controller
 {
     public function index(){
         return view('backend.website-content.about-company', [
-            'about_website' => AboutWebsite::first()
+            'about_website' => AboutWebsite::firstRecord()
         ]);
     }
 
@@ -52,7 +52,7 @@ class AboutWebsiteController extends Controller
             }],
         ]);
 
-        $about = AboutWebsite::first();
+        $about = AboutWebsite::firstRecord();
 
         $imagePath = $about->about_image ?? null;
 
@@ -98,7 +98,7 @@ class AboutWebsiteController extends Controller
 
     public function hero_banner(){
         return view('backend.website-content.hero-banner', [
-            'hero_banner' => HeroBanner::first()
+            'hero_banner' => HeroBanner::firstBanner()
         ]);
     }
 
@@ -111,7 +111,7 @@ class AboutWebsiteController extends Controller
             'sort_paragraph' => 'nullable|string|max:500'
         ]);
 
-        $banner = HeroBanner::first();
+        $banner = HeroBanner::firstBanner();
 
         $imagePath = $banner->banner_image ?? null;
 

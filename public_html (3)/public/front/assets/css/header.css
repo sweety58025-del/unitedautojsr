@@ -4,7 +4,7 @@
   top: 0;
   right: 0;
   width: 100%;
-  background-color: var(--color-navy, #0D2958);
+  background-color: var(--color-black);
   border-bottom: 1px solid rgba(var(--color-white-rgb), 0.35);
   box-shadow: 0px 4px 40px 0px rgba(var(--color-black), 0.35);
   z-index: 9;
@@ -151,7 +151,7 @@
 }
 
 .header .mainnav ul.main-menu > li + li {
-  margin-left: 70px;
+  margin-left: 32px;
 }
 
 .header .mainnav ul.main-menu li a {
@@ -169,6 +169,26 @@
   letter-spacing: 1px;
   padding: 25px 0px;
   transition: var(--transition-base);
+}
+
+.header .mainnav ul.main-menu li.header-book-cta {
+  margin-left: 24px;
+}
+
+.header .mainnav ul.main-menu li.header-book-cta a.header-book-button {
+  padding: 12px 18px;
+  background: var(--color-one);
+  color: var(--color-white);
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--color-one);
+  line-height: 1.2;
+}
+
+.header .mainnav ul.main-menu li.header-book-cta a.header-book-button:hover {
+  background: transparent;
+  color: var(--color-one);
 }
 
 .header .mainnav ul.main-menu li:hover > ul {
@@ -553,25 +573,42 @@
   color: var(--color-one);
 }
 
+.mobile-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(var(--color-black-rgb), 0.65);
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-base);
+  z-index: 9;
+}
+
+body.mr_menu_active .mobile-menu-backdrop {
+  opacity: 1;
+  visibility: visible;
+}
+
 .mr_menu {
-  width: 300px;
+  width: min(85vw, 320px);
   background: var(--color-dark);
-  padding: 0px;
+  padding: 24px 16px 20px;
   height: 100%;
   position: fixed;
-  left: -300px;
+  left: -100%;
   top: 0;
   z-index: 9999;
   transition: var(--transition-base);
+  overflow-y: auto;
   overflow-x: hidden;
+  box-shadow: 0 12px 30px rgba(var(--color-black-rgb), 0.25);
 }
 
 .mr_menu .mr_menu_close {
   position: absolute;
-  top: 10px;
-  right: 12px;
+  top: 14px;
+  right: 14px;
   background: transparent;
-  padding: 0px;
+  padding: 8px;
   color: var(--color-one);
   font-size: 20px;
   line-height: 20px;
@@ -581,13 +618,15 @@
 }
 
 .mr_menu .mr_menu_close:focus {
-  outline: none;
+  outline: 2px solid rgba(var(--color-one-rgb), 0.35);
+  outline-offset: 2px;
 }
 
 .mr_menu .logo {
   position: relative;
   text-align: center;
-  margin: 50px 0px;
+  margin: 52px 0 18px;
+  padding: 0 24px;
 }
 
 .mr_menu .logo a {
@@ -595,7 +634,10 @@
 }
 
 .mr_menu .logo a img {
+  display: block;
   width: 100%;
+  max-width: 180px;
+  margin: 0 auto;
   transition: var(--transition-base);
 }
 
@@ -628,7 +670,7 @@
   font-weight: 400;
   line-height: var(--fs-20);
   text-decoration: none;
-  text-align: center;
+  text-align: left;
   color: var(--color-two);
   display: flex;
   align-items: center;
@@ -692,6 +734,78 @@
   padding-left: 10px;
   z-index: 5;
   border-radius: 0px;
+}
+
+.mr_menu ul.main-menu li ul li a {
+  padding-left: 18px;
+  font-size: 14px;
+}
+
+.mr_menu_cta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.mobile-phone-cta,
+.mobile-book-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: var(--transition-base);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.mobile-phone-cta {
+  background: rgba(var(--color-white-rgb), 0.05);
+  color: var(--color-white);
+  border: 1px solid rgba(var(--color-white-rgb), 0.12);
+}
+
+.mobile-book-button {
+  background: var(--color-one);
+  color: var(--color-white);
+  border: 1px solid var(--color-one);
+}
+
+.mobile-phone-cta:hover,
+.mobile-book-button:hover {
+  color: var(--color-one);
+}
+
+.mr_menu_social {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(var(--color-two-rgb), 0.1);
+}
+
+.mr_menu_social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(var(--color-white-rgb), 0.05);
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.mr_menu_social a:hover {
+  color: var(--color-one);
+}
+
+body.mr_menu_active {
+  overflow: hidden;
 }
 
 body.mr_menu_active .mr_menu {
@@ -844,7 +958,7 @@ body.left_menu .mr_menu {
     padding-left: 50px;
   }
   .header .mainnav ul.main-menu > li + li {
-    margin-left: 35px;
+    margin-left: 20px;
   }
   .header .mainnav ul.main-menu > li.active > a::before, .header .mainnav ul.main-menu > li > a:hover::before {
     width: 18px;

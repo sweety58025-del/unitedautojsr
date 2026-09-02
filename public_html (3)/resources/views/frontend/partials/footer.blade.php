@@ -1,19 +1,14 @@
 @php
     use App\Models\AboutWebsite;
-    $about = AboutWebsite::first();
+    $about = AboutWebsite::firstRecord();
     $about_image = $about ? $about->about_image : "";
 @endphp
 
 @php
     use App\Models\CompanySetting;
-    $company = CompanySetting::first();
-    $logo_image = "";
+    $company = CompanySetting::firstRecord();
+    $logo_image = $company?->logo ?: 'logo.png';
 @endphp
-@if ($company)
-    @php
-        $logo_image = $company->logo;
-    @endphp
-@endif
 
 <!-- Footer -->
 <footer class="footer style1">
@@ -52,7 +47,7 @@
                             <div class="wptb-image-single wow fadeInUp d-none d-lg-block">
                                 <div class="wptb-item--inner">
                                     <div class="wptb-item--image">
-                                        <img src="{{ asset('front/assets/img/more/1.png') }}" alt="img">
+                                        <img src="{{ asset('front/assets/img/more/1.png') }}" alt="United Auto customer care team assisting with car service needs">
                                     </div>
                                 </div>
                             </div>

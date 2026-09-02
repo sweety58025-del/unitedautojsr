@@ -1,6 +1,6 @@
 @php
 use App\Models\ServicePrice;
-$servicePrices = ServicePrice::all();
+$servicePrices = ServicePrice::allPrices();
 @endphp
 <style>
     /* Table text color */
