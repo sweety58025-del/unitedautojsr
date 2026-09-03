@@ -8,12 +8,17 @@ class BrandSeeder extends Seeder
     public function run(): void
     {
         Brand::truncate();
-        $names = ['Toyota','Honda','Ford','Hyundai','Suzuki','Tata','Mahindra','Kia','Volkswagen','Skoda','Renault','Nissan','Chevrolet','BMW','Audi','Mercedes-Benz'];
-        foreach ($names as $i => $name) {
-            $num = $i + 1;
+            $brands = [
+                'Toyota', 'Hyundai', 'Suzuki', 'Tata', 'Mahindra', 'Ford',
+                'Volkswagen', 'Kia', 'Renault', 'Chevrolet', 'Fiat', 'Mitsubishi',
+                'Jeep', 'Mini', 'Land Rover', 'Jaguar', 'Volvo', 'BMW', 'Audi',
+                'Mercedes-Benz', 'Eicher', 'Force', 'BharatBenz',
+            ];
+            foreach ($brands as $name) {
+                $slug = strtolower(str_replace(' ', '-', $name));
             Brand::create([
                 'name' => $name,
-                'image' => "images/logo-brands/{$num}.webp",
+                    'image' => "images/logo-brands/{$slug}.png",
             ]);
         }
     }
