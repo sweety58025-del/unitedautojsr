@@ -206,9 +206,10 @@ Description: Ducatibox - Car Service & Auto Repair Template
         });
 
         // Testimonial One
+        var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         var SwiperTestimonial = new Swiper('.swiper-testimonial', {
             loop: true,
-            autoplay: {
+            autoplay: prefersReducedMotion ? false : {
                 delay: 6000,
             },
             speed: 1500,

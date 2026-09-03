@@ -15,7 +15,7 @@ class AboutWebsiteSeeder extends Seeder
             'about_title' => 'Premium Car Service & Maintenance',
             'short_description' => 'We specialize in top-quality car repair and maintenance services to keep your vehicle running smoothly and safely.',
             'description' => '<p>United Auto is a multi-brand Bosch car service center providing expert services for all vehicle maintenance and repairs. Our expert team ensures comprehensive solutions with the latest technology, providing trusted and affordable car care.</p>',
-            'about_image' => 'assets/images/company/logo.png',
+            'about_image' => 'images/about/united-auto-storefront.jpg',
             'mission' => 'Deliver outstanding automotive service and customer satisfaction at affordable prices.',
             'vision' => 'To be the most trusted multi-brand Bosch car service center for comprehensive vehicle care.',
             'why_choose_title_1' => 'Advanced Diagnostic & Repair Services',

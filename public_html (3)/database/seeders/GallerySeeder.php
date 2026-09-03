@@ -23,6 +23,10 @@ class GallerySeeder extends Seeder
             ['name' => 'Detailing Work - 2', 'image' => 'images/gallery/l2.webp'],
             ['name' => 'Detailing Work - 3', 'image' => 'images/gallery/l3.webp'],
             ['name' => 'Detailing Work - 4', 'image' => 'images/gallery/l4.webp'],
+            ['name' => 'Award - Excellence in Service', 'image' => 'images/gallery-events/united-auto-award.jpg'],
+            ['name' => 'Free Multi-Brand Car Checkup Camp - 1', 'image' => 'images/gallery-events/car-checkup-camp-1.jpg'],
+            ['name' => 'Free Multi-Brand Car Checkup Camp - 2', 'image' => 'images/gallery-events/car-checkup-camp-2.jpg'],
+            ['name' => 'Free Multi-Brand Car Checkup Camp - 3', 'image' => 'images/gallery-events/car-checkup-camp-3.jpg'],
         ];
         foreach ($items as $item) {
             Gallery::create($item);

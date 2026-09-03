@@ -18,13 +18,20 @@
             <button class="filter-btn" type="button" data-filter="before" aria-pressed="false">Before</button>
             <button class="filter-btn" type="button" data-filter="during" aria-pressed="false">During</button>
             <button class="filter-btn" type="button" data-filter="after" aria-pressed="false">After</button>
+            <button class="filter-btn" type="button" data-filter="event" aria-pressed="false">Events</button>
         </div>
 
         <div id="galleryGrid" class="project-gallery-grid" aria-live="polite">
             @foreach($galleryItems as $item)
                 @php
                     $lowerName = strtolower($item->name);
-                    $category = Str::contains($lowerName, 'before') ? 'before' : (Str::contains($lowerName, 'during') || Str::contains($lowerName, 'progress') ? 'during' : 'after');
+                    $category = Str::contains($lowerName, 'before')
+                        ? 'before'
+                        : (Str::contains($lowerName, 'during') || Str::contains($lowerName, 'progress')
+                            ? 'during'
+                            : ((Str::contains($lowerName, 'camp') || Str::contains($lowerName, 'award') || Str::contains($lowerName, 'event'))
+                                ? 'event'
+                                : 'after'));
                 @endphp
 
                 <div class="gallery-item" data-category="{{ $category }}">
@@ -118,7 +125,8 @@
         box-shadow: 0 18px 36px rgba(var(--color-one-rgb), 0.14);
     }
 
-    .gallery-item[hidden] {
+    .gallery-item[hidden],
+    .gallery-item.hidden {
         display: none;
     }
 
@@ -147,10 +155,6 @@
         color: var(--color-white);
         margin: 0;
         font-size: 16px;
-    }
-
-    .gallery-item.hidden {
-        display: none;
     }
 
     @media (max-width: 991px) {
