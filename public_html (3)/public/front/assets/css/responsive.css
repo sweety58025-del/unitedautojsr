@@ -93,6 +93,12 @@
         padding-left: 30px;
         padding-right: 30px;
     }
+    .wptb-about-company-one .wptb-image-single .wptb-item--image img.image-main {
+        height: 390px;
+    }
+    .wptb-about-company-one .united-auto-about-badge {
+        left: 10px;
+    }
     .wptb-office-address .widget {
         padding-left: 30px;
         padding-right: 15px;
@@ -154,6 +160,18 @@
     .wptb-about-company-one,
     .wptb-about-company-two {
         padding-top: 0px;
+    }
+    .wptb-about-company-one .wptb-image-single .wptb-item--image {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .wptb-about-company-one .wptb-image-single .wptb-item--image img.image-main {
+        height: auto;
+        max-height: 430px;
+    }
+    .wptb-about-company-one .united-auto-about-badge {
+        top: -12px;
+        left: 0;
     }
     .wptb-features-one {
         padding-top: 50px;

@@ -1,7 +1,7 @@
 @php
     use App\Models\AboutWebsite;
     $about = AboutWebsite::firstRecord();
-    $about_image = $about ? $about->about_image : "";
+    $about_image = 'images/misc/award.jpg';
 @endphp
 <section class="wptb-about-company-one bg-image-2" style="background-image: url('{{ asset('front/assets/img/background/bg-2.png') }}');">
     <div class="container">
@@ -11,7 +11,11 @@
                 <div class="wptb-image-single wow skewIn">
                     <div class="wptb-item--inner">
                         <div class="wptb-item--image">
-                            <img src="{{ asset($about_image) }}" alt="United Auto workshop team inspecting a vehicle" class="image-main">
+                            <img src="{{ asset($about_image) }}" alt="United Auto receiving a car service award" class="image-main">
+                            <div class="united-auto-about-badge">
+                                <strong>Trusted</strong>
+                                <span>Car Care<br>Services</span>
+                            </div>
                         </div>
 
                     </div>
@@ -22,6 +26,7 @@
                     <div class="wptb-heading">
                         <div class="wptb-item--inner">
                             <h6 class="wptb-item--subtitle">
+                                <span class="united-auto-about-eyebrow">About us</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="110" height="110" viewBox="0 0 110 110" fill="none">
                                     <g clip-path="url(#clip0_1_48600)">
                                         <path d="M78.4937 61.3448L78.4936 47.7922C78.4936 47.1684 77.9879 46.6627 77.3642 46.6629L72.8468 46.6629C72.5472 46.6627 72.2599 46.7818 72.0482 46.9936C71.8364 47.2054 71.7173 47.4927 71.7174 47.7922L71.7174 61.3449C71.7174 61.6567 71.8438 61.9392 72.0482 62.1436C72.2525 62.3479 72.5349 62.4744 72.8468 62.4743H77.3642C77.6638 62.4744 77.951 62.3554 78.1628 62.1436C78.3746 61.9318 78.4936 61.6444 78.4937 61.3448ZM73.976 48.9215L76.2349 48.9216L76.235 51.1804H73.976L73.976 48.9215ZM73.976 53.4391L76.235 53.4391L76.235 55.698L73.976 55.698L73.976 53.4391ZM73.976 60.2155L73.976 57.9565L76.235 57.9565V60.2155L73.976 60.2155Z" fill="#D70006"/>
@@ -41,6 +46,11 @@
                             <p class="wptb-item--description">
                                 {{ $about->short_description ?? '' }}
                             </p>
+                            <ul class="united-auto-about-features" aria-label="United Auto service benefits">
+                                <li>Advanced Diagnostic &amp; Repair Services</li>
+                                <li>Affordable Packages &amp; Discounts</li>
+                                <li>Skilled Professionals &amp; Genuine Parts</li>
+                            </ul>
                             <div class="wptb-item--button">
                                 <a class="btn-two" href="{{ route('about-us') }}">
                                     <span class="btn-wrap">
