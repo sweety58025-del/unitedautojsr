@@ -1,4 +1,59 @@
 @php
+    $services = \App\Models\Category::activeServices();
+    $leftServices = $services->take(4);
+    $rightServices = $services->slice(4, 4);
+    $serviceIcons = ['bi-wrench-adjustable', 'bi-gear-wide-connected', 'bi-snow', 'bi-droplet-half', 'bi-upc-scan', 'bi-car-front', 'bi-speedometer2', 'bi-shield-check'];
+@endphp
+
+<section class="united-services" aria-labelledby="services-title">
+    <div class="container">
+        <header class="united-services-heading">
+            <p class="united-services-eyebrow">Our Services</p>
+            <h2 id="services-title">What We Provide</h2>
+            <span class="united-services-rule" aria-hidden="true"></span>
+            <p class="united-services-intro">Premium car care services to keep your vehicle running like new.</p>
+        </header>
+
+        <div class="united-services-layout">
+            <div class="united-services-column united-services-column-left">
+                @foreach($leftServices as $index => $service)
+                    <a class="united-service-card" href="{{ route('service.details', $service->slug) }}">
+                        <span class="united-service-icon" aria-hidden="true"><i class="bi {{ $serviceIcons[$index] ?? 'bi-tools' }}"></i></span>
+                        <span class="united-service-copy">
+                            <strong>{{ $service->name }}</strong>
+                            <span>{{ Str::limit(strip_tags($service->description), 78) }}</span>
+                        </span>
+                        <i class="bi bi-arrow-right united-service-arrow" aria-hidden="true"></i>
+                    </a>
+                @endforeach
+            </div>
+
+            <div class="united-services-center" aria-hidden="true">
+                <span class="united-services-dots"></span>
+                <img src="{{ asset('front/assets/img/more/image.png') }}" alt="" loading="lazy">
+            </div>
+
+            <div class="united-services-column united-services-column-right">
+                @foreach($rightServices as $index => $service)
+                    <a class="united-service-card" href="{{ route('service.details', $service->slug) }}">
+                        <span class="united-service-icon" aria-hidden="true"><i class="bi {{ $serviceIcons[$index + 4] ?? 'bi-tools' }}"></i></span>
+                        <span class="united-service-copy">
+                            <strong>{{ $service->name }}</strong>
+                            <span>{{ Str::limit(strip_tags($service->description), 78) }}</span>
+                        </span>
+                        <i class="bi bi-arrow-right united-service-arrow" aria-hidden="true"></i>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="united-services-footer">
+            <span><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Professional workshop care</span>
+            <span><i class="bi bi-calendar-check-fill" aria-hidden="true"></i> <a href="{{ route('book-appointment') }}">Book your service appointment</a></span>
+        </div>
+    </div>
+</section>
+@php
     use App\Models\Category;
     $services = Category::activeServices();
 @endphp

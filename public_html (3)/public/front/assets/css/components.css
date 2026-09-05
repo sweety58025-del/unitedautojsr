@@ -1312,7 +1312,7 @@ body {
 }
 
 .wptb-slider.style3 .wptb-slider--item .wptb-image-single img.hero-vehicle {
-    bottom: 0;
+    bottom: -80px;
     width: clamp(380px, 34vw, 600px);
     filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.45));
 }
@@ -1338,7 +1338,7 @@ body {
     }
     .wptb-slider.style3 .hero-content-column {
         width: 52%;
-        padding-left: 1vw;
+        padding-left: 0%;
     }
     .wptb-slider.style3 .wptb-heading .wptb-item--title {
         max-width: 700px;
@@ -1354,6 +1354,17 @@ body {
     .wptb-slider.style3 .wptb-slider--item .wptb-image-single img.hero-car-light {
         width: clamp(380px, 34vw, 600px);
         bottom: 70px;
+    }
+
+    .wptb-slider.style3 .wptb-slider--item .wptb-image-single {
+        right: calc(clamp(16px, 3vw, 48px) + 180px);
+        bottom: -40px;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    :root {
+        --united-auto-header-offset: 112px;
     }
 }
 
@@ -1441,6 +1452,269 @@ body {
     }
     .wptb-slider.style3 .hero-trust-item {
         font-size: 10px;
+    }
+}
+
+/* United Auto homepage hero: consolidated responsive composition */
+.wptb-slider.style3 {
+    position: relative;
+    overflow: hidden;
+}
+
+.wptb-slider.style3 .wptb-slider--item {
+    display: flex;
+    align-items: stretch;
+    isolation: isolate;
+    box-sizing: border-box;
+    min-height: 100vh;
+    margin-top: 0;
+    padding: var(--united-auto-header-offset) 0 0;
+}
+
+.wptb-slider.style3 .wptb-slider--image {
+    inset: 0;
+    background-color: #101820;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: none;
+    transform: none;
+}
+
+.wptb-slider.style3 .hero-background-full {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-color: transparent;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+
+.wptb-slider.style3 .wptb-slider--item::before {
+    background: linear-gradient(90deg, rgba(5, 8, 12, 0.78) 0%, rgba(5, 8, 12, 0.58) 34%, rgba(5, 8, 12, 0.24) 66%, rgba(5, 8, 12, 0.1) 100%);
+}
+
+.wptb-slider.style3 .container {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    min-height: calc(100vh - var(--united-auto-header-offset));
+}
+
+.wptb-slider.style3 .wptb-slider--inner {
+    display: block;
+    min-height: 0;
+}
+
+.wptb-slider.style3 .hero-content-column {
+    width: min(100%, 600px);
+    padding: 0;
+}
+
+.wptb-slider.style3 .wptb-heading .wptb-item--inner {
+    max-width: 600px;
+    padding: 0;
+}
+
+.wptb-slider.style3 .wptb-heading .wptb-item--title {
+    max-width: 620px;
+    font-size: clamp(2.5rem, 4.2vw, 4.5rem);
+    line-height: 1.02;
+    letter-spacing: 0;
+    margin: 0 0 22px;
+    white-space: normal;
+}
+
+.wptb-slider.style3 .hero-description {
+    max-width: 560px;
+    margin: 0 0 30px;
+    font-size: clamp(1rem, 1.25vw, 1.15rem);
+    line-height: 1.65;
+}
+
+.wptb-slider.style3 .hero-cta-row {
+    gap: 14px;
+    margin: 0 0 30px;
+}
+
+.wptb-slider.style3 .hero-cta {
+    min-height: 56px;
+    height: auto;
+    padding: 0 28px;
+}
+
+.wptb-slider.style3 .hero-trust-strip {
+    gap: 14px 24px;
+    max-width: 620px;
+    margin-top: 0;
+}
+
+.wptb-slider.style3 .hero-trust-item {
+    white-space: nowrap;
+}
+
+.wptb-slider.style3 .wptb-image-single {
+    position: absolute;
+    z-index: 4;
+    right: clamp(16px, 3vw, 48px);
+    bottom: clamp(18px, 4vw, 55px);
+    left: auto;
+    width: min(36vw, 560px);
+    min-height: 0;
+    margin: 0;
+    pointer-events: none;
+}
+
+.wptb-slider.style3 .wptb-slider--item .wptb-image-single {
+    left: auto;
+    right: clamp(16px, 3vw, 48px);
+    bottom: clamp(18px, 4vw, 55px);
+}
+
+.wptb-slider.style3 .wptb-image-single .wptb-item--inner,
+.wptb-slider.style3 .wptb-image-single .wptb-item--image {
+    position: relative;
+    width: 100%;
+    min-height: 0;
+    margin: 0;
+}
+
+.wptb-slider.style3 .hero-vehicle {
+    position: relative !important;
+    left: auto !important;
+    bottom: auto !important;
+    display: block;
+    width: 100% !important;
+    height: auto;
+    max-width: 100%;
+    transform: none !important;
+    filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.48));
+}
+
+.wptb-slider.style3 .hero-car-light {
+    display: none;
+}
+
+@media screen and (max-width: 1199.9px) {
+    .wptb-slider.style3 .wptb-slider--item {
+        min-height: 100vh;
+    }
+
+    .wptb-slider.style3 .wptb-image-single {
+        right: 20px;
+        width: min(34vw, 360px);
+    }
+
+    .wptb-slider.style3 .wptb-slider--item .wptb-image-single {
+        right: 20px;
+    }
+}
+
+@media screen and (max-width: 991.9px) {
+    .wptb-slider.style3 .wptb-slider--item {
+        min-height: 100vh;
+    }
+
+    .wptb-slider.style3 .hero-content-column {
+        width: min(100%, 430px);
+    }
+
+    .wptb-slider.style3 .wptb-slider--item::before {
+        background: linear-gradient(90deg, rgba(5, 8, 12, 0.82) 0%, rgba(5, 8, 12, 0.62) 58%, rgba(5, 8, 12, 0.3) 100%);
+    }
+
+    .wptb-slider.style3 .wptb-image-single {
+        right: 0;
+        width: min(38vw, 300px);
+        opacity: 0.82;
+    }
+
+    .wptb-slider.style3 .wptb-slider--item .wptb-image-single {
+        right: 0;
+    }
+}
+
+@media screen and (max-width: 767.9px) {
+    .wptb-slider.style3 .wptb-slider--item {
+        min-height: 100vh;
+    }
+
+    .wptb-slider.style3 .container {
+        min-height: calc(100vh - var(--united-auto-header-offset));
+        align-items: flex-start;
+    }
+
+    .wptb-slider.style3 .hero-content-column {
+        width: 100%;
+        padding: 72px 0 210px;
+    }
+
+    .wptb-slider.style3 .wptb-heading .wptb-item--title {
+        font-size: clamp(2.35rem, 11vw, 3.8rem);
+    }
+
+    .wptb-slider.style3 .hero-cta-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .wptb-slider.style3 .hero-cta {
+        width: 100%;
+    }
+
+    .wptb-slider.style3 .hero-trust-strip {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .wptb-slider.style3 .hero-trust-item {
+        white-space: normal;
+        font-size: 0.84rem;
+    }
+
+    .wptb-slider.style3 .wptb-image-single {
+        display: block;
+        right: 50%;
+        bottom: 15px;
+        width: min(82vw, 390px);
+        transform: translateX(50%);
+        opacity: 0.5;
+        z-index: 1;
+    }
+
+    .wptb-slider.style3 .wptb-slider--item .wptb-image-single {
+        display: block;
+        right: 50%;
+        left: auto;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .wptb-slider.style3 .container {
+        min-height: calc(100vh - var(--united-auto-header-offset));
+    }
+
+    .wptb-slider.style3 .hero-content-column {
+        padding-top: 60px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .wptb-slider.style3 .hero-content-column {
+        transform: translate(-40px, -50px);
+    }
+
+    .wptb-slider.style3 .wptb-heading .wptb-item--title {
+        font-size: clamp(2.35rem, 3.8vw, 4.1rem);
+    }
+
+    .wptb-slider.style3 .wptb-slider--item .wptb-image-single {
+        right: calc(clamp(16px, 3vw, 48px) + 180px);
+        bottom: -40px;
     }
 }
 
@@ -1964,6 +2238,262 @@ body {
 
 .wptb-image-box1 .service-card-link:hover {
     color: var(--color-one);
+}
+
+/* United Auto services showcase */
+.united-services {
+    position: relative;
+    overflow: hidden;
+    padding: 112px 0 84px;
+    background: #fff;
+    color: #121722;
+}
+
+.united-services-heading {
+    max-width: 600px;
+    margin: 0 auto 46px;
+    text-align: center;
+}
+
+.united-services-eyebrow {
+    margin: 0 0 18px;
+    color: var(--color-one);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.united-services-eyebrow::before,
+.united-services-eyebrow::after {
+    display: inline-block;
+    width: 30px;
+    height: 1px;
+    margin: 0 12px 4px;
+    background: var(--color-one);
+    content: "";
+}
+
+.united-services-heading h2 {
+    margin: 0;
+    color: #111722;
+    font-family: var(--font-family-heading);
+    font-size: clamp(2.6rem, 4.2vw, 4rem);
+    line-height: 1.05;
+}
+
+.united-services-rule {
+    display: block;
+    width: 42px;
+    height: 2px;
+    margin: 18px auto 14px;
+    background: var(--color-one);
+}
+
+.united-services-intro {
+    max-width: 380px;
+    margin: 0 auto;
+    color: #677080;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.united-services-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 360px) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(24px, 4vw, 70px);
+}
+
+.united-services-column {
+    display: grid;
+    gap: 12px;
+}
+
+.united-services-column-right {
+    grid-column: 3;
+}
+
+.united-service-card {
+    display: flex;
+    min-height: 112px;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 20px 18px 16px;
+    border: 1px solid #e4e7eb;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .88);
+    color: inherit;
+    text-decoration: none;
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.united-service-card:hover {
+    border-color: rgba(215, 0, 6, .35);
+    box-shadow: 0 12px 28px rgba(18, 23, 34, .08);
+    color: inherit;
+    transform: translateY(-2px);
+}
+
+.united-service-icon {
+    display: grid;
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(215, 0, 6, .08);
+    color: var(--color-one);
+    font-size: 27px;
+}
+
+.united-service-copy {
+    display: grid;
+    min-width: 0;
+    gap: 6px;
+}
+
+.united-service-copy strong {
+    color: #151a24;
+    font-size: 15px;
+    line-height: 1.25;
+}
+
+.united-service-copy span {
+    display: -webkit-box;
+    overflow: hidden;
+    color: #68707d;
+    font-size: 12px;
+    line-height: 1.5;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.united-service-arrow {
+    margin-left: auto;
+    color: var(--color-one);
+    font-size: 20px;
+}
+
+.united-services-center {
+    position: relative;
+    display: grid;
+    min-height: 450px;
+    place-items: end center;
+}
+
+.united-services-center img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: min(100%, 360px);
+    height: auto;
+    object-fit: contain;
+}
+
+.united-services-dots {
+    position: absolute;
+    top: 12%;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background-image: radial-gradient(#e3e6ea 1.4px, transparent 1.4px);
+    background-size: 11px 11px;
+    opacity: .65;
+}
+
+.united-services-footer {
+    display: flex;
+    max-width: 780px;
+    justify-content: center;
+    gap: 34px;
+    margin: 26px auto 0;
+    padding: 17px 22px;
+    border: 1px solid #e4e7eb;
+    border-radius: 12px;
+    color: #68707d;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.united-services-footer span + span {
+    padding-left: 34px;
+    border-left: 1px solid #e4e7eb;
+}
+
+.united-services-footer i,
+.united-services-footer a {
+    color: var(--color-one);
+}
+
+.united-services-footer a {
+    font-weight: 700;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 991.9px) {
+    .united-services {
+        padding: 84px 0 64px;
+    }
+
+    .united-services-layout {
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+    }
+
+    .united-services-center {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        min-height: 420px;
+    }
+
+    .united-services-column-right {
+        grid-column: 1;
+    }
+}
+
+@media screen and (max-width: 767.9px) {
+    .united-services {
+        padding: 70px 0 48px;
+    }
+
+    .united-services-heading {
+        margin-bottom: 30px;
+    }
+
+    .united-services-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .united-services-center {
+        order: -1;
+        min-height: 250px;
+    }
+
+    .united-services-center img {
+        width: min(70vw, 300px);
+    }
+
+    .united-services-column,
+    .united-services-column-right {
+        width: 100%;
+    }
+
+    .united-service-card {
+        min-height: 96px;
+    }
+
+    .united-services-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .united-services-footer span + span {
+        padding: 10px 0 0;
+        border-top: 1px solid #e4e7eb;
+        border-left: 0;
+    }
 }
 
 

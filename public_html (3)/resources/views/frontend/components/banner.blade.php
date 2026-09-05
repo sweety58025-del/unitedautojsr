@@ -12,6 +12,7 @@
 <section class="wptb-slider style3 pt-0">
     <div class="wptb-slider--item">
         <div class="wptb-slider--image" style="background-image: url('{{ asset($banner_image) }}');"></div>
+        <div class="hero-background-full" style="background-image: url('{{ asset($banner_image) }}');" aria-hidden="true"></div>
         <div class="container">
             <div class="wptb-slider--inner">
                 <div class="hero-content-column">
@@ -37,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div class="wptb-image-single d-none d-md-block">
+        <div class="wptb-image-single">
             <div class="wptb-item--inner">
                 <div class="wptb-item--image">
                     <img src="{{ asset('front/assets/img/slider/car-2.png') }}" alt="United Auto car service vehicle in the workshop" class="hero-vehicle">
