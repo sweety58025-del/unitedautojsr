@@ -10,15 +10,16 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('frontend.index');
-    // return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('about-us', [HomeController::class, 'aboutUs'])->name('about-us');
 Route::get('service-price', [HomeController::class, 'servicePrice'])->name('service-price');
 Route::get('gallery', [HomeController::class, 'gallery'])->name('gallery');
 Route::get('contact-us', [HomeController::class, 'contactUs'])->name('contact-us');
+Route::get('brands', [HomeController::class, 'brands'])->name('brands');
+Route::get('offers', [HomeController::class, 'offers'])->name('offers');
+Route::get('insurance', [HomeController::class, 'insurance'])->name('insurance');
+Route::get('roadside-assistance', [HomeController::class, 'roadsideAssistance'])->name('roadside-assistance');
 
 Route::get('/service/{slug}', [HomeController::class,'serviceDetails'])->name('service.details');
 Route::get('/service-category/{slug}', [HomeController::class,'serviceCategoryDetails'])->name('service-category.details');

@@ -11,9 +11,13 @@ class Service extends Model
         'category_id',
         'sub_category_id',
         'name',
+        'slug',
+        'description',
         'price',
         'unit',
-        'notes'
+        'notes',
+        'status',
+        'sort_order',
     ];
 
     public function category(): BelongsTo

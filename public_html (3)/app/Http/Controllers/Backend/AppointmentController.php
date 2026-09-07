@@ -5,10 +5,20 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Validation\Rule;
 
-class AppointmentController extends Controller
+class AppointmentController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:show-appointment', only: ['index']),
+            new Middleware('permission:edit-appointment', only: ['updateStatus']),
+            new Middleware('permission:delete-appointment', only: ['destroy']),
+        ];
+    }
     public function index()
     {
         $appointments = Appointment::latest()->paginate(20);

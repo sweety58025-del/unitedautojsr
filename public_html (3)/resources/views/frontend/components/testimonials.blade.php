@@ -23,8 +23,8 @@ style="background-image: url('{{ asset('front/assets/img/background/bg-3.jpg') }
             @foreach($testimonials as $testimonial)
                 @php
                     $vehicleOrService = trim((string) ($testimonial->vehicle ?? ''));
-                    if (!empty($testimonial->service)) {
-                        $vehicleOrService .= ($vehicleOrService !== '' ? ' • ' : '') . $testimonial->service;
+                    if (!empty($testimonial->vehicle_brand)) {
+                        $vehicleOrService = $testimonial->vehicle_brand . ($vehicleOrService !== '' ? ' • ' : '') . $vehicleOrService;
                     }
                 @endphp
 
@@ -39,20 +39,18 @@ style="background-image: url('{{ asset('front/assets/img/background/bg-3.jpg') }
 
                             <div class="wptb-item--holder">
                                 <div class="wptb-item--meta-rating">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
+                                    @for($star = 1; $star <= 5; $star++)
+                                        <i class="bi {{ $star <= ($testimonial->rating ?: 5) ? 'bi-star-fill' : 'bi-star' }}"></i>
+                                    @endfor
                                 </div>
 
                                 <div class="testimonial-badge">Verified Customer</div>
 
-                                <p class="wptb-item--description">“{{ $testimonial->feedback }}”</p>
+                                <p class="wptb-item--description">“{{ $testimonial->review }}”</p>
 
                                 <div class="wptb-item--meta">
                                     <div class="wptb-item--meta-left">
-                                        <h4 class="wptb-item--title">{{ $testimonial->username }}</h4>
+                                        <h4 class="wptb-item--title">{{ $testimonial->customer_name }}</h4>
                                         @if($vehicleOrService !== '')
                                             <span class="testimonial-detail">{{ $vehicleOrService }}</span>
                                         @endif

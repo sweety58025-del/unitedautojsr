@@ -40,6 +40,21 @@ class PermissionSeeder extends Seeder
             'Add User',
             'Edit User',
             'Delete User',
+            'show-brand',
+            'add-brand',
+            'edit-brand',
+            'delete-brand',
+            'show-gallery',
+            'add-gallery',
+            'edit-gallery',
+            'delete-gallery',
+            'show-testimonial',
+            'add-testimonial',
+            'edit-testimonial',
+            'delete-testimonial',
+            'show-appointment',
+            'edit-appointment',
+            'delete-appointment',
         ];
 
         if (\Schema::hasTable('permissions')) {

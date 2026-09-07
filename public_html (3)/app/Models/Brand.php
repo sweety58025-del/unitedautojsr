@@ -9,7 +9,10 @@ class Brand extends Model
 {
     protected $fillable = [
         'name',
-        'image'
+        'slug',
+        'image',
+        'sort_order',
+        'status',
     ];
 
     public static function allBrands()
@@ -18,6 +21,10 @@ class Brand extends Model
             return collect();
         }
 
-        return static::query()->get();
+        return static::query()
+            ->where('status', 'yes')
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
     }
 }

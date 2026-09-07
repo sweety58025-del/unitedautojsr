@@ -7,19 +7,23 @@ class BrandSeeder extends Seeder
 {
     public function run(): void
     {
-        Brand::truncate();
-            $brands = [
-                'Toyota', 'Hyundai', 'Suzuki', 'Tata', 'Mahindra', 'Ford',
-                'Volkswagen', 'Kia', 'Renault', 'Chevrolet', 'Fiat', 'Mitsubishi',
-                'Jeep', 'Mini', 'Land Rover', 'Jaguar', 'Volvo', 'BMW', 'Audi',
-                'Mercedes-Benz', 'Eicher', 'Force', 'BharatBenz',
-            ];
-            foreach ($brands as $name) {
+        $brands = [
+            'Maruti', 'Hyundai', 'Tata Motors', 'Mahindra', 'Toyota', 'Ford',
+            'Fiat', 'Jeep', 'Chevrolet', 'Honda', 'Skoda', 'Volkswagen',
+            'Renault', 'Mercedes-Benz', 'Audi', 'BMW', 'Mitsubishi',
+        ];
+
+        foreach ($brands as $sortOrder => $name) {
                 $slug = strtolower(str_replace(' ', '-', $name));
-            Brand::create([
-                'name' => $name,
+            Brand::updateOrCreate(
+                ['slug' => $slug],
+                [
+                    'name' => $name,
                     'image' => "images/logo-brands/{$slug}.png",
-            ]);
+                    'sort_order' => $sortOrder,
+                    'status' => 'yes',
+                ]
+            );
         }
     }
 }

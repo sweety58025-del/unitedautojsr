@@ -5,6 +5,7 @@
 @section('content')
 
 @include('frontend.partials.breadcumbs')
+@include('frontend.components.project-gallery')
 <style>
     .wptb-gallery-section {
         padding: 80px 0;

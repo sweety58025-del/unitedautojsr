@@ -1,53 +1,5 @@
 @php
-    use App\Models\Gallery;
-    use Illuminate\Support\Str;
-
-    $galleryItems = Gallery::allGalleries();
-
-    // Group items into: paired before/after "transformations", in-progress
-    // "process" shots, and everything else ("achievements" — camps, events).
-    $before = [];
-    $after = [];
-    $process = collect();
-    $achievements = collect();
-
-    foreach ($galleryItems as $item) {
-        $lower = strtolower($item->name);
-
-        if (Str::startsWith($lower, 'before')) {
-            $key = trim(Str::after($lower, 'before'), " -\t\n\r\0\x0B");
-            $before[$key] = $item;
-        } elseif (Str::startsWith($lower, 'after')) {
-            $key = trim(Str::after($lower, 'after'), " -\t\n\r\0\x0B");
-            $after[$key] = $item;
-        } elseif (Str::contains($lower, ['progress', 'during'])) {
-            $process->push($item);
-        } else {
-            $achievements->push($item);
-        }
-    }
-
-    // Believable, specific repair descriptions — cycled across the pairs
-    // rather than a generic "Restoration #N" label.
-    $repairLabels = [
-        'Collision repair & repaint',
-        'Panel beating & fender rebuild',
-        'Door & side panel restoration',
-        'Bumper rebuild & full respray',
-    ];
-
-    $transformations = collect();
-    $i = 0;
-    foreach ($before as $key => $beforeItem) {
-        if (isset($after[$key])) {
-            $transformations->push([
-                'before' => $beforeItem,
-                'after' => $after[$key],
-                'label' => $repairLabels[$i % count($repairLabels)],
-            ]);
-            $i++;
-        }
-    }
+    $repairProjects = $repairProjects ?? collect();
 @endphp
 
 <section class="section work-section" id="our-work">
@@ -64,14 +16,11 @@
 
         <div class="work-tabs gallery-filter-container" role="toolbar" aria-label="Our work filters" aria-controls="galleryGrid">
             <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All work</button>
-            @if($transformations->isNotEmpty())
+            @if($repairProjects->isNotEmpty())
                 <button class="filter-btn" type="button" data-filter="transformation" aria-pressed="false">Before &amp; after</button>
             @endif
-            @if($process->isNotEmpty())
+            @if($repairProjects->contains(fn ($project) => $project->images->where('stage', 'during')->isNotEmpty()))
                 <button class="filter-btn" type="button" data-filter="process" aria-pressed="false">In the workshop</button>
-            @endif
-            @if($achievements->isNotEmpty())
-                <button class="filter-btn" type="button" data-filter="achievement" aria-pressed="false">Community</button>
             @endif
             <span class="work-tabs-indicator" aria-hidden="true"></span>
         </div>
@@ -79,52 +28,55 @@
         <div id="galleryGrid" class="work-grid" aria-live="polite">
 
             {{-- Before / After interactive compare cards --}}
-            @foreach($transformations as $index => $pair)
-                <div class="gallery-item compare-card {{ $index === 0 ? 'featured' : '' }}" data-category="transformation">
+            @forelse($repairProjects as $index => $project)
+                @php
+                    $before = $project->images->where('stage', 'before')->values();
+                    $during = $project->images->where('stage', 'during')->values();
+                    $after = $project->images->where('stage', 'after')->values();
+                    $beforeImage = $before->first();
+                    $afterImage = $after->first();
+                @endphp
+                <article class="gallery-item compare-card {{ $index === 0 ? 'featured' : '' }}" data-category="transformation">
+                    <h3 class="compare-caption">{{ $project->title }}</h3>
+                    @if($beforeImage && $afterImage)
                     <div class="compare-frame">
-                        <img class="compare-img" src="{{ asset($pair['before']->image) }}" alt="{{ $pair['before']->name }}" loading="lazy">
+                        <img class="compare-img" src="{{ asset($beforeImage->image) }}" alt="{{ $beforeImage->caption ?: $project->title . ' before repair' }}" loading="lazy">
                         <div class="compare-after-wrap">
-                            <img class="compare-img" src="{{ asset($pair['after']->image) }}" alt="{{ $pair['after']->name }}" loading="lazy">
+                            <img class="compare-img" src="{{ asset($afterImage->image) }}" alt="{{ $afterImage->caption ?: $project->title . ' after repair' }}" loading="lazy">
                         </div>
                         <div class="compare-divider"></div>
-                        <input type="range" class="compare-range" min="0" max="100" value="50" aria-label="Drag to reveal the before and after photo for {{ $pair['label'] }}">
+                        <input type="range" class="compare-range" min="0" max="100" value="50" aria-label="Drag to reveal the before and after photo for {{ $project->title }}">
                         <span class="compare-tag compare-tag-before">Before</span>
                         <span class="compare-tag compare-tag-after">After</span>
                         <span class="frame-tick frame-tick-tl" aria-hidden="true"></span>
                         <span class="frame-tick frame-tick-tr" aria-hidden="true"></span>
                         <span class="frame-tick frame-tick-bl" aria-hidden="true"></span>
                         <span class="frame-tick frame-tick-br" aria-hidden="true"></span>
-                        <a class="compare-expand" href="{{ asset($pair['after']->image) }}" data-fancybox="united-auto-gallery" data-caption="{{ $pair['after']->name }}" aria-label="View full-size photo">
+                        <a class="compare-expand" href="{{ asset($afterImage->image) }}" data-fancybox="united-auto-gallery" data-caption="{{ $afterImage->caption ?: $project->title }}" aria-label="View full-size photo">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 3H3V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 3H21V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21H3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 21H21V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </a>
                     </div>
-                    <p class="compare-caption">{{ $pair['label'] }}</p>
+                    @else
+                        <div class="process-caption">Project images are being prepared.</div>
+                    @endif
+                    @if($during->isNotEmpty())
+                        <div class="project-progress-gallery">
+                            @foreach($during as $image)
+                                <a class="process-frame" href="{{ asset($image->image) }}" data-fancybox="project-{{ $project->id }}" data-caption="{{ $image->caption ?: $project->title . ' during repair' }}">
+                                    <img src="{{ asset($image->image) }}" alt="{{ $image->caption ?: $project->title . ' during repair' }}" loading="lazy">
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
+                    @if($project->vehicle_name || $project->description)
+                        <p class="process-caption">{{ trim($project->vehicle_name . ($project->description ? ' - ' . $project->description : '')) }}</p>
+                    @endif
+                </article>
+            @empty
+                <div class="col-12">
+                    <p class="process-caption">Repair projects will appear here as soon as project images are added.</p>
                 </div>
-            @endforeach
-
-            {{-- In-progress / workshop process shots --}}
-            @foreach($process as $item)
-                <div class="gallery-item process-card" data-category="process">
-                    <a class="process-frame" href="{{ asset($item->image) }}" data-fancybox="united-auto-gallery" data-caption="{{ $item->name }}">
-                        <img src="{{ asset($item->image) }}" alt="{{ $item->name }}" loading="lazy">
-                    </a>
-                    <p class="process-caption">Workshop &mdash; repair in progress</p>
-                </div>
-            @endforeach
-
-            {{-- Achievements / community events --}}
-            @foreach($achievements as $item)
-                <div class="gallery-item achievement-card" data-category="achievement">
-                    <a class="achievement-photo" href="{{ asset($item->image) }}" data-fancybox="united-auto-gallery" data-caption="{{ $item->name }}">
-                        <img src="{{ asset($item->image) }}" alt="{{ $item->name }}" loading="lazy">
-                    </a>
-                    <div class="achievement-stub" aria-hidden="true"></div>
-                    <div class="achievement-body">
-                        <p class="achievement-eyebrow">United Auto community event</p>
-                        <h4>{{ $item->name }}</h4>
-                    </div>
-                </div>
-            @endforeach
+            @endforelse
 
         </div>
     </div>

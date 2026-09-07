@@ -14,7 +14,11 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        $services = Service::with('category')->orderBy('name')->get();
+        $services = Service::with('category')
+            ->where('status', 'yes')
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
 
         return view('frontend.pages.book-appointment', [
             'services' => $services,

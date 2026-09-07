@@ -2,8 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Category;
-use App\Models\CompanySetting;
+use App\View\Composers\FrontendLayoutComposer;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
@@ -74,43 +73,10 @@ class AppServiceProvider extends ServiceProvider
             return null;
         });
 
-        try {
-            if (\DB::connection()->getDatabaseName()) {
-                view()->share(
-                    'categories',
-                    Category::with('subcategories')
-                        ->where('status', 'yes')
-                        ->get()
-                );
-                
-                // Share company settings
-                $companySetting = CompanySetting::firstRecord();
-                view()->share([
-                    'favicon_icon' => $companySetting->favicon_icon ?? 'favicon.png',
-                    'company_logo' => $companySetting->logo ?? 'logo.png',
-                    'company_name' => $companySetting->company_name ?? 'United Auto',
-                    'company_phone' => $companySetting->phone ?? '',
-                    'company_email' => $companySetting->email ?? '',
-                    'company_address' => $companySetting->address ?? '',
-                    'company_city' => $companySetting->city ?? '',
-                    'company_state' => $companySetting->state ?? '',
-                    'company_pincode' => $companySetting->pincode ?? '',
-                ]);
-            }
-        } catch (\Exception $e) {
-            // Database not yet migrated, set defaults
-            view()->share([
-                'favicon_icon' => 'favicon.png',
-                'company_logo' => 'logo.png',
-                'company_name' => 'United Auto',
-                'company_phone' => '',
-                'company_email' => '',
-                'company_address' => '',
-                'categories' => collect(),
-                'company_city' => '',
-                'company_state' => '',
-                'company_pincode' => '',
-            ]);
-        }
+        view()->composer([
+            'frontend.partials.master',
+            'frontend.partials.header',
+            'frontend.partials.footer',
+        ], FrontendLayoutComposer::class);
     }
 }

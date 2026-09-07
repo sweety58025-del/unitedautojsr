@@ -58,8 +58,19 @@
                     </h2>
 
                     <p class="service-description">
-                        {!! $service->description !!}
+                        {!! nl2br(e($service->description ?: 'Professional vehicle care from the United Auto workshop team.')) !!}
                     </p>
+
+                    @if($service->services->isNotEmpty())
+                        <div class="service-description mt-4">
+                            <h3>Services in this category</h3>
+                            <ul>
+                                @foreach($service->services as $item)
+                                    <li>{{ $item->name }}@if($item->description) - {{ $item->description }}@endif</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
                 </div>
 

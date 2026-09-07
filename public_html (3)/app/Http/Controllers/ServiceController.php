@@ -8,6 +8,7 @@ use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Str;
 
 class ServiceController extends Controller implements HasMiddleware
 {
@@ -49,8 +50,10 @@ class ServiceController extends Controller implements HasMiddleware
             'category_id' => 'required|exists:categories,id',
             'subcategory_id' => 'nullable',
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'price' => 'required|numeric|min:1',
             'notes' => 'nullable|string|max:500',
+            'status' => 'sometimes|in:yes,no',
         ]);
 
         try {
@@ -60,8 +63,11 @@ class ServiceController extends Controller implements HasMiddleware
                 'category_id' => $validated['category_id'],
                 'sub_category_id' => $validated['subcategory_id'] ?? null,
                 'name' => $validated['name'],
+                'slug' => Str::slug($validated['name']),
+                'description' => $validated['description'] ?? null,
                 'price' => $validated['price'],
                 'notes' => $validated['notes'] ?? null,
+                'status' => $validated['status'] ?? 'yes',
             ]);
 
             return redirect()
@@ -106,8 +112,10 @@ class ServiceController extends Controller implements HasMiddleware
             'category_id' => 'required|exists:categories,id',
             'subcategory_id' => 'nullable',
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'price' => 'required|numeric|min:1',
             'notes' => 'nullable|string|max:500',
+            'status' => 'sometimes|in:yes,no',
         ]);
 
         try {
@@ -115,8 +123,11 @@ class ServiceController extends Controller implements HasMiddleware
                 'category_id' => $validated['category_id'],
                 'sub_category_id' => $validated['subcategory_id'] ?? null,
                 'name' => $validated['name'],
+                'slug' => Str::slug($validated['name']),
+                'description' => $validated['description'] ?? null,
                 'price' => $validated['price'],
                 'notes' => $validated['notes'] ?? null,
+                'status' => $validated['status'] ?? $service->status,
             ]);
 
             return redirect()

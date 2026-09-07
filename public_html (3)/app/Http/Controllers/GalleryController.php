@@ -3,10 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Models\Gallery;
 
-class GalleryController extends Controller
+class GalleryController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:show-gallery', only: ['index']),
+            new Middleware('permission:add-gallery', only: ['store']),
+            new Middleware('permission:edit-gallery', only: ['edit', 'update']),
+            new Middleware('permission:delete-gallery', only: ['destroy']),
+        ];
+    }
 
     public function index()
     {

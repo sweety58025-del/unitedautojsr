@@ -68,6 +68,16 @@
                 <div class="header_right_part d-flex align-items-center">
                     <div class="mainnav d-none d-xl-block">
                         <ul class="main-menu">
+                            <li class="menu-item menu-item-has-children">
+                                <a href="{{ route('brands') }}">Brands We Service</a>
+                                <ul class="sub-menu">
+                                    @forelse($brands as $brand)
+                                        <li class="menu-item"><a href="{{ route('brands') }}#{{ $brand->slug }}">{{ $brand->name }}</a></li>
+                                    @empty
+                                        <li class="menu-item"><a href="{{ route('brands') }}">View supported brands</a></li>
+                                    @endforelse
+                                </ul>
+                            </li>
                             <li class="menu-item"><a href="{{ url('/') }}">Home</a></li>
                             <li class="menu-item"><a href="{{ route('about-us') }}">About</a></li>
 
@@ -98,6 +108,8 @@
                             </li>
 
                             <li class="menu-item"><a href="{{ route('service-price') }}">Pricing</a></li>
+                            <li class="menu-item"><a href="{{ route('offers') }}">Offers</a></li>
+                            <li class="menu-item"><a href="{{ route('insurance') }}">Insurance</a></li>
                             <li class="menu-item"><a href="{{ route('gallery') }}">Gallery</a></li>
                             <li class="menu-item"><a href="{{ route('contact-us') }}">Contact</a></li>
                             <li class="menu-item header-book-cta">
@@ -148,6 +160,16 @@
 
     <nav class="mr_navmenu" aria-label="Mobile navigation">
         <ul class="main-menu">
+            <li class="menu-item menu-item-has-children">
+                <a href="{{ route('brands') }}" aria-expanded="false">Brands We Service</a>
+                <ul class="sub-menu">
+                    @forelse($brands as $brand)
+                        <li class="menu-item"><a href="{{ route('brands') }}#{{ $brand->slug }}">{{ $brand->name }}</a></li>
+                    @empty
+                        <li class="menu-item"><a href="{{ route('brands') }}">View supported brands</a></li>
+                    @endforelse
+                </ul>
+            </li>
             <li class="menu-item"><a href="{{ url('/') }}">Home</a></li>
             <li class="menu-item"><a href="{{ route('about-us') }}">About</a></li>
 
@@ -170,6 +192,8 @@
             </li>
 
             <li class="menu-item"><a href="{{ route('service-price') }}">Pricing</a></li>
+            <li class="menu-item"><a href="{{ route('offers') }}">Offers</a></li>
+            <li class="menu-item"><a href="{{ route('insurance') }}">Insurance</a></li>
             <li class="menu-item"><a href="{{ route('gallery') }}">Gallery</a></li>
             <li class="menu-item"><a href="{{ route('contact-us') }}">Contact</a></li>
             <li class="menu-item mobile-book-item"><a href="{{ route('book-appointment') }}" class="mobile-book-button">Book Appointment</a></li>

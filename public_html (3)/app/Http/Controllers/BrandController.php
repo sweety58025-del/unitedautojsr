@@ -3,10 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Str;
 use App\Models\Brand;
 
-class BrandController extends Controller
+class BrandController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:show-brand', only: ['index']),
+            new Middleware('permission:add-brand', only: ['store']),
+            new Middleware('permission:edit-brand', only: ['edit', 'update']),
+            new Middleware('permission:delete-brand', only: ['destroy']),
+        ];
+    }
 
     public function index()
     {
@@ -36,6 +48,7 @@ class BrandController extends Controller
 
         Brand::create([
             'name' => $request->name,
+            'slug' => Str::slug($request->name),
             'image' => $imagePath
         ]);
 
@@ -75,6 +88,7 @@ class BrandController extends Controller
 
         $brand->update([
             'name' => $request->name,
+            'slug' => Str::slug($request->name),
             'image' => $imagePath
         ]);
 
