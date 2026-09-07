@@ -24,7 +24,8 @@
                 </div>
             </div>
             <div class="col-md-7">
-                <form class="wptb-form ps-md-5" action="contact.php" method="post">
+                <form class="wptb-form ps-md-5" action="{{ route('contact-us.store') }}" method="post">
+                    @csrf
                     <div class="wptb-form--inner">
                         <div class="row">
                             <div class="col-lg-6 col-md-12 mb-4">

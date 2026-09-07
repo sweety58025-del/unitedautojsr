@@ -93,6 +93,9 @@
                                 <a href="{{ route('gallery.index') }}" class="tp-link">Gallery Images</a>
                             </li>
                             <li>
+                                <a href="{{ route('repair-projects.index') }}" class="tp-link">Repair Projects</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('testimonial.index') }}" class="tp-link">Testimonials</a>
                             </li>
                             <li>

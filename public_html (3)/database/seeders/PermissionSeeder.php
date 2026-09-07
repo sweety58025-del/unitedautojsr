@@ -55,6 +55,10 @@ class PermissionSeeder extends Seeder
             'show-appointment',
             'edit-appointment',
             'delete-appointment',
+            'show-repair-project',
+            'add-repair-project',
+            'edit-repair-project',
+            'delete-repair-project',
         ];
 
         if (\Schema::hasTable('permissions')) {

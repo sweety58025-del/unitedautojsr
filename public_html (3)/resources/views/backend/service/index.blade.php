@@ -66,14 +66,16 @@
                         <div class="form-group col-12 mb-3">
                             <label class="form-label">Description</label>
                             
-                            <textarea class="form-control ckeditor" name="notes" rows="5">{{ old('notes') }}</textarea>
+                            <textarea class="form-control ckeditor" name="description" rows="5">{{ old('description') }}</textarea>
 
                             <span class="text-danger">
-                                @error('notes')
+                                @error('description')
                                     {{ $message }}
                                 @enderror
                             </span>
                         </div>
+                        <div class="form-group col-6 mb-3"><label class="form-label">Status</label><select class="form-control" name="status"><option value="yes">Active</option><option value="no">Inactive</option></select></div>
+                        <div class="form-group col-6 mb-3"><label class="form-label">Sort order</label><input class="form-control" type="number" min="0" name="sort_order" value="{{ old('sort_order', 0) }}"></div>
                     </div>
                     <div class="card-footer text-end py-2">
                         <button class="btn btn-primary" type="submit">Submit</button>
@@ -112,7 +114,7 @@
                                     <td>{{ $service->subcategory->name ?? '-' }}</td>
                                     <td>{{ $service->name }}</td>
                                     <td>{{ $service->price }}</td>
-                                    <td>{!! $service->notes ?? '-' !!}</td>
+                                    <td>{{ $service->description ?: $service->notes ?: '-' }}</td>
                                     @canany(['edit-service','delete-service'])
                                     <td>
                                         <a href="{{ route('services.edit', $service->id) }}" 

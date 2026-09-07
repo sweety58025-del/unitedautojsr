@@ -45,6 +45,8 @@ value="{{ old('name', $editBrand->name ?? '') }}">
 
 </div>
 
+<div class="row"><div class="col-6 mb-3"><label>Sort order</label><input type="number" min="0" name="sort_order" class="form-control" value="{{ old('sort_order', $editBrand->sort_order ?? 0) }}"></div><div class="col-6 mb-3"><label>Status</label><select name="status" class="form-control"><option value="yes" @selected(old('status', $editBrand->status ?? 'yes') === 'yes')>Active</option><option value="no" @selected(old('status', $editBrand->status ?? '') === 'no')>Inactive</option></select></div></div>
+
 <button class="btn btn-success">
 {{ isset($editBrand) ? 'Update' : 'Save' }}
 </button>
@@ -102,7 +104,7 @@ value="{{ old('name', $editBrand->name ?? '') }}">
 @endif
 </td>
 
-<td>{{ $brand->name }}</td>
+<td>{{ $brand->name }}<br><small>{{ $brand->status === 'yes' ? 'Active' : 'Inactive' }} / order {{ $brand->sort_order }}</small></td>
 
 <td>
 

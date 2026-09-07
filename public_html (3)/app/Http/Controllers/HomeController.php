@@ -50,11 +50,11 @@ class HomeController extends Controller
     public function brands()
     {
         return view('frontend.pages.brands', [
-            'brands' => Brand::query()
+            'brands' => Schema::hasTable('brands') ? Brand::query()
                 ->where('status', 'yes')
                 ->orderBy('sort_order')
                 ->orderBy('name')
-                ->get(),
+                ->get() : collect(),
         ]);
     }
 

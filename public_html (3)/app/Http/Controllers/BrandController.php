@@ -32,15 +32,19 @@ class BrandController extends Controller implements HasMiddleware
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048'
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'sort_order' => 'sometimes|integer|min:0',
+            'status' => 'sometimes|in:yes,no',
         ]);
 
         $imagePath = null;
 
         if ($request->hasFile('image')) {
-
+            if (! is_dir(public_path('front/assets/img/brand'))) {
+                mkdir(public_path('front/assets/img/brand'), 0755, true);
+            }
             $file = $request->file('image');
-            $filename = time().'_'.$file->getClientOriginalName();
+            $filename = Str::uuid()->toString().'.'.$file->extension();
             $file->move(public_path('front/assets/img/brand'), $filename);
 
             $imagePath = 'front/assets/img/brand/'.$filename;
@@ -49,7 +53,9 @@ class BrandController extends Controller implements HasMiddleware
         Brand::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
-            'image' => $imagePath
+            'image' => $imagePath,
+            'sort_order' => $request->input('sort_order', 0),
+            'status' => $request->input('status', 'yes'),
         ]);
 
         return back()->with('success','Brand Added Successfully');
@@ -70,7 +76,9 @@ class BrandController extends Controller implements HasMiddleware
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048'
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'sort_order' => 'sometimes|integer|min:0',
+            'status' => 'sometimes|in:yes,no',
         ]);
 
         $brand = Brand::findOrFail($id);
@@ -78,9 +86,12 @@ class BrandController extends Controller implements HasMiddleware
         $imagePath = $brand->image;
 
         if ($request->hasFile('image')) {
-
+            if (! is_dir(public_path('front/assets/img/brand'))) {
+                mkdir(public_path('front/assets/img/brand'), 0755, true);
+            }
+            $this->deleteImageFile($brand->image);
             $file = $request->file('image');
-            $filename = time().'_'.$file->getClientOriginalName();
+            $filename = Str::uuid()->toString().'.'.$file->extension();
             $file->move(public_path('front/assets/img/brand'), $filename);
 
             $imagePath = 'front/assets/img/brand/'.$filename;
@@ -89,7 +100,9 @@ class BrandController extends Controller implements HasMiddleware
         $brand->update([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
-            'image' => $imagePath
+            'image' => $imagePath,
+            'sort_order' => $request->input('sort_order', $brand->sort_order),
+            'status' => $request->input('status', $brand->status),
         ]);
 
         return redirect()->route('brands.index')
@@ -99,9 +112,23 @@ class BrandController extends Controller implements HasMiddleware
 
     public function destroy($id)
     {
-        Brand::findOrFail($id)->delete();
+        $brand = Brand::findOrFail($id);
+        $this->deleteImageFile($brand->image);
+        $brand->delete();
 
         return back()->with('success','Brand Deleted Successfully');
+    }
+
+    private function deleteImageFile(?string $path): void
+    {
+        if (! $path || ! Str::startsWith($path, 'front/assets/img/brand/')) {
+            return;
+        }
+
+        $fullPath = public_path($path);
+        if (is_file($fullPath)) {
+            unlink($fullPath);
+        }
     }
 
 }

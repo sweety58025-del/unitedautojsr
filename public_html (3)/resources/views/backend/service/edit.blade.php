@@ -72,14 +72,16 @@
                         <div class="form-group col-12 mb-3">
                             <label class="form-label">Description</label>
                             
-                            <textarea class="form-control ckeditor" name="notes" rows="5">{{ old('notes',$service->notes) }}</textarea>
+                            <textarea class="form-control ckeditor" name="description" rows="5">{{ old('description',$service->description ?: $service->notes) }}</textarea>
 
                             <span class="text-danger">
-                                @error('notes')
+                                @error('description')
                                     {{ $message }}
                                 @enderror
                             </span>
                         </div>
+                        <div class="form-group col-6 mb-3"><label class="form-label">Status</label><select class="form-control" name="status"><option value="yes" @selected(old('status', $service->status) === 'yes')>Active</option><option value="no" @selected(old('status', $service->status) === 'no')>Inactive</option></select></div>
+                        <div class="form-group col-6 mb-3"><label class="form-label">Sort order</label><input class="form-control" type="number" min="0" name="sort_order" value="{{ old('sort_order', $service->sort_order ?? 0) }}"></div>
                     </div>
                     <div class="card-footer text-end py-2">
                         <button class="btn btn-primary" type="submit">Submit</button>

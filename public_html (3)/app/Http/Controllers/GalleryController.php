@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Str;
 use App\Models\Gallery;
 
 class GalleryController extends Controller implements HasMiddleware
@@ -34,7 +35,10 @@ class GalleryController extends Controller implements HasMiddleware
         ]);
 
         $file = $request->file('image');
-        $filename = time().'_'.$file->getClientOriginalName();
+        if (! is_dir(public_path('front/assets/img/gallery'))) {
+            mkdir(public_path('front/assets/img/gallery'), 0755, true);
+        }
+        $filename = Str::uuid()->toString().'.'.$file->extension();
         $file->move(public_path('front/assets/img/gallery'), $filename);
 
         $imagePath = 'front/assets/img/gallery/'.$filename;
@@ -70,9 +74,12 @@ class GalleryController extends Controller implements HasMiddleware
         $imagePath = $gallery->image;
 
         if ($request->hasFile('image')) {
-
+            if (! is_dir(public_path('front/assets/img/gallery'))) {
+                mkdir(public_path('front/assets/img/gallery'), 0755, true);
+            }
+            $this->deleteImageFile($gallery->image);
             $file = $request->file('image');
-            $filename = time().'_'.$file->getClientOriginalName();
+            $filename = Str::uuid()->toString().'.'.$file->extension();
             $file->move(public_path('front/assets/img/gallery'), $filename);
 
             $imagePath = 'front/assets/img/gallery/'.$filename;
@@ -90,9 +97,23 @@ class GalleryController extends Controller implements HasMiddleware
 
     public function destroy($id)
     {
-        Gallery::findOrFail($id)->delete();
+        $gallery = Gallery::findOrFail($id);
+        $this->deleteImageFile($gallery->image);
+        $gallery->delete();
 
         return back()->with('success','Gallery Deleted Successfully');
+    }
+
+    private function deleteImageFile(?string $path): void
+    {
+        if (! $path || ! Str::startsWith($path, 'front/assets/img/gallery/')) {
+            return;
+        }
+
+        $fullPath = public_path($path);
+        if (is_file($fullPath)) {
+            unlink($fullPath);
+        }
     }
 
 }

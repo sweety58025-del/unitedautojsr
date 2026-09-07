@@ -116,7 +116,8 @@
                     </div>
 
                     <div class="col-lg-7 col-md-6">
-                        <form class="wptb-form" action="contact.php" method="post">
+                        <form class="wptb-form" action="{{ route('contact-us.store') }}" method="post">
+                            @csrf
                             <div class="wptb-form--inner">        
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 mb-4">

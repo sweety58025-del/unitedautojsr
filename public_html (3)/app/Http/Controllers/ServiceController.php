@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ServiceController extends Controller implements HasMiddleware
 {
@@ -17,7 +18,7 @@ class ServiceController extends Controller implements HasMiddleware
         return [
             new Middleware('permission:show-service', only: ['index']),
             new Middleware('permission:add-service', only: ['store']),
-            new Middleware('permission:edit-service', only: ['edit']),
+            new Middleware('permission:edit-service', only: ['edit', 'update']),
             new Middleware('permission:delete-service', only: ['destroy']),
         ];
     }
@@ -48,12 +49,13 @@ class ServiceController extends Controller implements HasMiddleware
     {
         $validated = $request->validate([
             'category_id' => 'required|exists:categories,id',
-            'subcategory_id' => 'nullable',
+            'subcategory_id' => ['nullable', Rule::exists('sub_categories', 'id')->where('category_id', $request->input('category_id'))],
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:1',
             'notes' => 'nullable|string|max:500',
             'status' => 'sometimes|in:yes,no',
+            'sort_order' => 'sometimes|integer|min:0',
         ]);
 
         try {
@@ -68,6 +70,7 @@ class ServiceController extends Controller implements HasMiddleware
                 'price' => $validated['price'],
                 'notes' => $validated['notes'] ?? null,
                 'status' => $validated['status'] ?? 'yes',
+                'sort_order' => $validated['sort_order'] ?? 0,
             ]);
 
             return redirect()
@@ -110,12 +113,13 @@ class ServiceController extends Controller implements HasMiddleware
         $service = Service::findOrFail($id);
         $validated = $request->validate([
             'category_id' => 'required|exists:categories,id',
-            'subcategory_id' => 'nullable',
+            'subcategory_id' => ['nullable', Rule::exists('sub_categories', 'id')->where('category_id', $request->input('category_id'))],
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:1',
             'notes' => 'nullable|string|max:500',
             'status' => 'sometimes|in:yes,no',
+            'sort_order' => 'sometimes|integer|min:0',
         ]);
 
         try {
@@ -128,6 +132,7 @@ class ServiceController extends Controller implements HasMiddleware
                 'price' => $validated['price'],
                 'notes' => $validated['notes'] ?? null,
                 'status' => $validated['status'] ?? $service->status,
+                'sort_order' => $validated['sort_order'] ?? $service->sort_order,
             ]);
 
             return redirect()

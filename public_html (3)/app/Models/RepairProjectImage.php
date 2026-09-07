@@ -15,6 +15,11 @@ class RepairProjectImage extends Model
         'sort_order',
     ];
 
+    public function getUrlAttribute(): string
+    {
+        return asset($this->image);
+    }
+
     public function project(): BelongsTo
     {
         return $this->belongsTo(RepairProject::class, 'repair_project_id');

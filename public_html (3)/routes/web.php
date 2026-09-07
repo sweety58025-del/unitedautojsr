@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionCategoryController;
@@ -16,6 +17,7 @@ Route::get('about-us', [HomeController::class, 'aboutUs'])->name('about-us');
 Route::get('service-price', [HomeController::class, 'servicePrice'])->name('service-price');
 Route::get('gallery', [HomeController::class, 'gallery'])->name('gallery');
 Route::get('contact-us', [HomeController::class, 'contactUs'])->name('contact-us');
+Route::post('contact-us', [ContactController::class, 'store'])->name('contact-us.store');
 Route::get('brands', [HomeController::class, 'brands'])->name('brands');
 Route::get('offers', [HomeController::class, 'offers'])->name('offers');
 Route::get('insurance', [HomeController::class, 'insurance'])->name('insurance');

@@ -14,6 +14,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServicePriceController;
 use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\RepairProjectController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->prefix('backend')->group(function () {
@@ -52,6 +53,10 @@ Route::middleware(['auth'])->prefix('backend')->group(function () {
 
     Route::resource('service-price', ServicePriceController::class);
 
+    Route::resource('repair-projects', RepairProjectController::class)->except(['show']);
+    Route::delete('repair-project-images/{image}', [RepairProjectController::class, 'destroyImage'])->name('repair-project-images.destroy');
+    Route::patch('repair-project-images/{image}/reorder', [RepairProjectController::class, 'reorderImage'])->name('repair-project-images.reorder');
+
     Route::get('brands',[BrandController::class,'index'])->name('brands.index');
     Route::post('brands/store',[BrandController::class,'store'])->name('brands.store');
     Route::get('brands/edit/{id}',[BrandController::class,'edit'])->name('brands.edit');
@@ -68,7 +73,7 @@ Route::middleware(['auth'])->prefix('backend')->group(function () {
     Route::post('testimonial/store',[TestimonialController::class,'store'])->name('testimonial.store');
     Route::get('testimonial/edit/{id}',[TestimonialController::class,'edit'])->name('testimonial.edit');
     Route::post('testimonial/update/{id}',[TestimonialController::class,'update'])->name('testimonial.update');
-    Route::get('testimonial/delete/{id}',[TestimonialController::class,'destroy'])->name('testimonial.delete');
+    Route::delete('testimonial/delete/{id}',[TestimonialController::class,'destroy'])->name('testimonial.delete');
 
     Route::get('appointments',[AppointmentController::class,'index'])->name('appointment.index');
     Route::post('appointments/{id}/status',[AppointmentController::class,'updateStatus'])->name('appointment.status');

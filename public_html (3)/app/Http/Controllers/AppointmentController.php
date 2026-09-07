@@ -31,11 +31,11 @@ class AppointmentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'service_id'               => ['required', Rule::exists('services', 'id')],
+            'service_id'               => ['required', Rule::exists('services', 'id')->where('status', 'yes')],
             'vehicle_make_model'       => ['required', 'string', 'max:255'],
             'registration_number'      => ['required', 'string', 'max:50'],
             'appointment_date'         => ['required', 'date', 'after_or_equal:today'],
-            'appointment_time'         => ['required', 'string', 'max:20'],
+            'appointment_time'         => ['required', Rule::in(['9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM'])],
             'customer_name'            => ['required', 'string', 'max:255'],
             'customer_email'           => ['nullable', 'email', 'max:255'],
             'customer_phone'           => ['required', 'string', 'max:20'],
@@ -55,7 +55,8 @@ class AppointmentController extends Controller
 
         return redirect()
             ->route('book-appointment.confirmation', $appointment->id)
-            ->with('success', 'Your appointment request has been received.');
+            ->with('success', 'Your appointment request has been received.')
+            ->with('appointment_confirmation_id', $appointment->id);
     }
 
     /**
@@ -63,6 +64,8 @@ class AppointmentController extends Controller
      */
     public function confirmation(Appointment $appointment)
     {
+        abort_unless(session('appointment_confirmation_id') === $appointment->id, 403);
+
         return view('frontend.pages.book-appointment-confirmation', [
             'appointment' => $appointment,
         ]);

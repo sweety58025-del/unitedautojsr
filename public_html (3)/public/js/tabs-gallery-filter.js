@@ -91,8 +91,8 @@ class GalleryFilter {
         });
 
         this.items.forEach((item) => {
-            const itemCategory = item.getAttribute('data-category');
-            const visible = category === 'all' || itemCategory === category;
+            const itemCategory = (item.getAttribute('data-category') || '').split(/\s+/);
+            const visible = category === 'all' || itemCategory.includes(category);
             item.classList.toggle('hidden', !visible);
             item.hidden = !visible;
             item.setAttribute('aria-hidden', visible ? 'false' : 'true');

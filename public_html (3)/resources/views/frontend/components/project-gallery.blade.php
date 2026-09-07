@@ -36,7 +36,7 @@
                     $beforeImage = $before->first();
                     $afterImage = $after->first();
                 @endphp
-                <article class="gallery-item compare-card {{ $index === 0 ? 'featured' : '' }}" data-category="transformation">
+                <article class="gallery-item compare-card {{ $index === 0 ? 'featured' : '' }}" data-category="transformation{{ $during->isNotEmpty() ? ' process' : '' }}">
                     <h3 class="compare-caption">{{ $project->title }}</h3>
                     @if($beforeImage && $afterImage)
                     <div class="compare-frame">
