@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 284 284" role="img" aria-labelledby="title desc">
+  <title id="title">Car polishing icon</title>
+  <desc id="desc">Black car silhouette with shine marks on a light background</desc>
+  <rect x="4" y="14" width="276" height="256" rx="25" fill="#f7f7f7"/>
+  <g fill="#050505">
+    <path d="M48 180h188c5 0 9 4 9 9v17c0 5-4 9-9 9H48c-5 0-9-4-9-9v-17c0-5 4-9 9-9Z"/>
+    <path d="m68 180 18-39c3-7 9-11 17-11h67c8 0 14 4 18 11l18 39z"/>
+    <circle cx="79" cy="216" r="20" fill="#f7f7f7" stroke="#050505" stroke-width="8"/>
+    <circle cx="205" cy="216" r="20" fill="#f7f7f7" stroke="#050505" stroke-width="8"/>
+    <path d="M104 153h56l13 20H94z" fill="#f7f7f7"/>
+    <path d="m65 99 7-19 7 19 19 7-19 7-7 19-7-19-19-7z"/>
+    <path d="m196 77 6-15 6 15 15 6-15 6-6 15-6-15-15-6z"/>
+    <path d="m139 68 5-12 5 12 12 5-12 5-5 12-5-12-12-5z"/>
+  </g>
+</svg>

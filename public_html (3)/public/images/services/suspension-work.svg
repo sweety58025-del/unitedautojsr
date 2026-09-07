@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 284 284" role="img" aria-labelledby="title desc">
+  <title id="title">Suspension work icon</title>
+  <desc id="desc">Black line illustration of a tire and suspension strut on a white background</desc>
+  <rect width="284" height="284" fill="#fff"/>
+  <g fill="none" stroke="#050505" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="56" y="96" width="82" height="147" rx="25" stroke-width="7"/>
+    <path d="M76 101v137M118 101v137M76 112l21 18 21-18M76 139l21 18 21-18M76 166l21 18 21-18M76 193l21 18 21-18M76 220l21 18 21-18" stroke-width="6"/>
+    <path d="M137 198h72c15 0 26-9 26-20s-11-20-26-20h-72M206 158v40" stroke-width="8"/>
+    <circle cx="232" cy="178" r="13" stroke-width="7"/>
+    <circle cx="232" cy="178" r="3" fill="#050505" stroke="none"/>
+    <path d="M171 158V84M155 158h32M158 84h26M162 72h18M165 59h12M168 47h6" stroke-width="7"/>
+    <path d="M160 99h22M160 114h22M160 129h22M160 144h22" stroke-width="5"/>
+    <rect x="163" y="158" width="16" height="27" fill="#fff" stroke-width="7"/>
+    <path d="M160 193h22M163 185h16" stroke-width="7"/>
+  </g>
+</svg>

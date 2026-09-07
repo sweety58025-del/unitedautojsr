@@ -14,7 +14,6 @@
 @include('frontend.components.banner')
 @include('frontend.components.about')
 @include('frontend.components.services')
-@include('frontend.components.offers-discounts')
 @include('frontend.components.transformation-highlights')
 @include('frontend.components.project-gallery')
 @include('frontend.components.faq')

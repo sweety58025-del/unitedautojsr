@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 284 284" role="img" aria-labelledby="title desc">
+  <title id="title">Engine work icon</title>
+  <desc id="desc">Black line illustration of an engine with a warning symbol on a white background</desc>
+  <rect width="284" height="284" fill="#fff"/>
+  <g fill="none" stroke="#050505" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M69 104h18l8-14h94l8 14h18c8 0 14 6 14 14v64c0 8-6 14-14 14h-18l-8 14H95l-8-14H69c-8 0-14-6-14-14v-64c0-8 6-14 14-14Z" stroke-width="7"/>
+    <path d="M42 108c-6 0-10 5-10 11v55c0 6 4 11 10 11s10-5 10-11v-55c0-6-4-11-10-11ZM242 108c-6 0-10 5-10 11v55c0 6 4 11 10 11s10-5 10-11v-55c0-6-4-11-10-11ZM55 128h14M55 165h14M215 128h17M215 165h17" stroke-width="7"/>
+    <path d="M119 90V68h46v22M108 60h68" stroke-width="7"/>
+    <path d="M102 60h76" stroke-width="7"/>
+  </g>
+  <path d="m142 143-42 69c-4 7 1 16 9 16h84c8 0 13-9 9-16l-42-69c-4-7-14-7-18 0Z" fill="#fff" stroke="#050505" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M142 164c0-6 10-6 10 0v31c0 6-10 6-10 0v-31Z" fill="#fff" stroke="#050505" stroke-width="6"/>
+  <circle cx="147" cy="207" r="4" fill="#050505"/>
+  <text x="142" y="255" fill="#050505" font-family="Arial, sans-serif" font-size="18" font-weight="700" text-anchor="middle">ENGINE</text>
+</svg>

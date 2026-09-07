@@ -80,6 +80,11 @@
 }
 
 /* About Company One */
+.wptb-about-company-one {
+    background-position: center -150px;
+    padding-top: 0;
+}
+
 .wptb-about-company-one.pd-more {
     padding-bottom: 165px;
 }

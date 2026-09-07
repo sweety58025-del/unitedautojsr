@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 284 284" role="img" aria-labelledby="title desc">
+  <title id="title">Air conditioning service icon</title>
+  <desc id="desc">Silver air conditioning control dial marked A/C</desc>
+  <defs>
+    <radialGradient id="dial" cx="38%" cy="30%" r="75%">
+      <stop offset="0" stop-color="#595b63"/>
+      <stop offset=".7" stop-color="#1d1e25"/>
+      <stop offset="1" stop-color="#050505"/>
+    </radialGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#fff"/>
+      <stop offset=".45" stop-color="#c9cbd0"/>
+      <stop offset="1" stop-color="#777a80"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="143" cy="148" rx="126" ry="121" fill="#aeb1b5" opacity=".35"/>
+  <ellipse cx="143" cy="142" rx="118" ry="116" fill="url(#rim)" stroke="#8b8e93" stroke-width="3"/>
+  <ellipse cx="137" cy="132" rx="99" ry="98" fill="url(#dial)" stroke="#f2f2f2" stroke-width="7"/>
+  <path d="M82 64a81 81 0 0 1 45-25" fill="none" stroke="#5279ec" stroke-width="7" stroke-dasharray="15 9"/>
+  <path d="M146 38a81 81 0 0 1 47 25" fill="none" stroke="#ef3c43" stroke-width="8" stroke-dasharray="20 8"/>
+  <path d="M211 64c9 14 14 31 14 49" fill="none" stroke="#ef3c43" stroke-width="8"/>
+  <path d="M216 24c8 3 14 8 18 15l-15 10-15-12z" fill="#bd652f" stroke="#85401e" stroke-width="2"/>
+  <text x="139" y="75" fill="#f4f4f4" font-family="Arial, sans-serif" font-size="16" text-anchor="middle">25</text>
+  <text x="66" y="103" fill="#f4f4f4" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">16</text>
+  <text x="207" y="127" fill="#f4f4f4" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">32</text>
+  <text x="135" y="150" fill="#f4f4f4" font-family="Arial, sans-serif" font-size="27" font-style="italic" text-anchor="middle">A/C</text>
+  <rect x="79" y="184" width="27" height="8" rx="4" fill="#e54a2e" transform="rotate(15 79 184)"/>
+</svg>

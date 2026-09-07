@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 284 284" role="img" aria-labelledby="title desc">
+  <title id="title">Throttle body cleaning image</title>
+  <desc id="desc">Illustration of a throttle body component for engine maintenance</desc>
+  <rect x="4" y="14" width="276" height="256" rx="25" fill="#f7f7f7"/>
+  <g fill="none" stroke="#4b5055" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M48 205 68 85l54-35 89 21 25 104-54 35z" fill="#777d80" stroke-width="5"/>
+    <path d="M71 94 122 60l70 15 18 79-42 29-79-14z" fill="#545b5f" stroke-width="4"/>
+    <ellipse cx="145" cy="119" rx="52" ry="45" fill="#9ca2a1" stroke-width="5"/>
+    <ellipse cx="145" cy="119" rx="34" ry="28" fill="#1d2427" stroke-width="4"/>
+    <path d="M115 106 174 131" stroke="#b6bfbd" stroke-width="6"/>
+    <path d="m75 171 18 8M193 177l18-8M87 72l11 14M194 68l-6 15" stroke-width="7"/>
+  </g>
+</svg>

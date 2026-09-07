@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 284 284" role="img" aria-labelledby="title desc">
+  <title id="title">Car washing icon</title>
+  <desc id="desc">Bright red car being cleaned with a pressure washer</desc>
+  <rect x="4" y="14" width="276" height="256" rx="25" fill="#f7f7f7"/>
+  <g fill="none" stroke="#050505" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0 109h89c13 0 22 7 26 19l7 24v48H0" stroke-width="7"/>
+    <path d="M0 157h120M11 112l22 20M45 111l23 13M78 113l20 8M23 151h12M84 151h13" stroke-width="6"/>
+    <path d="M11 192v17M99 192v17" stroke-width="7"/>
+    <circle cx="239" cy="65" r="12" fill="#050505" stroke="none"/>
+    <path d="M241 80v50l-8 58M242 96l-32 28M235 109l-26 14M207 124l-13 9" stroke-width="9"/>
+    <path d="M205 124c-15 2-28 10-39 17M168 141c-8 5-11 13-3 19M160 143c-5 9-4 16 4 21M153 153c-2 9 4 15 11 18" stroke-width="3"/>
+  </g>
+  <path d="M32 284v-95c0-13 10-23 23-23h30v20H59c-2 0-4 2-4 4v94z" fill="#ff9f36"/>
+  <path d="M38 203h18v70H38z" fill="#d4f6fa"/>
+  <path d="M166 153c10-35 31-55 68-55h76v186H159c-15 0-27-12-27-27v-74c0-12 13-24 34-30z" fill="#ed3f45"/>
+  <path d="M202 125c8-18 21-27 43-27h65v23h-59c-15 0-24 7-30 22l-24 63h-16z" fill="#111"/>
+  <path d="M204 132c7-15 18-22 36-22h70v26h-59c-11 0-17 4-21 15l-16 45h-25z" fill="#567d85"/>
+  <path d="M151 192h130v28H151zM154 230h112v20H154z" fill="#c62d35"/>
+  <path d="M161 172h48c8 0 14 6 14 14s-6 14-14 14h-48c-8 0-14-6-14-14s6-14 14-14z" fill="#ed3f45" stroke="#050505" stroke-width="8"/>
+  <path d="M154 239h37v16h-37zM203 239h37v16h-37z" fill="#ff9f36"/>
+  <path d="M177 123h44M238 123h19M178 145h38M229 145h24" stroke="#050505" stroke-width="7" stroke-linecap="round"/>
+  <path d="m110 145 39 27" stroke="#050505" stroke-width="8" stroke-linecap="round"/>
+  <path d="M83 145h28M83 154h28" stroke="#ff9f36" stroke-width="8"/>
+</svg>

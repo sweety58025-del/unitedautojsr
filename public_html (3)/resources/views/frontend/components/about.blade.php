@@ -5,7 +5,7 @@
 @endphp
 <section class="wptb-about-company-one bg-image-2" style="background-image: url('{{ asset('front/assets/img/background/bg-2.png') }}');">
     <div class="container">
-        <div class="row pd-top-140">
+        <div class="row">
             <div class="col-md-6">
                 <!-- Single Image -->
                 <div class="wptb-image-single wow skewIn">
