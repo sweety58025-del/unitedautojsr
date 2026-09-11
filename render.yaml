@@ -11,7 +11,7 @@ services:
   - type: web
     name: unitedautojsr
     runtime: docker
-    rootDir: "public_html (3)"
+    rootDir: "."
     dockerfilePath: ./Dockerfile
     plan: free
     healthCheckPath: /
