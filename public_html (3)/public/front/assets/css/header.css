@@ -21,8 +21,6 @@
   box-shadow: none;
   z-index: 99;
   transition: var(--transition-base);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
 }
 
 .header .header-inner {

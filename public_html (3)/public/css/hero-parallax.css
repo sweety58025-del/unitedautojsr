@@ -13,6 +13,28 @@
     isolation: isolate;
 }
 
+.hero-parallax::before,
+.hero-parallax::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.hero-parallax::before {
+    top: 0;
+    height: 220px;
+    background: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.75) 35%, transparent 100%);
+}
+
+.hero-parallax::after {
+    bottom: 0;
+    height: 200px;
+    background: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.75) 35%, transparent 100%);
+}
+
 .hero-parallax__layer {
     position: absolute;
     inset: 0;
@@ -32,7 +54,7 @@
 
 .hero-parallax__stats {
     position: relative;
-    z-index: 3;
+    z-index: 4;
     padding: 64px 24px 0;
     display: flex;
     flex-wrap: wrap;
@@ -64,7 +86,7 @@
     position: absolute;
     left: 50%;
     bottom: 0;
-    z-index: 2;
+    z-index: 3;
     width: min(1100px, 92vw);
     transform: translate3d(-50%, 0, 0);
     will-change: transform;
