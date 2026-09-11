@@ -1,6 +1,11 @@
 # Render deploys this Laravel app through Docker.
-FROM composer:2 AS vendor
+FROM php:8.4-cli AS vendor
 WORKDIR /app
+RUN apt-get update && apt-get install -y \
+    git unzip libzip-dev \
+    && docker-php-ext-install zip \
+    && rm -rf /var/lib/apt/lists/*
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-scripts --prefer-dist --optimize-autoloader
 
@@ -11,7 +16,7 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM php:8.2-cli AS app
+FROM php:8.4-cli AS app
 WORKDIR /var/www/html
 
 RUN apt-get update && apt-get install -y \
