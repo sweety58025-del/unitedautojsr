@@ -40,3 +40,35 @@
         </div>
     </div>
 </section>
+
+<!-- Parallax Hero: cockpit/tunnel background + floating car + count-up stats -->
+<section class="hero-parallax" aria-label="United Auto highlights">
+    <div class="hero-parallax__layer hero-parallax__tunnel" aria-hidden="true"></div>
+
+    <div class="hero-parallax__stats">
+        <div class="hero-parallax__stat">
+            <div class="hero-parallax__stat-icon"><i class="bi bi-briefcase-fill" aria-hidden="true"></i></div>
+            <div class="hero-parallax__stat-value" data-count="65250">0+</div>
+            <div class="hero-parallax__stat-label">Hours of Works</div>
+        </div>
+        <div class="hero-parallax__stat">
+            <div class="hero-parallax__stat-icon"><i class="bi bi-hand-thumbs-up-fill" aria-hidden="true"></i></div>
+            <div class="hero-parallax__stat-value" data-count="23160">0+</div>
+            <div class="hero-parallax__stat-label">Happy Customers</div>
+        </div>
+        <div class="hero-parallax__stat">
+            <div class="hero-parallax__stat-icon"><i class="bi bi-people-fill" aria-hidden="true"></i></div>
+            <div class="hero-parallax__stat-value" data-count="1500">0+</div>
+            <div class="hero-parallax__stat-label">Experienced Workers</div>
+        </div>
+        <div class="hero-parallax__stat">
+            <div class="hero-parallax__stat-icon"><i class="bi bi-award-fill" aria-hidden="true"></i></div>
+            <div class="hero-parallax__stat-value" data-count="20">0+</div>
+            <div class="hero-parallax__stat-label">Years of Experience</div>
+        </div>
+    </div>
+
+    <div class="hero-parallax__car">
+        <img src="{{ asset('front/assets/img/slider/car-2.png') }}" alt="United Auto - premium car detailing" loading="eager">
+    </div>
+</section>

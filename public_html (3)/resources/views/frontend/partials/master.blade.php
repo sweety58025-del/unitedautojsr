@@ -69,6 +69,7 @@
         <link rel="stylesheet" href="{{ asset('front/assets/css/responsive.css') }}">
         <link rel="stylesheet" href="{{ asset('front/assets/css/light.css') }}">
         <link rel="stylesheet" href="{{ asset('front/assets/css/animation.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/hero-parallax.css') }}">
     </head>
     <body>
 
@@ -111,6 +112,9 @@
 
         <!-- PASS C: Hero Slider -->
         <script src="{{ asset('js/hero-slider.js') }}"></script>
+
+        <!-- Hero Parallax: layered tunnel/car background -->
+        <script src="{{ asset('js/hero-parallax.js') }}"></script>
 
         <!-- PASS D: FAQ Accordion -->
 

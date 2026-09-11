@@ -1,19 +1,24 @@
 .header {
-  --nav-bg: rgba(255, 255, 255, 0.94);
+  --ua-nav-bg: rgba(255, 255, 255, 0.92);
+  --ua-nav-red: #e50909;
+  --ua-nav-border: rgba(20, 20, 20, 0.07);
+  --ua-nav-radius: 16px;
+  --ua-nav-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
+  --nav-bg: var(--ua-nav-bg);
   --nav-text: #171717;
   --nav-muted: #6f7378;
-  --nav-accent: var(--color-one);
-  --nav-border: rgba(20, 20, 20, 0.08);
-  --nav-radius: 16px;
-  --nav-shadow: 0 10px 35px rgba(0, 0, 0, 0.07);
+  --nav-accent: var(--ua-nav-red);
+  --nav-border: var(--ua-nav-border);
+  --nav-radius: var(--ua-nav-radius);
+  --nav-shadow: var(--ua-nav-shadow);
   position: fixed;
   left: 0;
   top: 0;
   right: 0;
   width: 100%;
-  background: var(--nav-bg);
-  border-bottom: 1px solid var(--nav-border);
-  box-shadow: var(--nav-shadow);
+  background: transparent;
+  border-bottom: 0;
+  box-shadow: none;
   z-index: 99;
   transition: var(--transition-base);
   backdrop-filter: blur(16px);
@@ -22,6 +27,17 @@
 
 .header .header-inner {
   transition: var(--transition-base);
+}
+
+.header .header-inner .container-fluid {
+  width: min(calc(100% - 32px), 1440px);
+  margin: 10px auto 0;
+  background: var(--ua-nav-bg);
+  border: 1px solid var(--ua-nav-border);
+  border-radius: var(--ua-nav-radius);
+  box-shadow: var(--ua-nav-shadow);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .header .logo {
@@ -37,7 +53,9 @@
 
 .header .logo a img {
   width: auto;
-  max-height: 62px;
+  max-width: 190px;
+  max-height: 54px;
+  object-fit: contain;
   transition: var(--transition-base);
 }
 
@@ -59,7 +77,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 52px;
+  min-height: 42px;
   gap: 20px;
 }
 
@@ -112,14 +130,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 76px;
+  min-height: 72px;
   gap: 20px;
 }
 
 .header_left_part {
   display: flex;
   align-items: center;
-  min-width: 260px;
+  min-width: 190px;
 }
 
 .header_right_part {
@@ -138,9 +156,9 @@
 .header .mainnav ul.main-menu {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   flex-wrap: nowrap;
-  gap: clamp(16px, 1.6vw, 28px);
+  gap: clamp(12px, 1.25vw, 24px);
   padding: 0;
   margin: 0;
   list-style: none;
@@ -161,20 +179,20 @@
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.2;
   letter-spacing: 0.01em;
   text-decoration: none;
   text-transform: none;
   color: var(--nav-text);
   padding: 10px 0;
-  transition: var(--transition-base);
+  transition: color 0.2s ease;
 }
 
 .header .mainnav ul.main-menu li:hover > a,
 .header .mainnav ul.main-menu li.current > a,
 .header .mainnav ul.main-menu li.active > a {
-  color: var(--color-one);
+  color: var(--ua-nav-red);
 }
 
 .header .mainnav ul.main-menu li.header-book-cta {
@@ -182,11 +200,11 @@
 }
 
 .header .mainnav ul.main-menu li.header-book-cta a.header-book-button {
-  background: var(--color-one);
+  background: var(--ua-nav-red);
   color: var(--color-white);
   border-radius: 11px;
   padding: 12px 18px;
-  border: 1px solid var(--color-one);
+  border: 1px solid var(--ua-nav-red);
   box-shadow: 0 8px 18px rgba(215, 0, 6, 0.18);
   text-transform: none;
   letter-spacing: 0.01em;
@@ -275,8 +293,8 @@
 }
 
 .header .mainnav ul.main-menu li ul ul {
-  left: calc(100% + 15px);
-  top: -15px;
+  left: calc(100% + 8px);
+  top: -12px;
 }
 
 .header .mainnav ul.main-menu li ul ul ul ul {
@@ -286,11 +304,11 @@
 
 @media (max-width: 1399.98px) {
   .header .mainnav ul.main-menu {
-    gap: 18px;
+    gap: 14px;
   }
 
   .header .mainnav ul.main-menu li a {
-    font-size: 13px;
+    font-size: 14px;
   }
 }
 
@@ -312,17 +330,19 @@
 .header .mainnav ul.main-menu > li > a::before {
   content: '';
   position: absolute;
-  left: auto;
-  right: calc(100% + 9px);
-  top: 50%;
-  width: 0px;
-  height: 1px;
-  background-color: var(--color-one);
-  transition: var(--transition-base);
+  left: 0;
+  right: auto;
+  top: auto;
+  bottom: 5px;
+  width: 0;
+  height: 2px;
+  background-color: var(--ua-nav-red);
+  transition: width 0.2s ease;
 }
-.header .mainnav ul.main-menu > li.active > a::before,
-.header .mainnav ul.main-menu > li > a:hover::before {
-  width: 32px;
+.header .mainnav ul.main-menu > li:not(.header-book-cta).active > a::before,
+.header .mainnav ul.main-menu > li:not(.header-book-cta) > a:hover::before,
+.header .mainnav ul.main-menu > li:not(.header-book-cta):focus-within > a::before {
+  width: 100%;
 }
 .header .mainnav ul.main-menu > li.menu-item-has-children > a::after {
   content: "\F282";
@@ -662,6 +682,8 @@ body.mr_menu_active .mobile-menu-backdrop {
   top: 14px;
   right: 14px;
   background: transparent;
+  width: 44px;
+  height: 44px;
   padding: 8px;
   color: var(--nav-text);
   font-size: 20px;
@@ -826,14 +848,14 @@ body.mr_menu_active .mobile-menu-backdrop {
 }
 
 .mobile-book-button {
-  background: var(--color-one);
+  background: var(--ua-nav-red);
   color: var(--color-white);
-  border: 1px solid var(--color-one);
+  border: 1px solid var(--ua-nav-red);
 }
 
 .mobile-phone-cta:hover,
 .mobile-book-button:hover {
-  color: var(--nav-accent);
+  color: var(--color-white);
 }
 
 .mr_menu_social {
@@ -984,6 +1006,12 @@ body.left_menu .mr_menu {
   position: fixed !important;
 }
 
+.header.sticky .header-inner .container-fluid {
+  margin-top: 6px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.09);
+}
+
 .header.sticky .header-top,
 .header.style2.sticky .header-top {
 	max-height: 0px;
@@ -998,7 +1026,7 @@ body.left_menu .mr_menu {
   max-width: 220px;
 }
 .header.sticky .mainnav ul.main-menu > li > a {
-  padding: 20px 0px;
+  padding: 12px 0;
 }
 
 .header.top-up {
@@ -1012,17 +1040,19 @@ body.left_menu .mr_menu {
 @media screen and (max-width: 1366px) {
   .header .header_right_part,
   .header.style2 .header_right_part {
-    padding-left: 50px;
+    padding-left: 0;
   }
   .header .mainnav ul.main-menu > li + li {
-    margin-left: 20px;
-  }
-  .header .mainnav ul.main-menu > li.active > a::before, .header .mainnav ul.main-menu > li > a:hover::before {
-    width: 18px;
+    margin-left: 0;
   }
 }
 
 @media screen and (max-width: 1199.9px) {
+  .header .header-inner .container-fluid {
+    width: calc(100% - 24px);
+    margin-top: 8px;
+  }
+
   .header .logo,
   .header.sticky .logo {
     position: relative;

@@ -1,0 +1,106 @@
+/**
+ * Hero Parallax - layered cockpit/tunnel background with a floating car
+ * that scroll at different speeds, plus count-up stat row.
+ * Pure CSS + transform, GPU-friendly (translate3d), respects reduced-motion.
+ */
+
+.hero-parallax {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: #000;
+    isolation: isolate;
+}
+
+.hero-parallax__layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 130%;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+}
+
+.hero-parallax__tunnel {
+    background-image: url('/front/assets/img/banner/3.webp');
+    z-index: 1;
+}
+
+.hero-parallax__stats {
+    position: relative;
+    z-index: 3;
+    padding: 64px 24px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 56px;
+    text-align: center;
+}
+
+.hero-parallax__stat-icon {
+    font-size: 28px;
+    color: var(--color-primary-red, #e11d2a);
+    margin-bottom: 8px;
+}
+
+.hero-parallax__stat-value {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+}
+
+.hero-parallax__stat-label {
+    margin-top: 6px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.hero-parallax__car {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    z-index: 2;
+    width: min(1100px, 92vw);
+    transform: translate3d(-50%, 0, 0);
+    will-change: transform;
+    pointer-events: none;
+}
+
+.hero-parallax__car img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.55));
+}
+
+.hero-parallax__content {
+    position: relative;
+    z-index: 4;
+}
+
+@media (max-width: 768px) {
+    .hero-parallax {
+        min-height: 70vh;
+    }
+
+    .hero-parallax__stats {
+        gap: 28px;
+        padding-top: 40px;
+    }
+
+    .hero-parallax__car {
+        width: 95vw;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-parallax__layer,
+    .hero-parallax__car {
+        transform: none !important;
+    }
+}
