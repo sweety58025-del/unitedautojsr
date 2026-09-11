@@ -1474,7 +1474,7 @@ body {
 .wptb-slider.style3 .wptb-slider--image {
     inset: 0;
     background-color: #101820;
-    background-position: center center;
+    background-position: center 84%;
     background-size: cover;
     background-repeat: no-repeat;
     filter: none;
@@ -1486,7 +1486,7 @@ body {
     inset: 0;
     z-index: 0;
     background-color: transparent;
-    background-position: center center;
+    background-position: center 74%;
     background-size: contain;
     background-repeat: no-repeat;
     pointer-events: none;

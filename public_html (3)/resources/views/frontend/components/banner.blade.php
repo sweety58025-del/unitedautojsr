@@ -38,13 +38,5 @@
                 </div>
             </div>
         </div>
-        <div class="wptb-image-single">
-            <div class="wptb-item--inner">
-                <div class="wptb-item--image">
-                    <img src="{{ asset('front/assets/img/slider/car-2.png') }}" alt="United Auto car service vehicle in the workshop" class="hero-vehicle">
-                    <img src="{{ asset('front/assets/img/slider/car-light.png') }}" alt="Vehicle lighting detail in the United Auto workshop" class="hero-car-light car-light">
-                </div>
-            </div>
-        </div>
     </div>
 </section>
