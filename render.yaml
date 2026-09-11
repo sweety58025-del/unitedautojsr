@@ -1,0 +1,56 @@
+# Render Blueprint - commit this at the repository root.
+# In Render: New -> Blueprint -> select this repository -> Apply.
+
+databases:
+  - name: unitedautojsr-db
+    plan: free
+    databaseName: unitedauto
+    user: unitedauto
+
+services:
+  - type: web
+    name: unitedautojsr
+    runtime: docker
+    rootDir: "public_html (3)"
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: APP_NAME
+        value: United Auto
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_URL
+        sync: false
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: unitedautojsr-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: unitedautojsr-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: unitedautojsr-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: unitedautojsr-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: unitedautojsr-db
+          property: password
+      - key: SESSION_DRIVER
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: LOG_CHANNEL
+        value: stderr
