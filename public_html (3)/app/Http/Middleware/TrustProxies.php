@@ -14,13 +14,7 @@ class TrustProxies extends Middleware
      *
      * @var array|string|null
      */
-    protected $proxies;
-
-    public function __construct(\Illuminate\Contracts\Foundation\Application $app, \Illuminate\Routing\ResponseFactory $response)
-    {
-        parent::__construct($app, $response);
-        $this->proxies = $app->environment('production') ? null : '*';
-    }
+    protected $proxies = '*';
 
     /**
      * The headers that should be used to detect proxies.

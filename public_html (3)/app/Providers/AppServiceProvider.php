@@ -22,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
+
         // Make URL generation follow the incoming request when handling HTTP requests.
         // Guard against running in console (artisan, queue workers, scheduler, etc.).
         if (! $this->app->runningInConsole() && ! $this->app->environment('production')) {
