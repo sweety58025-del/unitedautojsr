@@ -33,11 +33,14 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=vendor /app/vendor ./vendor
 COPY . .
+COPY resources/views ./resources/views
 COPY --from=assets /app/public/build ./public/build
 
 RUN cp -n .env.example .env || true \
     && mkdir -p storage/framework/{cache,sessions,views} storage/logs bootstrap/cache \
-    && chmod -R 775 storage bootstrap/cache
+    && chmod -R 775 storage bootstrap/cache \
+    && test -d resources/views \
+    && test -n "$(find resources/views -type f -name '*.blade.php' -print -quit)"
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
