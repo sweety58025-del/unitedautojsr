@@ -1,6 +1,10 @@
-<section class="wptb-funfacts-one has-before-bg py-0">
+<section class="wptb-funfacts-one">
     <div class="container">
         <div class="wptb-funfacts--inner">
+            <div class="wptb-funfacts-heading">
+                <span class="wptb-funfacts-heading--bars" aria-hidden="true"></span>
+                <span>Why Choose Us</span>
+            </div>
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                     <div class="wptb-counter1 style1 wow skewIn">
@@ -15,7 +19,7 @@
                             </div>
                             <div class="wptb-item--holder">
                                 <div class="wptb-item--text">Happy Customers</div>
-                                <div class="wptb-item--value"><span class="odometer" data-count="6000"></span><span class="suffix">+</span></div>
+                                <div class="wptb-item--value"><span class="stat-number"><span class="odometer" data-count="6000"></span><span class="suffix">+</span></span></div>
                             </div>
                         </div>
                     </div>
@@ -39,7 +43,7 @@
                             </div>
                             <div class="wptb-item--holder">
                                 <div class="wptb-item--text">Experience Workers</div>
-                                <div class="wptb-item--value"><span class="odometer" data-count="250"></span><span class="suffix">+</span></div>
+                                <div class="wptb-item--value"><span class="stat-number"><span class="odometer" data-count="250"></span><span class="suffix">+</span></span></div>
                             </div>
                         </div>
                     </div>
@@ -62,7 +66,7 @@
                             </div>
                             <div class="wptb-item--holder">
                                 <div class="wptb-item--text">Year of Experience</div>
-                                <div class="wptb-item--value"><span class="odometer" data-count="40"></span><span class="suffix">+</span></div>
+                                <div class="wptb-item--value"><span class="stat-number"><span class="odometer" data-count="40"></span><span class="suffix">+</span></span></div>
                             </div>
                         </div>
                     </div>
