@@ -10,7 +10,7 @@
                 <h2>Every panel here has been in our bay.</h2>
             </div>
             <div class="work-header-side">
-                <p>No stock photography, no filters &mdash; drag any photo below to see the repair United Auto actually carried out.</p>
+                <p>Real workshop repairs, shown from the first panel check to the finished result. Drag the divider to compare each job.</p>
             </div>
         </div>
 
@@ -171,7 +171,7 @@
     /* Bento grid: mixed spans, not one repeated card size */
     .work-grid {
         display: grid;
-        grid-template-columns: repeat(12, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 1.5rem;
     }
 
@@ -179,8 +179,18 @@
         display: none;
     }
 
-    .compare-card { grid-column: span 6; }
-    .compare-card.featured { grid-column: span 12; }
+    .compare-card {
+        grid-column: span 1;
+        min-width: 0;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .compare-card.featured {
+        grid-column: span 1;
+    }
     .process-card { grid-column: span 4; }
     .achievement-card { grid-column: span 6; }
 
@@ -194,10 +204,6 @@
         background: var(--work-ink);
         user-select: none;
         border-radius: 6px;
-    }
-
-    .compare-card.featured .compare-frame {
-        aspect-ratio: 21 / 9;
     }
 
     .compare-img {
@@ -261,13 +267,16 @@
     .compare-range {
         position: absolute;
         inset: 0;
+        z-index: 3;
         width: 100%;
-        height: 100%;
+        height: 100% !important;
+        min-height: 100%;
         margin: 0;
         opacity: 0;
         cursor: ew-resize;
         appearance: none;
         -webkit-appearance: none;
+        touch-action: none;
     }
 
     .compare-range::-webkit-slider-thumb {
@@ -313,7 +322,7 @@
         position: absolute;
         bottom: 14px;
         right: 14px;
-        z-index: 2;
+        z-index: 6;
         width: 32px;
         height: 32px;
         display: flex;
@@ -330,16 +339,24 @@
     }
 
     .compare-caption {
-        margin: 0.85rem 0 0;
+        margin: 0 0 0.85rem;
         color: var(--work-ink);
-        font-size: 0.95rem;
-        font-weight: var(--font-weight-medium, 500);
+        font-size: 1.05rem;
+        font-weight: var(--font-weight-semibold, 600);
+        line-height: 1.3;
     }
 
-    /* Workshop filmstrip cards — quiet, small, no badges */
+    .project-progress-gallery {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+    }
+
+    /* Workshop filmstrip cards — compact context below the comparison */
     .process-frame {
         display: block;
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 16 / 7;
         overflow: hidden;
         border: 1px solid var(--work-steel);
         background: var(--color-white);
@@ -353,7 +370,7 @@
         transition: transform 0.5s ease;
     }
 
-    .process-card:hover .process-frame img {
+    .compare-card:hover .process-frame img {
         transform: scale(1.04);
     }
 
@@ -438,14 +455,16 @@
             max-width: none;
         }
 
-        .compare-card, .compare-card.featured { grid-column: span 12; }
-        .process-card { grid-column: span 6; }
+        .work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .compare-card, .compare-card.featured { grid-column: span 1; }
+        .process-card { grid-column: span 1; }
         .achievement-card { grid-column: span 12; }
     }
 
     @media (max-width: 576px) {
         .work-grid { gap: 1.1rem; }
-        .process-card { grid-column: span 12; }
+        .work-grid { grid-template-columns: 1fr; }
+        .process-card { grid-column: span 1; }
         .achievement-card { flex-direction: column; }
         .achievement-photo { width: 100%; height: 200px; }
         .achievement-stub { display: none; }
@@ -486,19 +505,6 @@
 
                 card.__updateCompare = update;
             });
-        }
-
-        function nudgeHero(root) {
-            var hero = root.querySelector('.compare-card.featured .compare-range');
-            if (!hero) return;
-            var steps = [50, 38, 62, 50];
-            var i = 0;
-            var timer = setInterval(function () {
-                hero.value = steps[i];
-                hero.dispatchEvent(new Event('input'));
-                i++;
-                if (i >= steps.length) clearInterval(timer);
-            }, 260);
         }
 
         function initTabIndicator(root) {
@@ -543,7 +549,6 @@
             initCompareCards(section);
             initTabIndicator(section);
             initReveal(section);
-            setTimeout(function () { nudgeHero(section); }, 500);
         }
 
         if (document.readyState === 'loading') {

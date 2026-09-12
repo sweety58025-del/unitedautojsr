@@ -8,9 +8,9 @@
     position: relative;
     width: 100%;
     min-height: 100vh;
-    padding: 0;
+    padding: 0 0 24px;
     overflow: hidden;
-    background-color: #000;
+    background: linear-gradient(to bottom, #000 0%, #050608 78%, #101216 100%);
     isolation: isolate;
 }
 
@@ -32,8 +32,8 @@
 
 .hero-parallax::after {
     bottom: 0;
-    height: 240px;
-    background: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.82) 42%, transparent 100%);
+    height: 165px;
+    background: linear-gradient(to top, #101216 0%, rgba(5, 6, 8, 0.58) 42%, transparent 100%);
 }
 
 .hero-parallax__layer {
@@ -50,7 +50,7 @@
 
 .hero-parallax__tunnel {
     background-image: url('/front/assets/img/banner/3.webp');
-    filter: blur(2px) brightness(0.72) contrast(1.08) saturate(0.88);
+    filter: blur(0.6px) brightness(0.72) contrast(1.08) saturate(0.88);
     z-index: 1;
 }
 
@@ -99,6 +99,39 @@
     pointer-events: none;
 }
 
+.hero-parallax__car img.hero-parallax__headlights {
+    position: absolute;
+    left: 50%;
+    bottom: 22%;
+    z-index: 1;
+    width: 82%;
+    max-width: none;
+    height: auto;
+    opacity: 0;
+    transform: translateX(-50%);
+    filter: blur(0.2px) drop-shadow(0 0 18px rgba(255, 255, 255, 0.85));
+    pointer-events: none;
+}
+
+.hero-parallax__car.headlights-flash .hero-parallax__headlights {
+    animation: hero-headlight-flash 1050ms ease-out both;
+}
+
+@keyframes hero-headlight-flash {
+    0% {
+        opacity: 0;
+    }
+    22% {
+        opacity: 0.95;
+    }
+    48% {
+        opacity: 0.58;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 .hero-parallax__car img {
     display: block;
     width: auto;
@@ -133,5 +166,9 @@
     .hero-parallax__layer,
     .hero-parallax__car {
         transform: none !important;
+    }
+
+    .hero-parallax__car.headlights-flash .hero-parallax__headlights {
+        animation: none;
     }
 }

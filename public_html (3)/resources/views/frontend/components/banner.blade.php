@@ -70,5 +70,6 @@
 
     <div class="hero-parallax__car">
         <img src="{{ asset('front/assets/img/slider/car-2.png') }}" alt="United Auto - premium car detailing" loading="eager">
+        <img class="hero-parallax__headlights" src="{{ asset('front/assets/img/slider/car-light.png') }}" alt="" aria-hidden="true">
     </div>
 </section>

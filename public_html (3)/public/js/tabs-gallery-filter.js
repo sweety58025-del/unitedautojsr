@@ -4,7 +4,9 @@
 
 class TabSystem {
     constructor(containerSelector = '.tabs-container') {
-        this.container = document.querySelector(containerSelector);
+        this.container = typeof containerSelector === 'string'
+            ? document.querySelector(containerSelector)
+            : containerSelector;
         if (!this.container) return;
 
         this.buttons = this.container.querySelectorAll('.tab-button');
@@ -59,8 +61,12 @@ class TabSystem {
 
 class GalleryFilter {
     constructor(containerSelector = '.gallery-filter-container', gridSelector = '#galleryGrid') {
-        this.container = document.querySelector(containerSelector);
-        this.grid = document.querySelector(gridSelector);
+        this.container = typeof containerSelector === 'string'
+            ? document.querySelector(containerSelector)
+            : containerSelector;
+        this.grid = typeof gridSelector === 'string'
+            ? document.querySelector(gridSelector)
+            : gridSelector;
 
         if (!this.container || !this.grid) return;
 

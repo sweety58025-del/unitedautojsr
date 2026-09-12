@@ -216,6 +216,8 @@ Ready Components Stylesheet
 .faq-eyebrow {
     color: var(--color-primary-red) !important;
     margin-bottom: var(--space-2);
+    font-size: 13px;
+    letter-spacing: 1.5px;
 }
 
 .faq-eyebrow::before {
@@ -228,7 +230,8 @@ Ready Components Stylesheet
     font-family: var(--font-heading);
     font-weight: var(--font-weight-bold);
     margin-bottom: var(--space-4);
-    line-height: 1.2;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
 }
 
 .faq-accordion {
@@ -239,10 +242,19 @@ Ready Components Stylesheet
 
 .faq-item {
     background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: var(--radius-card);
     overflow: hidden;
     transition: all var(--transition-normal);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .faq-item {
+        background-color: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(16px) saturate(140%);
+        -webkit-backdrop-filter: blur(16px) saturate(140%);
+    }
 }
 
 .faq-item:hover {
@@ -266,6 +278,13 @@ Ready Components Stylesheet
 
 .faq-header:hover {
     background-color: rgba(215, 0, 6, 0.1);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .faq-header:hover {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
 }
 
 .faq-header:focus {
@@ -297,6 +316,10 @@ Ready Components Stylesheet
     transform: rotate(0deg);
 }
 
+.faq-item.open {
+    border-top: 1px solid rgba(215, 0, 6, 0.4);
+}
+
 .faq-answer {
     overflow: hidden;
     transition: max-height var(--transition-normal), padding var(--transition-normal);
@@ -315,13 +338,33 @@ Ready Components Stylesheet
 }
 
 .faq-image {
+    position: relative;
     background: linear-gradient(135deg, #D70006 0%, #000000 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: var(--radius-card);
     overflow: hidden;
     min-height: 500px;
     background-size: cover;
     background-position: center;
     min-width: 0;
+}
+
+.faq-image img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.faq-image::after {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.5) 100%);
+    content: '';
+    pointer-events: none;
 }
 
 @media (max-width: 1024px) {

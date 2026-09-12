@@ -7,7 +7,6 @@
 <section class="section wptb-partners" aria-label="Our brand partners">
 
     <div class="wptb-partners-bg" aria-hidden="true">
-        <span class="wptb-orb wptb-orb-1"></span>
         <span class="wptb-orb wptb-orb-2"></span>
     </div>
 

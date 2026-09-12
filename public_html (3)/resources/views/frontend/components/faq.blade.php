@@ -49,7 +49,9 @@
                 </div>
             </div>
 
-            <div class="faq-image"></div>
+            <div class="faq-image">
+                <img src="{{ asset('images/services/MechanicalRepairs.jpg') }}" alt="United Auto service bay" loading="lazy">
+            </div>
         </div>
     </div>
 </section>

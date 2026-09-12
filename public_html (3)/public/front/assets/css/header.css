@@ -1,11 +1,11 @@
 .header {
-  --ua-nav-bg: rgba(210, 217, 225, 0.42);
+  --ua-nav-bg: rgba(8, 10, 12, 0.58);
   --ua-nav-red: #e50909;
-  --ua-nav-border: rgba(255, 255, 255, 0.3);
-  --ua-nav-radius: 16px;
-  --ua-nav-shadow: 0 10px 35px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 -1px 0 rgba(30, 38, 48, 0.12);
+  --ua-nav-border: rgba(255, 255, 255, 0.12);
+  --ua-nav-radius: 8px;
+  --ua-nav-shadow: 0 10px 35px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -1px 0 rgba(0, 0, 0, 0.24);
   --nav-bg: var(--ua-nav-bg);
-  --nav-text: #171717;
+  --nav-text: rgba(255, 255, 255, 0.92);
   --nav-muted: #6f7378;
   --nav-accent: var(--ua-nav-red);
   --nav-border: var(--ua-nav-border);
@@ -52,7 +52,7 @@
 .header .logo a img {
   width: auto;
   max-width: 190px;
-  max-height: 54px;
+  max-height: 46px;
   object-fit: contain;
   transition: var(--transition-base);
 }
@@ -67,15 +67,43 @@
 
 .header-top {
   position: relative;
-  background: rgba(247, 247, 245, 0.82);
-  border-bottom: 1px solid var(--nav-border);
+  overflow: hidden;
+  background: rgba(8, 10, 12, 0.72);
+  border-bottom: 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.header-top::before {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.025) 42%, rgba(255, 255, 255, 0.08));
+  content: '';
+  pointer-events: none;
+}
+
+.header-top .container-fluid {
+  position: relative;
+  z-index: 1;
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .header-top {
+    background: rgba(8, 10, 12, 0.42);
+    backdrop-filter: blur(18px) saturate(145%);
+    -webkit-backdrop-filter: blur(18px) saturate(145%);
+  }
+}
+
+.header-top .promo-text,
+.header-top-contacts a {
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .header-top-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 42px;
+  min-height: 34px;
   gap: 20px;
 }
 
@@ -83,7 +111,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: var(--nav-muted);
+  color: #ffffff;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -109,7 +137,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: var(--nav-muted);
+  color: #ffffff;
   font-size: 12px;
   font-weight: 500;
   white-space: nowrap;
@@ -128,7 +156,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 72px;
+  min-height: 62px;
   gap: 20px;
 }
 
@@ -177,7 +205,7 @@
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.2;
   letter-spacing: 0.01em;
   text-decoration: none;
@@ -1006,8 +1034,9 @@ body.left_menu .mr_menu {
 
 .header.sticky .header-inner .container-fluid {
   margin-top: 6px;
-  background: rgba(210, 217, 225, 0.58);
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 0 rgba(30, 38, 48, 0.14);
+  background: rgba(8, 10, 12, 0.68);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.07), inset 0 -1px 0 rgba(0, 0, 0, 0.24);
 }
 
 .header.sticky .header-top,

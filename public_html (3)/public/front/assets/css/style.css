@@ -81,8 +81,21 @@
 
 /* About Company One */
 .wptb-about-company-one {
+    position: relative;
     background-position: center -150px;
-    padding-top: 0;
+    padding-top: 24px;
+    background-color: #101216;
+}
+
+.wptb-about-company-one::before {
+    position: absolute;
+    top: -24px;
+    right: 0;
+    left: 0;
+    height: 24px;
+    background: linear-gradient(to bottom, transparent, #101216);
+    content: '';
+    pointer-events: none;
 }
 
 .wptb-about-company-one.pd-more {
