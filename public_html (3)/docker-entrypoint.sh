@@ -8,6 +8,16 @@ fi
 
 php artisan storage:link || true
 php artisan migrate --force
+
+if [ "${SEED_DATABASE_IF_EMPTY:-false}" = "true" ]; then
+  if php artisan tinker --execute='exit(\App\Models\AboutWebsite::query()->exists() ? 0 : 1);'; then
+    echo "Database content already exists; skipping seeders."
+  else
+    echo "Database content is empty; running seeders."
+    php artisan db:seed --force
+  fi
+fi
+
 php artisan config:clear
 php artisan config:cache
 php artisan route:cache
