@@ -38,8 +38,9 @@ style="background-image: url('{{ asset('front/assets/img/background/bg-3.jpg') }
                             </div>
 
                             <div class="wptb-item--holder">
-                                <div class="wptb-item--meta-rating">
-                                    @for($star = 1; $star <= 5; $star++)
+                                <section class="wptb-testimonial-one ua-testimonials-carousel bg-image"
+                                    style="background-image: url('{{ asset('front/assets/img/background/bg-3.jpg') }}');"
+                                    aria-labelledby="testimonials-title">
                                         <i class="bi {{ $star <= ($testimonial->rating ?: 5) ? 'bi-star-fill' : 'bi-star' }}"></i>
                                     @endfor
                                 </div>
@@ -52,7 +53,7 @@ style="background-image: url('{{ asset('front/assets/img/background/bg-3.jpg') }
                                     <div class="wptb-item--meta-left">
                                         <h4 class="wptb-item--title">{{ $testimonial->customer_name }}</h4>
                                         @if($vehicleOrService !== '')
-                                            <span class="testimonial-detail">{{ $vehicleOrService }}</span>
+                                        <div class="swiper-container swiper-testimonial ua-testimonials__viewport" role="region" aria-roledescription="carousel" aria-label="Client testimonials">
                                         @endif
                                     </div>
                                 </div>

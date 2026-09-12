@@ -208,25 +208,50 @@ Description: Ducatibox - Car Service & Auto Repair Template
         // Testimonial One
         var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         var SwiperTestimonial = new Swiper('.swiper-testimonial', {
-            loop: true,
+            loop: false,
             autoplay: prefersReducedMotion ? false : {
-                delay: 6000,
+                delay: 4800,
+                disableOnInteraction: false,
             },
-            speed: 1500,
+            speed: 650,
             slidesPerView: 1,
-            spaceBetween: 30,            
-            // navigation: {
-            //     nextEl: '.swiper-button-next',
-            //     prevEl: '.swiper-button-prev',
-            // },
+            slidesPerGroup: 1,
+            spaceBetween: 24,
+            watchOverflow: true,
+            keyboard: {
+                enabled: true,
+                onlyInViewport: true,
+            },
+            navigation: {
+                nextEl: '.ua-testimonials__next',
+                prevEl: '.ua-testimonials__prev',
+            },
             pagination: {
-                el: '.swiper-pagination',
+                el: '.ua-testimonials__pagination',
                 clickable: true
             },
             breakpoints: {
                 768: {
-                  slidesPerView: 1,
+                  slidesPerView: 2,
                 },
+                1024: {
+                  slidesPerView: 3,
+                },
+            },
+            on: {
+                init: function (swiper) {
+                    var carousel = swiper.el.closest('.ua-testimonials-carousel');
+                    if (!carousel || !swiper.autoplay) return;
+
+                    carousel.addEventListener('mouseenter', function () { swiper.autoplay.stop(); });
+                    carousel.addEventListener('mouseleave', function () {
+                        if (!prefersReducedMotion) swiper.autoplay.start();
+                    });
+                    carousel.addEventListener('focusin', function () { swiper.autoplay.stop(); });
+                    carousel.addEventListener('focusout', function (event) {
+                        if (!carousel.contains(event.relatedTarget) && !prefersReducedMotion) swiper.autoplay.start();
+                    });
+                }
             }
         });
 
