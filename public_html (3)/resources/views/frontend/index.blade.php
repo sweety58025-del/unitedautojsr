@@ -18,7 +18,6 @@
 @include('frontend.components.project-gallery')
 @include('frontend.components.faq')
 @include('frontend.components.blog-news')
-@include('frontend.components.facts-counter')
 @include('frontend.components.why-us')
 @include('frontend.components.partners')
 @include('frontend.components.testimonials')
