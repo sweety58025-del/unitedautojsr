@@ -148,6 +148,26 @@
   font-size: 16px;
 }
 
+.header-top-socials {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 4px;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.header-top-socials a {
+  color: #ffffff;
+  font-size: 15px;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.header-top-socials a:hover,
+.header-top-socials a:focus-visible {
+  color: var(--nav-accent);
+  transform: translateY(-1px);
+}
+
 .header-inner {
   background: transparent;
 }
@@ -259,10 +279,10 @@
   z-index: 5;
   transition: var(--transition-base);
   transform: translate3d(0px, 10px, 0px);
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow: 0 18px 42px rgba(17, 17, 17, 0.12);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(8, 10, 12, 0.82);
+  box-shadow: var(--nav-shadow);
+  backdrop-filter: blur(24px) saturate(180%) contrast(105%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%) contrast(105%);
 }
 
 .header .mainnav ul.main-menu li:hover > ul {
@@ -321,6 +341,62 @@
 .header .mainnav ul.main-menu li ul ul {
   left: calc(100% + 8px);
   top: -12px;
+}
+
+/* Keep the Services catalog inside one glass panel instead of cascading over itself. */
+.header .mainnav ul.main-menu > li.services-menu > ul.sub-menu {
+  display: block;
+  width: 280px;
+  min-width: 280px;
+  padding: 14px;
+}
+.header .mainnav ul.main-menu > li.services-menu:hover > ul.sub-menu,
+.header .mainnav ul.main-menu > li.services-menu:focus-within > ul.sub-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+.header .mainnav ul.main-menu > li.services-menu > ul.sub-menu > li > ul.sub-menu {
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 0;
+  display: none !important;
+  width: 360px;
+  min-width: 360px;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--nav-border);
+  border-radius: var(--nav-radius);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(-8px, 0, 0);
+  background: rgba(8, 10, 12, 0.92);
+  box-shadow: var(--nav-shadow);
+  backdrop-filter: blur(24px) saturate(180%) contrast(105%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%) contrast(105%);
+}
+
+.header .mainnav ul.main-menu > li.services-menu > ul.sub-menu > li.is-active > ul.sub-menu {
+  display: block !important;
+  opacity: 1;
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+
+.header .mainnav ul.main-menu > li.services-menu > ul.sub-menu > li {
+  position: relative;
+}
+
+.header .mainnav ul.main-menu > li.services-menu > ul.sub-menu > li > a {
+  border-bottom: 1px solid var(--nav-border);
+  border-radius: 9px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.header .mainnav ul.main-menu > li.services-menu > ul.sub-menu > li > ul.sub-menu li a {
+  padding: 7px 8px;
+  font-size: 14px;
 }
 
 .header .mainnav ul.main-menu li ul ul ul ul {
@@ -689,7 +765,7 @@ body.mr_menu_active .mobile-menu-backdrop {
 
 .mr_menu {
   width: min(88vw, 360px);
-  background: #fff;
+  background: rgba(8, 10, 12, 0.82);
   padding: 24px 18px 24px;
   height: 100%;
   position: fixed;
@@ -699,8 +775,10 @@ body.mr_menu_active .mobile-menu-backdrop {
   transition: var(--transition-base);
   overflow-y: auto;
   overflow-x: hidden;
-  border-right: 1px solid var(--nav-border);
-  box-shadow: 0 18px 45px rgba(17, 17, 17, 0.14);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -1px 0 rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(24px) saturate(180%) contrast(105%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%) contrast(105%);
 }
 
 .mr_menu .mr_menu_close {
@@ -800,7 +878,7 @@ body.mr_menu_active .mobile-menu-backdrop {
   width: 40px;
   line-height: 52px;
   text-align: center;
-  color: var(--color-two);
+  color: var(--nav-text);
   background: rgba(var(--color-two-rgb), 0.03);
   cursor: pointer;
   z-index: 5;
@@ -868,7 +946,7 @@ body.mr_menu_active .mobile-menu-backdrop {
 }
 
 .mobile-phone-cta {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.08);
   color: var(--nav-text);
   border: 1px solid var(--nav-border);
 }
@@ -900,7 +978,7 @@ body.mr_menu_active .mobile-menu-backdrop {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #f4f4f2;
+  background: rgba(255, 255, 255, 0.08);
   color: var(--nav-text);
   text-decoration: none;
 }

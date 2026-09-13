@@ -4,6 +4,8 @@
 @section('og_title', 'Contact United Auto | Car Service in Jamshedpur')
 @section('content')
 @include('frontend.partials.breadcumbs')
+@php($contactEmail = 'unitedautojsr@gmail.com')
+@php($mapsUrl = 'https://maps.app.goo.gl/arEp1Ln9oFcqVC1JA')
 
 <section class="pd-bottom-300">
     <div class="container">
@@ -50,8 +52,8 @@
                                 </div>
 
                                 <h5 class="wptb-item--title">
-                                    <a href="mailto:{{ $contact_us->email }}">
-                                        {{ $contact_us->email }}
+                                    <a href="mailto:{{ $contactEmail }}">
+                                        {{ $contactEmail }}
                                     </a>
                                 </h5>
 
@@ -94,6 +96,44 @@
 
             </div>
         </div>
+
+        <div class="contact-social-links" aria-labelledby="contact-social-title">
+            <div>
+                <p class="contact-social-links__eyebrow">STAY CONNECTED</p>
+                <h2 id="contact-social-title">Follow United Auto</h2>
+            </div>
+            <div class="contact-social-links__items">
+                <a href="https://www.facebook.com/profile.php?id=61573584212073" target="_blank" rel="noopener noreferrer" aria-label="Follow United Auto on Facebook">
+                    <i class="bi bi-facebook" aria-hidden="true"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="https://www.instagram.com/unitedauto2025/" target="_blank" rel="noopener noreferrer" aria-label="Follow United Auto on Instagram">
+                    <i class="bi bi-instagram" aria-hidden="true"></i>
+                    <span>Instagram</span>
+                </a>
+            </div>
+        </div>
+
+        <section class="contact-map-card" aria-labelledby="workshop-location-title">
+            <div class="contact-map-card__header">
+                <div>
+                    <p class="contact-map-card__eyebrow">FIND US</p>
+                    <h2 id="workshop-location-title">Our Workshop Location</h2>
+                    <p>Use the satellite view to locate United Auto and plan your visit.</p>
+                </div>
+                <a class="contact-map-card__link" href="{{ $mapsUrl }}" target="_blank" rel="noopener noreferrer">
+                    Open in Google Maps <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="contact-map-card__frame">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1034.3957842727507!2d86.20305954206994!3d22.77074824982234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f5e3322de34835%3A0x95a83c877cd25733!2sUnited%20Auto!5e1!3m2!1sen!2sin!4v1789313209577!5m2!1sen!2sin"
+                    title="United Auto workshop location map"
+                    loading="lazy"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+        </section>
 
         <div class="wptb-contact-form-two mr-top-100">
             <div class="wptb-form--wrapper">

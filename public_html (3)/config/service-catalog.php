@@ -1,0 +1,55 @@
+<?php
+
+return [
+    [
+        'key' => 'mechanical-job',
+        'name' => 'Mechanical Job',
+        'class' => 'mechanical',
+        'items' => [
+            'Periodic Maintenance Service',
+            'Engine Overhauling',
+            'Gearbox Overhauling',
+            'Clutch Overhauling',
+            'Suspension Overhauling',
+            'Brake Overhauling',
+            'Car Scanning',
+            'A/C Repairing',
+            'Electrical Repairing',
+            'DPF Cleaning',
+            'Breakdown Facility',
+        ],
+    ],
+    [
+        'key' => 'body-repair',
+        'name' => 'Body Repair',
+        'class' => 'body-repair',
+        'items' => [
+            'Denting with Automated Tools',
+            'Painting in Heat Chamber',
+            'Accidental Repair',
+            'Insurance Claim with Cashless Facility',
+            'Towing Facility from Accidental Spot',
+            'Windshield Glass Change',
+            'Full Body Colour Change',
+        ],
+    ],
+    [
+        'key' => 'value-added-service',
+        'name' => 'Value Added Service (VAS)',
+        'class' => 'value-added',
+        'items' => [
+            'Anti Rust Coating',
+            'Teflon Coating',
+            'Ceramic Coating',
+            'PPF Coating',
+            'Silencer Coating',
+            'Interior Cleaning',
+            'A/C Vent Cleaning',
+            'New Battery Fitting',
+            'New Tyre Fitting',
+            'LED Head Light Fitting',
+            'New Seat Cover Fitting',
+            'New Accessories Fitting',
+        ],
+    ],
+];

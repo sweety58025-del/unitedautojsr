@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmployeeController;
@@ -22,9 +23,12 @@ Route::get('brands', [HomeController::class, 'brands'])->name('brands');
 Route::get('offers', [HomeController::class, 'offers'])->name('offers');
 Route::get('insurance', [HomeController::class, 'insurance'])->name('insurance');
 Route::get('roadside-assistance', [HomeController::class, 'roadsideAssistance'])->name('roadside-assistance');
+Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
+Route::get('articles/{article:slug}', [ArticleController::class, 'show'])->name('articles.show');
 
 Route::get('/service/{slug}', [HomeController::class,'serviceDetails'])->name('service.details');
 Route::get('/service-category/{slug}', [HomeController::class,'serviceCategoryDetails'])->name('service-category.details');
+Route::get('/service-topic/{slug}', [HomeController::class, 'serviceTopic'])->name('service.topic');
 
 Route::get('/book-appointment', [AppointmentController::class, 'create'])->name('book-appointment');
 Route::post('/book-appointment', [AppointmentController::class, 'store'])->name('book-appointment.store');

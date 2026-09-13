@@ -6,10 +6,11 @@
     $defaultAddress = 'Nagesh Tower, Near Goods Shed Road, Burma Mines, Jamshedpur - 831007';
     $companyAddress = $company?->address ?: $defaultAddress;
     $mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' . urlencode($companyAddress);
+    $contactEmail = 'unitedautojsr@gmail.com';
 
     $socialLinks = [
-        'facebook' => env('UNITED_AUTO_FACEBOOK_URL'),
-        'instagram' => env('UNITED_AUTO_INSTAGRAM_URL'),
+        'facebook' => 'https://www.facebook.com/profile.php?id=61573584212073',
+        'instagram' => 'https://www.instagram.com/unitedauto2025/',
         'x' => env('UNITED_AUTO_X_URL'),
         'linkedin' => env('UNITED_AUTO_LINKEDIN_URL'),
     ];
@@ -29,10 +30,18 @@
                         <span class="icon bi bi-telephone-fill"></span>
                         <span>Call us: {{ $company->phone ?? '079922 78199' }}</span>
                     </a>
-                    <a href="mailto:{{ $company->email ?? 'unitedautojsr@gmail.com' }}">
+                    <a href="mailto:{{ $contactEmail }}">
                         <span class="icon bi bi-envelope-fill"></span>
-                        <span>Message us: {{ $company->email ?? 'unitedautojsr@gmail.com' }}</span>
+                        <span>Message us: {{ $contactEmail }}</span>
                     </a>
+                    <span class="header-top-socials" aria-label="United Auto social media links">
+                        <a href="{{ $socialLinks['facebook'] }}" target="_blank" rel="noopener noreferrer" aria-label="Follow United Auto on Facebook">
+                            <i class="bi bi-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="{{ $socialLinks['instagram'] }}" target="_blank" rel="noopener noreferrer" aria-label="Follow United Auto on Instagram">
+                            <i class="bi bi-instagram" aria-hidden="true"></i>
+                        </a>
+                    </span>
                 </div>
             </div>
         </div>
@@ -65,19 +74,17 @@
                             <li class="menu-item"><a href="{{ url('/') }}">Home</a></li>
                             <li class="menu-item"><a href="{{ route('about-us') }}">About</a></li>
 
-                            <li class="menu-item menu-item-has-children">
+                            <li class="menu-item menu-item-has-children services-menu">
                                 <a href="#">Services</a>
                                 <ul class="sub-menu">
-                                    @foreach($categories as $category)
-                                        <li class="menu-item {{ $category->subcategories->count() ? 'menu-item-has-children' : '' }}">
-                                            <a href="{{ route('service.details', $category->slug) }}">{{ $category->name }}</a>
-                                            @if($category->subcategories->count())
-                                                <ul class="sub-menu">
-                                                    @foreach($category->subcategories as $sub)
-                                                        <li class="menu-item"><a href="{{ route('service-category.details', $sub->slug) }}">{{ $sub->name }}</a></li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
+                                    @foreach($serviceCatalog as $group)
+                                        <li class="menu-item menu-item-has-children">
+                                            <a href="#">{{ $group['name'] }}</a>
+                                            <ul class="sub-menu">
+                                                @foreach($group['items'] as $item)
+                                                    <li class="menu-item"><a href="{{ route('service.topic', \Illuminate\Support\Str::slug($item)) }}">{{ $item }}</a></li>
+                                                @endforeach
+                                            </ul>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -135,16 +142,14 @@
             <li class="menu-item menu-item-has-children">
                 <a href="#" aria-expanded="false">Services</a>
                 <ul class="sub-menu">
-                    @foreach($categories as $category)
-                        <li class="menu-item {{ $category->subcategories->count() ? 'menu-item-has-children' : '' }}">
-                            <a href="{{ route('service.details', $category->slug) }}">{{ $category->name }}</a>
-                            @if($category->subcategories->count())
-                                <ul class="sub-menu">
-                                    @foreach($category->subcategories as $sub)
-                                        <li class="menu-item"><a href="{{ route('service-category.details', $sub->slug) }}">{{ $sub->name }}</a></li>
-                                    @endforeach
-                                </ul>
-                            @endif
+                    @foreach($serviceCatalog as $group)
+                        <li class="menu-item menu-item-has-children">
+                            <a href="#" aria-expanded="false">{{ $group['name'] }}</a>
+                            <ul class="sub-menu">
+                                @foreach($group['items'] as $item)
+                                    <li class="menu-item"><a href="{{ route('service.topic', \Illuminate\Support\Str::slug($item)) }}">{{ $item }}</a></li>
+                                @endforeach
+                            </ul>
                         </li>
                     @endforeach
                 </ul>
@@ -155,7 +160,6 @@
             <li class="menu-item"><a href="{{ route('insurance') }}">Insurance</a></li>
             <li class="menu-item"><a href="{{ route('gallery') }}">Gallery</a></li>
             <li class="menu-item"><a href="{{ route('contact-us') }}">Contact</a></li>
-            <li class="menu-item mobile-book-item"><a href="{{ route('book-appointment') }}" class="mobile-book-button">Book Appointment</a></li>
         </ul>
     </nav>
 

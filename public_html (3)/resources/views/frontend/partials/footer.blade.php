@@ -81,6 +81,23 @@
                         </div>
 
                         <p class="text-white">{{ Str::limit($about->short_description ?? '', 150) }}</p>
+
+                        <div class="footer-map-card">
+                            <div class="footer-map-card__heading">
+                                <span>Find Our Workshop</span>
+                                <a href="https://maps.app.goo.gl/arEp1Ln9oFcqVC1JA" target="_blank" rel="noopener noreferrer" aria-label="Open United Auto in Google Maps">
+                                    <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div class="footer-map-card__frame">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1034.3957842727507!2d86.20305954206994!3d22.77074824982234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f5e3322de34835%3A0x95a83c877cd25733!2sUnited%20Auto!5e1!3m2!1sen!2sin!4v1789313209577!5m2!1sen!2sin"
+                                    title="United Auto workshop satellite map"
+                                    loading="lazy"
+                                    allowfullscreen
+                                    referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                            </div>
+                        </div>
                         
                     </div>
 
@@ -156,9 +173,8 @@
                 </div>
                 <div class="social-box">
                     <ul>
-                        <li><a href="https://www.facebook.com/" class="bi bi-facebook"></a></li>
-                        <li><a href="https://www.instagram.com/" class="bi bi-instagram"></a></li>
-                        <li><a href="https://www.linkedin.com/" class="bi bi-linkedin"></a></li>
+                        <li><a href="https://www.facebook.com/profile.php?id=61573584212073" target="_blank" rel="noopener noreferrer" class="bi bi-facebook" aria-label="Follow United Auto on Facebook"></a></li>
+                        <li><a href="https://www.instagram.com/unitedauto2025/" target="_blank" rel="noopener noreferrer" class="bi bi-instagram" aria-label="Follow United Auto on Instagram"></a></li>
                     </ul>
                 </div>
                 <div class="footer-nav-bottom">

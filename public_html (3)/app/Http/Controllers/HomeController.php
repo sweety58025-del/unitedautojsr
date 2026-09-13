@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\AboutWebsite;
+use App\Models\Article;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\CompanySetting;
 use App\Models\Gallery;
 use App\Models\RepairProject;
+use App\Models\Service;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +19,7 @@ class HomeController extends Controller
     public function index()
     {
         return view('frontend.index', [
+            'articles' => Schema::hasTable('articles') ? Article::published()->take(3)->get() : collect(),
             'repairProjects' => Schema::hasTable('repair_projects')
                 ? RepairProject::publicQuery()->get()
                 : collect(),
@@ -89,5 +92,24 @@ class HomeController extends Controller
         return view('frontend.pages.service-category',[
             'service' => SubCategory::where('slug', $slug)->firstOrFail()
         ]);
+    }
+
+    public function serviceTopic($slug)
+    {
+        $topic = collect(config('service-catalog'))
+            ->flatMap(fn ($group) => $group['items'])
+            ->first(fn ($item) => (string) str($item)->slug() === $slug);
+
+        abort_unless($topic, 404);
+
+        $service = Service::with(['category', 'subcategory'])
+            ->where('status', 'yes')
+            ->where(function ($query) use ($slug, $topic) {
+                $query->where('slug', $slug)
+                    ->orWhereRaw('LOWER(name) = ?', [strtolower($topic)]);
+            })
+            ->first();
+
+        return view('frontend.pages.service-topic', compact('topic', 'service'));
     }
 }

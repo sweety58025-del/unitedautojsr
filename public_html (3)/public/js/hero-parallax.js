@@ -20,8 +20,8 @@
     var headlights = car ? car.querySelector('.hero-parallax__headlights') : null;
 
     var SPEED_TUNNEL = 0.15;
-    var SPEED_CAR = 0.35;
-    var SPEED_STATS = 0.05;
+    var SPEED_CAR = 0.12;
+    var SPEED_STATS = -0.05;
     var CENTER_TOLERANCE = 56;
     var headlightsArmed = true;
 

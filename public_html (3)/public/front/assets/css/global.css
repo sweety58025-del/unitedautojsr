@@ -247,9 +247,24 @@
 
 /* Reset */
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto !important;
+    scroll-padding-top: var(--united-auto-header-offset, 96px);
     font-size: 100%;
 }
+
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+html.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+html.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
 body{
     position: relative;
     font-family: var(--font-family-base);
@@ -408,17 +423,23 @@ h1, h2, h3, h4, h5, h6,
 }
 
 a {
-    -webkit-transition: var(--transition-bezier);
     -khtml-transition: var(--transition-bezier);
     -moz-transition: var(--transition-bezier);
     -ms-transition: var(--transition-bezier);
     -o-transition: var(--transition-bezier);
-    transition: var(--transition-bezier);
-    color: var(--link-color);
-    text-decoration: none;
-    outline: none;
+html.lenis,
+html.lenis body {
+    height: auto;
     display: inline-block;
 }
+html.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+html.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
 
 a:before,
 a:after {

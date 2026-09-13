@@ -154,7 +154,7 @@ class FaqAccordion {
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.tabs-container').forEach((container) => new TabSystem(container));
-    document.querySelectorAll('.gallery-filter-container').forEach((container) => new GalleryFilter(container));
+    // The repair gallery owns its filter state because it also controls comparison cards.
     new FaqAccordion();
 
     window.showTab = function (event, tabName) {

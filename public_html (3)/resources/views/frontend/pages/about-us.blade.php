@@ -35,14 +35,27 @@
         <div class="col-md-7">
             <!-- Title -->
             <h1 class="wptb-item--title text-white ">
-                {{ $about_us->about_title }}
+                {{ $about_us->about_title ?: 'Premium Car Service & Maintenance' }}
             </h1>
             <br><br>
 
             <!-- Short Description -->
             <p class="wptb-item--description text-white">
-                {{ $about_us->short_description }}
+                {{ $about_us->short_description ?: 'We specialize in top-quality car repair and maintenance services to keep your vehicle running smoothly and safely.' }}
             </p>
+            <ul class="united-auto-about-features" aria-label="United Auto service benefits">
+                <li>Advanced Diagnostic &amp; Repair Services</li>
+                <li>Affordable Packages &amp; Discounts</li>
+                <li>Skilled Professionals &amp; Genuine Parts</li>
+            </ul>
+            <div class="wptb-item--button">
+                <a class="btn-two" href="{{ route('about-us') }}">
+                    <span class="btn-wrap">
+                        <span class="text-first">Read more</span>
+                        <span class="text-second"><i class="bi bi-plus"></i></span>
+                    </span>
+                </a>
+            </div>
         </div>
     </div>
     
@@ -114,6 +127,8 @@
 </div>
 
 </section>
+
+@include('frontend.components.showcase-highlights')
 
 <br><br><br><br>
 

@@ -38,6 +38,9 @@
         
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+        <!-- Lenis smooth scrolling -->
+        <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
         
         <!-- Bootstrap Icons -->
         <link href="{{ asset('front/assets/fonts/bootstrap-icons-1.1/font/bootstrap-icons.css') }}" rel="stylesheet">
@@ -120,5 +123,38 @@
 
         <!-- PASS E: Tabs & Gallery Filter -->
         <script src="{{ asset('js/tabs-gallery-filter.js') }}"></script>
+
+        <!-- Lenis smooth scrolling -->
+        <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+        <script>
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                smoothWheel: true,
+                wheelMultiplier: 1,
+                touchMultiplier: 1.5,
+                anchors: true,
+            });
+
+            window.lenis = lenis;
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+
+            // Keep existing sticky-header and parallax listeners in sync.
+            lenis.on('scroll', function () {
+                window.dispatchEvent(new Event('scroll'));
+            });
+
+            // If GSAP ScrollTrigger is already used on this site, sync it.
+            if (window.gsap && window.ScrollTrigger) {
+                lenis.on('scroll', ScrollTrigger.update);
+                gsap.ticker.add((time) => lenis.raf(time * 1000));
+                gsap.ticker.lagSmoothing(0);
+            }
+        </script>
     </body>
 </html>

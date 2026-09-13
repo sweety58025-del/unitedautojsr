@@ -43,8 +43,25 @@ Description: Ducatibox - Car Service & Auto Repair Template
             dynamicCurrentMenuClass($('.mainnav .main-menu'));
         }
 
+        // Desktop Services menu: keep exactly one category expanded at a time.
+        var servicesMenu = $('.mainnav .services-menu');
+        var serviceGroups = servicesMenu.children('.sub-menu').children('.menu-item-has-children');
+        if (servicesMenu.length && serviceGroups.length) {
+            var activateServiceGroup = function (group) {
+                serviceGroups.removeClass('is-active');
+                $(group).addClass('is-active');
+            };
+
+            serviceGroups.on('mouseenter focusin', function () {
+                activateServiceGroup(this);
+            });
+            servicesMenu.on('mouseleave', function () {
+                serviceGroups.removeClass('is-active');
+            });
+        }
+
         // Mobile Responsive Menu 
-        $('.mr_menu .mr_navmenu ul.main-menu li.menu-item-has-children').append( $( "<span class='submenu_opener'><i class='bi bi-chevron-right'></i></span>" ) );
+        $('.mr_menu .mr_navmenu ul.main-menu li.menu-item-has-children').append( $( "<button type='button' class='submenu_opener' aria-expanded='false' aria-label='Open submenu'><i class='bi bi-chevron-right' aria-hidden='true'></i></button>" ) );
 
         // Sub-Menu Open On-Click
         $('.mr_menu ul.main-menu li.menu-item-has-children .submenu_opener').on("click", function(e){
@@ -52,7 +69,9 @@ Description: Ducatibox - Car Service & Auto Repair Template
             var isOpen = parentItem.hasClass('nav_open');
             parentItem.toggleClass('nav_open', !isOpen);
             $(this).siblings('ul').slideToggle();
-            $(this).closest('a').attr('aria-expanded', !isOpen ? 'true' : 'false');
+            $(this).attr('aria-expanded', !isOpen ? 'true' : 'false');
+            parentItem.children('a').attr('aria-expanded', !isOpen ? 'true' : 'false');
+            $(this).attr('aria-label', !isOpen ? 'Close submenu' : 'Open submenu');
             e.stopPropagation();
             e.preventDefault();
         });

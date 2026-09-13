@@ -17,11 +17,12 @@
         <div class="work-tabs gallery-filter-container" role="toolbar" aria-label="Our work filters" aria-controls="galleryGrid">
             <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All work</button>
             @if($repairProjects->isNotEmpty())
-                <button class="filter-btn" type="button" data-filter="transformation" aria-pressed="false">Before &amp; after</button>
+                <button class="filter-btn" type="button" data-filter="before-after" aria-pressed="false">Before &amp; after</button>
             @endif
             @if($repairProjects->contains(fn ($project) => $project->images->where('stage', 'during')->isNotEmpty()))
-                <button class="filter-btn" type="button" data-filter="process" aria-pressed="false">In the workshop</button>
+                <button class="filter-btn" type="button" data-filter="in-workshop" aria-pressed="false">In the workshop</button>
             @endif
+            <span class="work-tabs-count" aria-live="polite">{{ $repairProjects->count() }} projects</span>
             <span class="work-tabs-indicator" aria-hidden="true"></span>
         </div>
 
@@ -36,8 +37,14 @@
                     $beforeImage = $before->first();
                     $afterImage = $after->first();
                 @endphp
-                <article class="gallery-item compare-card {{ $index === 0 ? 'featured' : '' }}" data-category="transformation{{ $during->isNotEmpty() ? ' process' : '' }}">
-                    <h3 class="compare-caption">{{ $project->title }}</h3>
+                <article class="gallery-item compare-card {{ $index === 0 ? 'featured' : '' }}" data-category="all before-after{{ $during->isNotEmpty() ? ' in-workshop' : '' }}">
+                    <div class="compare-card-heading">
+                        <div>
+                            <span class="compare-eyebrow">{{ $project->brand?->name ?: 'United Auto' }} · Repair case {{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span>
+                            <h3 class="compare-caption">{{ $project->title }}</h3>
+                        </div>
+                        <span class="compare-stage">{{ $during->isNotEmpty() ? 'In workshop' : 'Completed' }}</span>
+                    </div>
                     @if($beforeImage && $afterImage)
                     <div class="compare-frame">
                         <img class="compare-img" src="{{ asset($beforeImage->image) }}" alt="{{ $beforeImage->caption ?: $project->title . ' before repair' }}" loading="lazy">
@@ -57,7 +64,7 @@
                         </a>
                     </div>
                     @else
-                        <div class="process-caption">Project images are being prepared.</div>
+                        <div class="process-caption">Before and after images are being prepared.</div>
                     @endif
                     @if($during->isNotEmpty())
                         <div class="project-progress-gallery">
@@ -69,7 +76,7 @@
                         </div>
                     @endif
                     @if($project->vehicle_name || $project->description)
-                        <p class="process-caption">{{ trim($project->vehicle_name . ($project->description ? ' - ' . $project->description : '')) }}</p>
+                        <p class="process-caption"><strong>{{ $project->vehicle_name }}</strong>{{ $project->vehicle_model ? ' · ' . $project->vehicle_model : '' }}{{ $project->description ? ' · ' . $project->description : '' }}</p>
                     @endif
                 </article>
             @empty
@@ -168,6 +175,16 @@
         transition: left 0.25s ease, width 0.25s ease;
     }
 
+    .work-tabs-count {
+        margin-left: auto;
+        padding-bottom: 0.85rem;
+        color: var(--work-muted);
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
     /* Bento grid: mixed spans, not one repeated card size */
     .work-grid {
         display: grid;
@@ -186,6 +203,37 @@
         border: 0;
         background: transparent;
         box-shadow: none;
+    }
+
+    .compare-card-heading {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        min-height: 62px;
+        margin-bottom: 0.85rem;
+    }
+
+    .compare-eyebrow {
+        display: block;
+        margin-bottom: 0.35rem;
+        color: var(--work-red);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .compare-stage {
+        flex: 0 0 auto;
+        padding: 0.35rem 0.55rem;
+        border: 1px solid var(--work-steel);
+        border-radius: 3px;
+        color: var(--work-steel-dark);
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
     }
 
     .compare-card.featured {
@@ -339,7 +387,7 @@
     }
 
     .compare-caption {
-        margin: 0 0 0.85rem;
+        margin: 0;
         color: var(--work-ink);
         font-size: 1.05rem;
         font-weight: var(--font-weight-semibold, 600);
@@ -379,6 +427,8 @@
         color: var(--work-muted);
         font-size: 0.86rem;
     }
+
+    .process-caption strong { color: var(--work-ink); }
 
     /* Achievement / community cards — "ticket stub" layout */
     .achievement-card {
@@ -469,6 +519,9 @@
         .achievement-photo { width: 100%; height: 200px; }
         .achievement-stub { display: none; }
         .work-tabs { gap: 1.1rem; overflow-x: auto; }
+        .work-tabs-count { margin-left: 0; white-space: nowrap; }
+        .compare-card-heading { min-height: 0; }
+        .compare-stage { font-size: 0.6rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -527,6 +580,32 @@
             });
         }
 
+        function initGalleryFilters(section) {
+            var buttons = section.querySelectorAll('.filter-btn');
+            var cards = section.querySelectorAll('.gallery-item');
+            var count = section.querySelector('.work-tabs-count');
+            buttons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var filter = button.getAttribute('data-filter');
+                    buttons.forEach(function (item) {
+                        var active = item === button;
+                        item.classList.toggle('active', active);
+                        item.setAttribute('aria-pressed', active ? 'true' : 'false');
+                    });
+                    cards.forEach(function (card) {
+                        var categories = (card.getAttribute('data-category') || '').split(/\s+/);
+                        var visible = filter === 'all' || categories.indexOf(filter) !== -1;
+                        card.hidden = !visible;
+                        card.setAttribute('aria-hidden', visible ? 'false' : 'true');
+                    });
+                    if (count) {
+                        var visibleCount = Array.prototype.filter.call(cards, function (card) { return !card.hidden; }).length;
+                        count.textContent = visibleCount + (visibleCount === 1 ? ' project' : ' projects');
+                    }
+                });
+            });
+        }
+
         function initReveal(section) {
             if (!('IntersectionObserver' in window)) {
                 section.classList.add('is-visible');
@@ -548,6 +627,7 @@
             if (!section) return;
             initCompareCards(section);
             initTabIndicator(section);
+            initGalleryFilters(section);
             initReveal(section);
         }
 

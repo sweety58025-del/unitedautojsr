@@ -56,9 +56,9 @@
                     </a>
                     <div class="collapse" id="services">
                         <ul class="nav-second-level">
-                            {{-- <li>
+                            <li>
                                 <a href="{{ route('services.index') }}" class="tp-link">Service List</a>
-                            </li> --}}
+                            </li>
                             <li>
                                 <a href="{{ route('category.index') }}" class="tp-link">Service</a>
                             </li>
@@ -94,6 +94,9 @@
                             </li>
                             <li>
                                 <a href="{{ route('repair-projects.index') }}" class="tp-link">Repair Projects</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('articles.admin.index') }}" class="tp-link">Articles</a>
                             </li>
                             <li>
                                 <a href="{{ route('testimonial.index') }}" class="tp-link">Testimonials</a>

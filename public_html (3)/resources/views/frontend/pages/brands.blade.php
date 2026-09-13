@@ -15,24 +15,32 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="brands-grid">
             @forelse($brands as $brand)
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4" id="{{ $brand->slug }}">
-                    <div class="wptb-image-box1 h-100">
-                        <div class="wptb-item--inner">
-                            @if($brand->image)
-                                <div class="wptb-item--image">
-                                    <img src="{{ asset($brand->image) }}" alt="{{ $brand->name }} logo" loading="lazy">
-                                </div>
-                            @endif
-                            <div class="wptb-item--meta">
-                                <span class="wptb-item--label">{{ $brand->name }}</span>
-                            </div>
-                        </div>
+                <article class="brand-card" id="{{ $brand->slug }}">
+                    <div class="brand-card__topline">
+                        <span class="brand-card__index"><i class="bi bi-car-front-fill" aria-hidden="true"></i> {{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                        <span class="brand-card__status">Supported brand</span>
                     </div>
-                </div>
+
+                    <div class="brand-card__logo-stage">
+                        @if($brand->image)
+                            <img src="{{ asset($brand->image) }}" alt="{{ $brand->name }} logo" loading="lazy">
+                        @else
+                            <span class="brand-card__fallback">{{ str($brand->name)->substr(0, 1) }}</span>
+                        @endif
+                    </div>
+
+                    <div class="brand-card__footer">
+                        <div class="brand-card__name">
+                            <span class="brand-card__eyebrow">We service</span>
+                            <h2>{{ $brand->name }}</h2>
+                        </div>
+                        <span class="brand-card__signal" aria-hidden="true"><i class="bi bi-tools"></i></span>
+                    </div>
+                </article>
             @empty
-                <div class="col-12 text-center"><p>No supported brands are available yet.</p></div>
+                <div class="brands-empty"><p>No supported brands are available yet.</p></div>
             @endforelse
         </div>
     </div>

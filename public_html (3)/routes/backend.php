@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutWebsiteController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\AppointmentController;
@@ -56,6 +57,12 @@ Route::middleware(['auth'])->prefix('backend')->group(function () {
     Route::resource('repair-projects', RepairProjectController::class)->except(['show']);
     Route::delete('repair-project-images/{image}', [RepairProjectController::class, 'destroyImage'])->name('repair-project-images.destroy');
     Route::patch('repair-project-images/{image}/reorder', [RepairProjectController::class, 'reorderImage'])->name('repair-project-images.reorder');
+
+    Route::get('articles', [ArticleController::class, 'adminIndex'])->name('articles.admin.index');
+    Route::get('articles/{article}/edit', [ArticleController::class, 'adminIndex'])->name('articles.admin.edit');
+    Route::post('articles', [ArticleController::class, 'store'])->name('articles.admin.store');
+    Route::put('articles/{article}', [ArticleController::class, 'update'])->name('articles.admin.update');
+    Route::delete('articles/{article}', [ArticleController::class, 'destroy'])->name('articles.admin.destroy');
 
     Route::get('brands',[BrandController::class,'index'])->name('brands.index');
     Route::post('brands/store',[BrandController::class,'store'])->name('brands.store');

@@ -17,6 +17,7 @@ class FrontendLayoutComposer
         $company = CompanySetting::firstRecord();
 
         $view->with([
+            'serviceCatalog' => config('service-catalog'),
             'categories' => $hasCategories ? Category::query()
                 ->with('subcategories')
                 ->where('status', 'yes')

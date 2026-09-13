@@ -18,6 +18,7 @@
 @include('frontend.components.faq')
 @include('frontend.components.blog-news')
 @include('frontend.components.why-us')
+@include('frontend.components.showcase-highlights')
 @include('frontend.components.partners')
 @include('frontend.components.testimonials')
 @include('frontend.components.contact')
