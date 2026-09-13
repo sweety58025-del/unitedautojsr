@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
         ]);
 
-        $admin = User::firstOrCreate(
+        $admin = User::updateOrCreate(
             ['email' => 'admin@example.com'],
             [
                 'name'              => 'Admin User',
