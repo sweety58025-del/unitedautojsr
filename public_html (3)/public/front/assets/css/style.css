@@ -585,7 +585,21 @@
 
 
 .wptb-contact-one {
+    padding-top: 96px;
     padding-bottom: 300px;
+}
+
+.wptb-service-one,
+.wptb-testimonial-one {
+    padding-top: 96px;
+}
+
+@media (max-width: 767px) {
+    .wptb-service-one,
+    .wptb-testimonial-one,
+    .wptb-contact-one {
+        padding-top: 64px;
+    }
 }
 /* Contact Page */
 .wptb-contact-page-wrapper {

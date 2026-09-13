@@ -31,8 +31,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
-            // Redirect to previous intended page or home
-            return redirect()->intended(url('/'));
+            return redirect()->route('admindashboard.get');
         }
 
         return back()->withErrors(['email' => 'Invalid email or password.']);
