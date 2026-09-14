@@ -74,7 +74,7 @@
                                         value="{{ $service->id }}"
                                         data-price="{{ $service->price }}"
                                         data-name="{{ $service->name }}"
-                                        {{ old('service_id') == $service->id ? 'checked' : '' }}
+                                        {{ old('service_id', $selectedServiceId) == $service->id ? 'checked' : '' }}
                                         required
                                     >
                                     <span class="service-option-body">

@@ -10,7 +10,12 @@
     $pricingCategories = collect();
 
     if ($serviceTableExists && $categoryTableExists) {
-        $pricingServices = Service::with('category')->get()->map(function ($service) {
+        $pricingServices = Service::with('category')
+            ->where('status', 'yes')
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get()
+            ->map(function ($service) {
             $categoryName = $service->category?->name ?? 'General';
             $estimatedDuration = match ($categoryName) {
                 'Car Washing & Cleaning' => '45-90 min',
@@ -25,6 +30,7 @@
                 'name' => $service->name,
                 'category_name' => $categoryName,
                 'category_slug' => $service->category?->slug ?? 'general',
+                'id' => $service->id,
                 'description' => $service->notes ?: 'Professional care and finish for your vehicle.',
                 'duration' => $estimatedDuration,
                 'price' => (float) $service->price,
@@ -78,7 +84,7 @@
                             <td>{{ $service['duration'] }}</td>
                             <td>₹{{ number_format($service['price'], 0) }}</td>
                             <td>
-                                <a class="pricing-book-link" href="{{ route('book-appointment') }}?service={{ urlencode($service['name']) }}">
+                                <a class="pricing-book-link" href="{{ route('book-appointment', ['service' => $service['id']]) }}">
                                     Book
                                 </a>
                             </td>

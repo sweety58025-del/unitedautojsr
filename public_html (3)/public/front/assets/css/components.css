@@ -2113,7 +2113,8 @@ body {
     }
 
     .wptb-slider.style3 .hero-content-column {
-        width: 100%;
+        width: calc(100vw - 32px);
+        max-width: calc(100vw - 32px);
         padding: 72px 0 210px;
     }
 
@@ -2170,7 +2171,7 @@ body {
 
 @media screen and (min-width: 1200px) {
     .wptb-slider.style3 .hero-content-column {
-        transform: translate(-40px, -50px);
+        transform: translate(-80px, -50px);
     }
 
     .wptb-slider.style3 .wptb-heading .wptb-item--title {

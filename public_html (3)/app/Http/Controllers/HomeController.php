@@ -13,6 +13,7 @@ use App\Models\Service;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -77,6 +78,19 @@ class HomeController extends Controller
     }
 
     public function serviceDetails($slug){
+        $service = Service::with('category')
+            ->where('status', 'yes')
+            ->get()
+            ->first(fn ($item) => $item->slug === $slug || Str::slug($item->name) === $slug);
+
+        if ($service) {
+            return view('frontend.pages.service-details', [
+                'service' => $service,
+                'serviceCategory' => $service->category,
+                'categoryServices' => collect(),
+            ]);
+        }
+
         $service = Category::with(['services' => fn ($query) => $query
             ->where('status', 'yes')
             ->orderBy('sort_order')
@@ -84,7 +98,9 @@ class HomeController extends Controller
         ])->where('slug', $slug)->firstOrFail();
 
         return view('frontend.pages.service-details',[
-            'service' => $service
+            'service' => $service,
+            'serviceCategory' => $service,
+            'categoryServices' => $service->services,
         ]);
     }
 

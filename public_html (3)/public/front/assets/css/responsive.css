@@ -157,7 +157,9 @@
     .wptb-service-one {
         padding-bottom: 0px;
     }
-    .wptb-about-company-one,
+    .wptb-about-company-one {
+        padding: 56px 0 48px;
+    }
     .wptb-about-company-two {
         padding-top: 0px;
     }

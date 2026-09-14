@@ -22,6 +22,7 @@ class AppointmentController extends Controller
 
         return view('frontend.pages.book-appointment', [
             'services' => $services,
+            'selectedServiceId' => request()->integer('service'),
         ]);
     }
 

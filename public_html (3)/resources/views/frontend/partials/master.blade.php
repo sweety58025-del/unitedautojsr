@@ -144,11 +144,6 @@
             }
             requestAnimationFrame(raf);
 
-            // Keep existing sticky-header and parallax listeners in sync.
-            lenis.on('scroll', function () {
-                window.dispatchEvent(new Event('scroll'));
-            });
-
             // If GSAP ScrollTrigger is already used on this site, sync it.
             if (window.gsap && window.ScrollTrigger) {
                 lenis.on('scroll', ScrollTrigger.update);

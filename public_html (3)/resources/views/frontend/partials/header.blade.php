@@ -82,7 +82,7 @@
                                             <a href="#">{{ $group['name'] }}</a>
                                             <ul class="sub-menu">
                                                 @foreach($group['items'] as $item)
-                                                    <li class="menu-item"><a href="{{ route('service.topic', \Illuminate\Support\Str::slug($item)) }}">{{ $item }}</a></li>
+                                                    <li class="menu-item"><a href="{{ route('service.details', $item['slug']) }}">{{ $item['name'] }}</a></li>
                                                 @endforeach
                                             </ul>
                                         </li>
@@ -147,7 +147,7 @@
                             <a href="#" aria-expanded="false">{{ $group['name'] }}</a>
                             <ul class="sub-menu">
                                 @foreach($group['items'] as $item)
-                                    <li class="menu-item"><a href="{{ route('service.topic', \Illuminate\Support\Str::slug($item)) }}">{{ $item }}</a></li>
+                                    <li class="menu-item"><a href="{{ route('service.details', $item['slug']) }}">{{ $item['name'] }}</a></li>
                                 @endforeach
                             </ul>
                         </li>

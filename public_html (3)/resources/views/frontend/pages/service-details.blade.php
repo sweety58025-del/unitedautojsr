@@ -40,7 +40,7 @@
                 <div class="service-image">
 
                     <img 
-                        src="{{ asset($service->category_image) }}" 
+                        src="{{ asset($serviceCategory?->category_image ?? 'front/assets/img/more/image.png') }}"
                         alt="{{ $service->name }}"
                         class="img-fluid rounded">
 
@@ -61,11 +61,11 @@
                         {!! nl2br(e($service->description ?: 'Professional vehicle care from the United Auto workshop team.')) !!}
                     </p>
 
-                    @if($service->services->isNotEmpty())
+                    @if($categoryServices->isNotEmpty())
                         <div class="service-description mt-4">
                             <h3>Services in this category</h3>
                             <ul>
-                                @foreach($service->services as $item)
+                                @foreach($categoryServices as $item)
                                     <li>{{ $item->name }}@if($item->description) - {{ $item->description }}@endif</li>
                                 @endforeach
                             </ul>

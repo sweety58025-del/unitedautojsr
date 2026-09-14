@@ -7,17 +7,39 @@ use App\Models\Category;
 use App\Models\CompanySetting;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class FrontendLayoutComposer
 {
     public function compose(View $view): void
     {
         $hasCategories = Schema::hasTable('categories');
+        $hasServices = Schema::hasTable('services');
         $hasBrands = Schema::hasTable('brands');
         $company = CompanySetting::firstRecord();
+        $serviceCatalog = $hasCategories && $hasServices
+            ? Category::query()
+                ->with(['services' => fn ($query) => $query
+                    ->where('status', 'yes')
+                    ->orderBy('sort_order')
+                    ->orderBy('name')
+                ])
+                ->where('status', 'yes')
+                ->orderBy('name')
+                ->get()
+                ->map(fn ($category) => [
+                    'name' => $category->name,
+                    'items' => $category->services->map(fn ($service) => [
+                        'name' => $service->name,
+                        'slug' => $service->slug ?: Str::slug($service->name),
+                    ])->values(),
+                ])
+                ->filter(fn ($category) => $category['items']->isNotEmpty())
+                ->values()
+            : collect();
 
         $view->with([
-            'serviceCatalog' => config('service-catalog'),
+            'serviceCatalog' => $serviceCatalog,
             'categories' => $hasCategories ? Category::query()
                 ->with('subcategories')
                 ->where('status', 'yes')
