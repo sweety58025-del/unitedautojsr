@@ -17,26 +17,22 @@ class FrontendLayoutComposer
         $hasServices = Schema::hasTable('services');
         $hasBrands = Schema::hasTable('brands');
         $company = CompanySetting::firstRecord();
-        $serviceCatalog = $hasCategories && $hasServices
-            ? Category::query()
-                ->with(['services' => fn ($query) => $query
-                    ->where('status', 'yes')
-                    ->orderBy('sort_order')
-                    ->orderBy('name')
-                ])
-                ->where('status', 'yes')
-                ->orderBy('name')
-                ->get()
-                ->map(fn ($category) => [
-                    'name' => $category->name,
-                    'items' => $category->services->map(fn ($service) => [
-                        'name' => $service->name,
-                        'slug' => $service->slug ?: Str::slug($service->name),
-                    ])->values(),
-                ])
-                ->filter(fn ($category) => $category['items']->isNotEmpty())
-                ->values()
-            : collect();
+        $serviceCatalog = collect(config('service-catalog', []))
+            ->map(function ($group) {
+                $items = collect($group['items'] ?? [])
+                    ->map(fn ($item) => [
+                        'name' => (string) $item,
+                        'slug' => Str::slug((string) $item),
+                    ])
+                    ->values();
+
+                return [
+                    'name' => $group['name'] ?? '',
+                    'items' => $items,
+                ];
+            })
+            ->filter(fn ($group) => !empty($group['name']) && $group['items']->isNotEmpty())
+            ->values();
 
         $view->with([
             'serviceCatalog' => $serviceCatalog,

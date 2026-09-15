@@ -2,6 +2,7 @@
 .footer {
     position: relative;
     z-index: 1;
+    margin-top: 90px;
     font-size: var(--fs-16);
     font-weight: var(--fw-normal);
     line-height: 34px;
@@ -347,6 +348,10 @@
 }
 
 @media screen and (max-width: 1199.9px) {
+    .footer {
+        margin-top: 70px;
+    }
+
     .footer-upper-contact .logo {
         position: relative;
         left: 0;
@@ -361,6 +366,10 @@
 }
 
 @media screen and (max-width: 575.9px) {
+    .footer {
+        margin-top: 50px;
+    }
+
     .footer-upper-contact .wptb-icon-box1 .wptb-item--inner {
         border-width: 0px;
         margin-right: 0px;
