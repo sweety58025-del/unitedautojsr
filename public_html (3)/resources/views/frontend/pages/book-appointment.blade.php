@@ -3,19 +3,8 @@
 @section('content')
 @include('frontend.partials.breadcumbs')
 
-<section class="pd-bottom-300">
-    <div class="container">
-
-        <div class="wptb-heading text-center mr-bottom-60">
-            <div class="wptb-item--inner">
-                <h6 class="wptb-item--subtitle">BOOK ONLINE</h6>
-                <h1 class="wptb-item--title">Book a Service Appointment</h1>
-                <div class="wptb-item--divider mx-auto"></div>
-                <div class="wptb-item--description">
-                    Reserve your slot in a few clicks. Choose a service, tell us about your vehicle, and pick a time that works for you.
-                </div>
-            </div>
-        </div>
+<section class="booking-page-shell">
+    <div class="container-fluid booking-dashboard-container">
 
         @if ($errors->any())
             <div class="alert alert-danger mr-bottom-30">
@@ -28,7 +17,33 @@
             </div>
         @endif
 
-        <div class="booking-wizard-card mx-auto">
+        <div class="booking-dashboard">
+            <aside class="booking-side-card booking-duration-card">
+                <div class="booking-card-heading"><i class="bi bi-stopwatch" aria-hidden="true"></i><strong>Service Duration</strong></div>
+                <label for="duration_preset">Select Service Duration</label>
+                <select id="duration_preset" class="booking-dashboard-select">
+                    <option>30 minutes</option>
+                    <option>45 minutes</option>
+                    <option>60 minutes</option>
+                    <option>90 minutes</option>
+                </select>
+                <div class="booking-rate-row"><span>Base Time (30 mins)</span><strong id="durationBasePrice">₹0.00</strong></div>
+                <div class="booking-rate-row"><span>Extra Time (per 15 mins)</span><strong>₹0.00</strong></div>
+                <div class="booking-total-row"><span>Total Price</span><strong id="durationTotalPrice">₹0.00</strong></div>
+                <div class="booking-duration-options" aria-label="Quick duration selection">
+                    <button type="button" data-duration="30">30<br><small>Min</small></button>
+                    <button type="button" data-duration="60" class="is-selected">60<br><small>Min</small></button>
+                    <button type="button" data-duration="90">90<br><small>Min</small></button>
+                    <button type="button" data-duration="120">120<br><small>Min</small></button>
+                </div>
+                <button type="button" class="booking-red-button booking-check-button"><i class="bi bi-calendar-check" aria-hidden="true"></i> Check Availability</button>
+            </aside>
+
+            <div class="booking-wizard-card">
+                <div class="booking-dashboard-heading">
+                    <div><i class="bi bi-calendar2-check" aria-hidden="true"></i><h1>Book a Service Appointment</h1></div>
+                    <span>New Vehicle Service <i class="bi bi-chevron-down" aria-hidden="true"></i></span>
+                </div>
 
             <!-- Step indicator -->
             <div class="booking-steps" role="list">
@@ -64,9 +79,15 @@
                 <!-- STEP 1: Service -->
                 <div class="booking-step-pane is-active" data-step-pane="1">
                     <h5 class="booking-pane-title">Select a Service</h5>
-                    <div class="row" id="serviceOptions">
+                    <div class="booking-service-stage">
+                    <div class="booking-service-picker">
+                        <button type="button" class="booking-service-trigger" aria-expanded="false" aria-controls="serviceOptions">
+                            <span><i class="bi bi-car-front" aria-hidden="true"></i><span id="serviceTriggerName">Select a service</span></span>
+                            <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                        </button>
+                    <div class="booking-service-list" id="serviceOptions" role="menu">
                         @forelse ($services as $service)
-                            <div class="col-md-6 mb-3">
+                            <div>
                                 <label class="service-option" data-price="{{ $service->price }}" data-name="{{ $service->name }}">
                                     <input
                                         type="radio"
@@ -74,7 +95,7 @@
                                         value="{{ $service->id }}"
                                         data-price="{{ $service->price }}"
                                         data-name="{{ $service->name }}"
-                                        {{ old('service_id', $selectedServiceId) == $service->id ? 'checked' : '' }}
+                                        {{ old('service_id', $selectedServiceId ?: $services->first()?->id) == $service->id ? 'checked' : '' }}
                                         required
                                     >
                                     <span class="service-option-body">
@@ -89,10 +110,19 @@
                                 </label>
                             </div>
                         @empty
-                            <div class="col-12">
+                            <div>
                                 <p class="text-muted">No services are available for booking right now. Please check back soon or contact us directly.</p>
                             </div>
                         @endforelse
+                    </div>
+                    </div>
+                    <div class="booking-selected-service">
+                        <div class="booking-service-icon"><i class="bi bi-car-front-fill" aria-hidden="true"></i></div>
+                        <h3 id="selectedServiceTitle">Select a service</h3>
+                        <strong id="selectedServicePrice">₹0.00</strong>
+                        <p id="selectedServiceDescription">Choose a service to see its price and details here.</p>
+                        <div class="booking-service-meta"><span><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Routine Maintenance</span><span><i class="bi bi-clock-fill" aria-hidden="true"></i> 60 mins</span></div>
+                    </div>
                     </div>
                     <div class="booking-pane-actions">
                         <button type="button" class="btn-two white booking-next-btn">
@@ -245,6 +275,18 @@
                 </div>
 
             </form>
+            </div>
+
+            <aside class="booking-side-card booking-editor-card">
+                <div class="booking-card-heading"><i class="bi bi-gear" aria-hidden="true"></i><strong>Service</strong><button type="button" aria-label="Close service panel"><i class="bi bi-x-lg" aria-hidden="true"></i></button></div>
+                <label for="service_editor_name">Service</label>
+                <div class="booking-editor-select"><i class="bi bi-car-front" aria-hidden="true"></i><span id="editorServiceName">Select a service</span><i class="bi bi-chevron-down" aria-hidden="true"></i></div>
+                <label for="service_editor_price">Price</label>
+                <input id="service_editor_price" class="booking-dashboard-input" value="₹0.00" readonly>
+                <label for="service_editor_duration">Duration</label>
+                <input id="service_editor_duration" class="booking-dashboard-input" value="60 mins" readonly>
+                <button type="button" class="booking-red-button booking-save-button"><i class="bi bi-calendar-check" aria-hidden="true"></i> Save</button>
+            </aside>
         </div>
     </div>
 </section>
@@ -422,6 +464,494 @@
     .booking-summary-row span {
         color: var(--color-text-muted);
     }
+
+    .booking-page-shell {
+        padding: 42px 0 120px;
+        background: #f7f9fc;
+    }
+
+    .booking-dashboard-container {
+        max-width: 1500px;
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .booking-dashboard {
+        display: grid;
+        grid-template-columns: 255px minmax(0, 1fr) 255px;
+        align-items: start;
+        gap: 20px;
+        max-width: 1450px;
+        margin: 0 auto;
+    }
+
+    .booking-side-card,
+    .booking-wizard-card {
+        background: #fff;
+        border: 1px solid #e8edf3;
+        border-radius: 14px;
+        box-shadow: 0 12px 32px rgba(21, 42, 70, 0.08);
+    }
+
+    .booking-side-card {
+        padding: 18px;
+        min-width: 0;
+    }
+
+    .booking-wizard-card {
+        max-width: none;
+        padding: 18px;
+    }
+
+    .booking-dashboard-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 4px 12px 18px;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+    .booking-dashboard-heading > div,
+    .booking-card-heading {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .booking-dashboard-heading i,
+    .booking-card-heading > i {
+        color: #ef233c;
+        font-size: 22px;
+    }
+
+    .booking-dashboard-heading h1 {
+        margin: 0;
+        color: #14233b;
+        font-size: 23px;
+        line-height: 1.2;
+    }
+
+    .booking-dashboard-heading > span {
+        color: #40506a;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .booking-card-heading {
+        justify-content: space-between;
+        margin-bottom: 18px;
+        color: #172842;
+        font-size: 15px;
+    }
+
+    .booking-card-heading button {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: #172842;
+    }
+
+    .booking-side-card label {
+        display: block;
+        margin: 15px 0 7px;
+        color: #53627a;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .booking-dashboard-select,
+    .booking-dashboard-input,
+    .booking-editor-select {
+        width: 100%;
+        min-height: 40px;
+        padding: 0 11px;
+        border: 1px solid #dfe6ef;
+        border-radius: 8px;
+        background: #fbfcfe;
+        color: #40506a;
+        font-size: 12px;
+    }
+
+    .booking-duration-card .nice-select.booking-dashboard-select {
+        display: flex;
+        align-items: center;
+        float: none;
+        width: 100%;
+        margin: 0;
+    }
+
+    .booking-editor-select {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .booking-editor-select i:first-child {
+        color: #ef233c;
+    }
+
+    .booking-rate-row,
+    .booking-total-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        min-width: 0;
+        padding: 8px 0;
+        color: #42516a;
+        font-size: 11px;
+    }
+
+    .booking-rate-row span,
+    .booking-rate-row strong,
+    .booking-total-row span,
+    .booking-total-row strong {
+        min-width: 0;
+    }
+
+    .booking-rate-row span,
+    .booking-total-row span {
+        overflow-wrap: anywhere;
+    }
+
+    .booking-total-row {
+        margin-top: 7px;
+        padding-top: 13px;
+        border-top: 1px solid #e9edf3;
+        color: #172842;
+        font-size: 12px;
+    }
+
+    .booking-total-row strong,
+    .booking-rate-row strong {
+        white-space: nowrap;
+    }
+
+    .booking-total-row strong {
+        color: #ef233c;
+        font-size: 16px;
+    }
+
+    .booking-duration-options {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        margin: 14px 0;
+    }
+
+    .booking-duration-options button {
+        padding: 9px 2px;
+        border: 1px solid #e1e7ef;
+        border-radius: 8px;
+        background: #fbfcfe;
+        color: #40506a;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .booking-duration-options button.is-selected,
+    .booking-duration-options button:hover {
+        border-color: #ef233c;
+        background: #ef233c;
+        color: #fff;
+    }
+
+    .booking-duration-options small {
+        font-size: 9px;
+    }
+
+    .booking-red-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        min-height: 40px;
+        padding: 8px 12px;
+        border: 0;
+        border-radius: 8px;
+        background: #ef233c;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .booking-red-button:hover {
+        background: #cf1830;
+        color: #fff;
+    }
+
+    .booking-editor-card .booking-red-button {
+        margin-top: 18px;
+    }
+
+    .booking-steps {
+        margin: 18px 0 24px;
+        padding: 0 8px 16px;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+    .booking-step-circle {
+        width: 34px;
+        height: 34px;
+        border: 1px solid #dfe6ef;
+        background: #fff;
+        color: #40506a;
+    }
+
+    .booking-step-line {
+        background: #dfe6ef;
+    }
+
+    .booking-step.is-active .booking-step-circle,
+    .booking-step.is-complete .booking-step-circle {
+        background: #ef233c;
+        border-color: #ef233c;
+    }
+
+    .booking-step-label {
+        color: #40506a;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .booking-pane-title {
+        margin: 0 0 12px;
+        color: #172842;
+        font-family: var(--font-family-heading);
+        font-size: 17px;
+    }
+
+    .booking-service-stage {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(230px, .9fr);
+        gap: 16px;
+    }
+
+    .booking-service-picker {
+        position: relative;
+        align-self: start;
+        min-width: 0;
+    }
+
+    .booking-service-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        min-height: 48px;
+        padding: 0 14px;
+        border: 1px solid #dfe6ef;
+        border-radius: 8px;
+        background: #fff;
+        color: #40506a;
+        font-size: 12px;
+        font-weight: 600;
+        text-align: left;
+    }
+
+    .booking-service-trigger > span {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 0;
+    }
+
+    .booking-service-trigger i:first-child {
+        color: #ef233c;
+        font-size: 18px;
+    }
+
+    .booking-service-trigger[aria-expanded="true"] {
+        border-color: #ef233c;
+        box-shadow: 0 0 0 3px rgba(239, 35, 60, .1);
+    }
+
+    .booking-service-list {
+        display: none;
+        position: absolute;
+        top: calc(100% + 7px);
+        left: 0;
+        right: 0;
+        z-index: 20;
+        grid-template-columns: 1fr;
+        gap: 5px;
+        max-height: 280px;
+        overflow-y: auto;
+        padding: 8px;
+        border: 1px solid #e3e8f0;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 16px 34px rgba(21, 42, 70, .16);
+    }
+
+    .booking-service-picker.is-open .booking-service-list {
+        display: grid;
+    }
+
+    .booking-service-picker.opens-up .booking-service-list {
+        top: auto;
+        bottom: calc(100% + 7px);
+    }
+
+    .service-option {
+        min-height: 42px;
+        padding: 9px 12px;
+        border-color: #e5eaf1;
+        border-radius: 8px;
+        background: #fff;
+    }
+
+    .service-option:hover {
+        border-color: #ef233c;
+        background: #fff7f8;
+    }
+
+    .service-option-body {
+        font-size: 12px;
+    }
+
+    .service-option-name small {
+        font-size: 9px;
+    }
+
+    .service-option-price {
+        color: #172842;
+        font-size: 12px;
+    }
+
+    .service-option:has(input:checked) {
+        border-color: #ef233c;
+        background: #fff7f8;
+        box-shadow: 0 0 0 1px rgba(239, 35, 60, .12);
+    }
+
+    .booking-selected-service {
+        padding: 24px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #fff4f5, #fffafb);
+    }
+
+    .booking-service-icon {
+        display: grid;
+        place-items: center;
+        width: 52px;
+        height: 52px;
+        margin-bottom: 14px;
+        border-radius: 50%;
+        background: #ffe1e4;
+        color: #ef233c;
+        font-size: 25px;
+    }
+
+    .booking-selected-service h3 {
+        display: inline-block;
+        margin: 0 12px 8px 0;
+        color: #172842;
+        font-size: 18px;
+    }
+
+    .booking-selected-service > strong {
+        color: #172842;
+        font-size: 15px;
+    }
+
+    .booking-selected-service p {
+        margin: 0 0 16px;
+        color: #607089;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .booking-service-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        color: #53627a;
+        font-size: 10px;
+    }
+
+    .booking-service-meta i {
+        color: #ef233c;
+    }
+
+    .booking-pane-actions {
+        margin-top: 22px;
+    }
+
+    .booking-editor-card {
+        min-height: 330px;
+    }
+
+    @media (max-width: 1199.9px) {
+        .booking-dashboard {
+            grid-template-columns: 220px minmax(0, 1fr);
+        }
+
+        .booking-editor-card {
+            grid-column: 2;
+        }
+    }
+
+    @media (max-width: 767.9px) {
+        .booking-page-shell {
+            padding-top: 24px;
+        }
+
+        .booking-dashboard-container {
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+
+        .booking-dashboard {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .booking-side-card,
+        .booking-wizard-card {
+            width: 100%;
+            min-width: 0;
+        }
+
+        .booking-rate-row,
+        .booking-total-row {
+            gap: 8px;
+        }
+
+        .booking-rate-row strong,
+        .booking-total-row strong {
+            flex: 0 0 auto;
+        }
+
+        .booking-editor-card {
+            order: 3;
+        }
+
+        .booking-dashboard-heading {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .booking-dashboard-heading h1 {
+            font-size: 19px;
+        }
+
+        .booking-service-stage {
+            grid-template-columns: 1fr;
+        }
+
+        .booking-steps {
+            gap: 8px 0;
+        }
+
+        .booking-step-line {
+            min-width: 16px;
+        }
+    }
 </style>
 
 <script>
@@ -557,6 +1087,79 @@
             document.getElementById('summaryPhone').textContent = document.getElementById('customer_phone').value || '-';
         }
 
+        function updateSelectedService() {
+            const selectedService = form.querySelector('input[name="service_id"]:checked');
+            const title = document.getElementById('selectedServiceTitle');
+            const price = document.getElementById('selectedServicePrice');
+            const description = document.getElementById('selectedServiceDescription');
+            const triggerName = document.getElementById('serviceTriggerName');
+            const editorName = document.getElementById('editorServiceName');
+            const editorPrice = document.getElementById('service_editor_price');
+            const basePrice = document.getElementById('durationBasePrice');
+            const totalPrice = document.getElementById('durationTotalPrice');
+
+            if (!selectedService) return;
+
+            const serviceName = selectedService.dataset.name || 'Selected service';
+            const servicePrice = Number(selectedService.dataset.price || 0).toFixed(2);
+            title.textContent = serviceName;
+            price.textContent = '₹' + servicePrice;
+            triggerName.textContent = serviceName;
+            description.textContent = 'Professional ' + serviceName.toLowerCase() + ' support from the United Auto workshop team.';
+            editorName.textContent = serviceName;
+            editorPrice.value = '₹' + servicePrice;
+            basePrice.textContent = '₹' + servicePrice;
+            totalPrice.textContent = '₹' + servicePrice;
+        }
+
+        form.querySelectorAll('input[name="service_id"]').forEach(function (serviceInput) {
+            serviceInput.addEventListener('change', updateSelectedService);
+        });
+
+        const servicePicker = document.querySelector('.booking-service-picker');
+        const serviceTrigger = document.querySelector('.booking-service-trigger');
+
+        serviceTrigger.addEventListener('click', function () {
+            const isOpen = servicePicker.classList.toggle('is-open');
+            if (isOpen) {
+                const triggerBottom = serviceTrigger.getBoundingClientRect().bottom;
+                servicePicker.classList.toggle('opens-up', triggerBottom + 290 > window.innerHeight);
+            } else {
+                servicePicker.classList.remove('opens-up');
+            }
+            serviceTrigger.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        servicePicker.querySelectorAll('.service-option').forEach(function (option) {
+            option.addEventListener('click', function () {
+                window.setTimeout(function () {
+                    servicePicker.classList.remove('is-open');
+                    servicePicker.classList.remove('opens-up');
+                    serviceTrigger.setAttribute('aria-expanded', 'false');
+                    updateSelectedService();
+                }, 0);
+            });
+        });
+
+        document.addEventListener('click', function (event) {
+            if (!servicePicker.contains(event.target)) {
+                servicePicker.classList.remove('is-open');
+                servicePicker.classList.remove('opens-up');
+                serviceTrigger.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        document.querySelectorAll('[data-duration]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                document.querySelectorAll('[data-duration]').forEach(function (item) {
+                    item.classList.toggle('is-selected', item === button);
+                });
+                document.getElementById('duration_preset').value = button.dataset.duration + ' minutes';
+                document.getElementById('service_editor_duration').value = button.dataset.duration + ' mins';
+            });
+        });
+
+        updateSelectedService();
         showStep(1);
     })();
 </script>

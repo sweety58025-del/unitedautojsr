@@ -83,6 +83,8 @@ Route::middleware(['auth'])->prefix('backend')->group(function () {
     Route::delete('testimonial/delete/{id}',[TestimonialController::class,'destroy'])->name('testimonial.delete');
 
     Route::get('appointments',[AppointmentController::class,'index'])->name('appointment.index');
+    Route::get('appointments/{id}/edit',[AppointmentController::class,'edit'])->name('appointment.edit');
+    Route::put('appointments/{id}',[AppointmentController::class,'update'])->name('appointment.update');
     Route::post('appointments/{id}/status',[AppointmentController::class,'updateStatus'])->name('appointment.status');
     Route::post('appointments/{id}/delete',[AppointmentController::class,'destroy'])->name('appointment.delete');
 

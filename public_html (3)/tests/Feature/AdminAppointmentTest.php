@@ -87,6 +87,44 @@ class AdminAppointmentTest extends TestCase
         ]);
     }
 
+    public function test_admin_can_edit_appointment_details()
+    {
+        $admin = $this->makeAdmin();
+        $appointment = $this->makeAppointment();
+        $replacementService = Service::create([
+            'category_id' => $appointment->service->category_id,
+            'name' => 'Brake Inspection',
+            'price' => 79.00,
+            'unit' => 'each',
+        ]);
+
+        $response = $this->actingAs($admin)->put(route('appointment.update', $appointment->id), [
+            'service_id' => $replacementService->id,
+            'vehicle_make_model' => 'Honda City',
+            'registration_number' => 'JH-01-CD-5678',
+            'appointment_date' => now()->addDays(2)->format('Y-m-d'),
+            'appointment_time' => '2:00 PM',
+            'customer_name' => 'Alex Johnson',
+            'customer_email' => 'alex@example.com',
+            'customer_phone' => '9876543211',
+            'service_reason' => 'Brake noise',
+            'preferred_contact_method' => 'email',
+            'additional_issues' => 'Please inspect the front brakes.',
+            'status' => 'confirmed',
+        ]);
+
+        $response->assertRedirect(route('appointment.index'));
+        $this->assertDatabaseHas('appointments', [
+            'id' => $appointment->id,
+            'service_id' => $replacementService->id,
+            'service_name' => 'Brake Inspection',
+            'customer_name' => 'Alex Johnson',
+            'vehicle_make_model' => 'Honda City',
+            'appointment_time' => '2:00 PM',
+            'status' => 'confirmed',
+        ]);
+    }
+
     public function test_admin_can_delete_appointment()
     {
         $admin = $this->makeAdmin();

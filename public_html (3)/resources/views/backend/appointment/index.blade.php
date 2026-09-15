@@ -66,10 +66,11 @@
                                 </form>
                             </td>
                             <td>
+                                <a href="{{ route('appointment.edit', $appointment->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                 <form id="delete-appointment-form-{{ $appointment->id }}" method="POST" action="{{ route('appointment.delete', $appointment->id) }}">
                                     @csrf
                                 </form>
-                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAppointmentModal" data-delete-form-id="delete-appointment-form-{{ $appointment->id }}">Delete</button>
+                                <button type="button" class="btn btn-sm btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#deleteAppointmentModal" data-delete-form-id="delete-appointment-form-{{ $appointment->id }}">Delete</button>
                             </td>
                         </tr>
 
