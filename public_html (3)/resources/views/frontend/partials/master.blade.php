@@ -163,12 +163,14 @@
     </head>
     <body>
 
-        <div class="viswakarma-popup is-open" id="viswakarmaPopup" role="dialog" aria-modal="true" aria-label="Viswakarma Puja greeting">
-            <div class="viswakarma-popup__dialog">
-                <button class="viswakarma-popup__close" type="button" id="viswakarmaPopupClose" aria-label="Close poster">&times;</button>
-                <img class="viswakarma-popup__image" src="{{ asset('images/viswakarma-puja-poster.png') }}" alt="United Auto Viswakarma Puja greeting poster">
+        @if (request()->routeIs('home'))
+            <div class="viswakarma-popup is-open" id="viswakarmaPopup" role="dialog" aria-modal="true" aria-label="Viswakarma Puja greeting">
+                <div class="viswakarma-popup__dialog">
+                    <button class="viswakarma-popup__close" type="button" id="viswakarmaPopupClose" aria-label="Close poster">&times;</button>
+                    <img class="viswakarma-popup__image" src="{{ asset('images/viswakarma-puja-poster.png') }}" alt="United Auto Viswakarma Puja greeting poster">
+                </div>
             </div>
-        </div>
+        @endif
 
         @include('frontend.partials.header')
 
@@ -178,28 +180,30 @@
 
         @include('frontend.partials.footer')
 
-        <script>
-            (function () {
-                const popup = document.getElementById('viswakarmaPopup');
-                const closeButton = document.getElementById('viswakarmaPopupClose');
-                if (!popup || !closeButton) return;
+        @if (request()->routeIs('home'))
+            <script>
+                (function () {
+                    const popup = document.getElementById('viswakarmaPopup');
+                    const closeButton = document.getElementById('viswakarmaPopupClose');
+                    if (!popup || !closeButton) return;
 
-                function closePopup() {
-                    popup.classList.remove('is-open');
-                    window.setTimeout(function () {
-                        popup.hidden = true;
-                    }, 240);
-                }
+                    function closePopup() {
+                        popup.classList.remove('is-open');
+                        window.setTimeout(function () {
+                            popup.hidden = true;
+                        }, 240);
+                    }
 
-                closeButton.addEventListener('click', closePopup);
-                popup.addEventListener('click', function (event) {
-                    if (event.target === popup) closePopup();
-                });
-                document.addEventListener('keydown', function (event) {
-                    if (event.key === 'Escape' && !popup.hidden) closePopup();
-                });
-            })();
-        </script>
+                    closeButton.addEventListener('click', closePopup);
+                    popup.addEventListener('click', function (event) {
+                        if (event.target === popup) closePopup();
+                    });
+                    document.addEventListener('keydown', function (event) {
+                        if (event.key === 'Escape' && !popup.hidden) closePopup();
+                    });
+                })();
+            </script>
+        @endif
 
     <!-- Core JS -->
         <script src="{{ asset('front/assets/js/jquery-3.6.0.min.js') }}"></script>
