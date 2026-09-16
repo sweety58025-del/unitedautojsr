@@ -35,6 +35,7 @@
     .offer-card {
         display: flex;
         height: 100%;
+        min-height: 650px;
         flex-direction: column;
         overflow: hidden;
         border: 1px solid #2f333b;
@@ -44,7 +45,7 @@
 
     .offer-card__image {
         position: relative;
-        height: 220px;
+        height: 360px;
         overflow: hidden;
         background: #050505;
     }
@@ -59,12 +60,13 @@
     .offer-card__image img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        object-position: center 58%;
+        object-fit: contain;
+        object-position: center;
+        background: #050505;
     }
 
     .offer-card--poster .offer-card__image {
-        height: 220px;
+        height: 360px;
         background: #0757ad;
     }
 
@@ -72,9 +74,8 @@
         display: none;
     }
 
-    .offer-card--poster .offer-card__image img {
-        object-fit: contain;
-        object-position: center;
+    .offer-card:not(.offer-card--poster) .offer-card__image::after {
+        display: none;
     }
 
     .offer-card__number {
@@ -147,11 +148,15 @@
         }
 
         .offer-card__image {
-            height: 190px;
+            height: 260px;
         }
 
         .offer-card--poster .offer-card__image {
-            height: 190px;
+            height: 260px;
+        }
+
+        .offer-card {
+            min-height: 0;
         }
 
         .offer-card__body {
@@ -187,13 +192,13 @@
                 <div class="offer-card__body">
                     <p class="offer-card__eyebrow">Printed service card</p>
                     <h2>Service Card Offer</h2>
-                    <p>We can introduce our printed card under offer. I have already shared you the card previously.</p>
+                    <p>Enjoy service benefits and discounts through the United Auto VIP Membership card. Ask our team about eligibility, included services, and applicable terms.</p>
                 </div>
             </article>
 
             <article class="offer-card">
                 <div class="offer-card__image">
-                    <img src="{{ asset('front/assets/img/slider/car-2.png') }}" alt="Red car representing United Auto roadside assistance" loading="lazy">
+                    <img src="{{ asset('images/roadside.webp') }}" alt="United Auto roadside assistance offer" loading="lazy">
                 </div>
                 <div class="offer-card__body">
                     <p class="offer-card__eyebrow">Roadside support</p>
