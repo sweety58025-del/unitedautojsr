@@ -133,5 +133,36 @@
             </div>
         </div>
         @endcan
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <h4>Frontend Service Catalog</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Services</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($serviceCatalog as $group)
+                                    <tr>
+                                        <td>{{ $group['name'] ?? '' }}</td>
+                                        <td>{{ implode(', ', $group['items'] ?? []) }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="2">No frontend service catalog entries configured.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

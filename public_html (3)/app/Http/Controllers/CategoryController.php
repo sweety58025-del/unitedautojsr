@@ -25,7 +25,8 @@ class CategoryController extends Controller implements HasMiddleware
     public function index()
     {
         return view('backend.category.index',[
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'serviceCatalog' => config('service-catalog', []),
         ]);
     }
 
