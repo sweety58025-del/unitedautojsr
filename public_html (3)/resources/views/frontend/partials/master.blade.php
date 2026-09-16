@@ -73,8 +73,102 @@
         <link rel="stylesheet" href="{{ asset('front/assets/css/light.css') }}">
         <link rel="stylesheet" href="{{ asset('front/assets/css/animation.css') }}">
         <link rel="stylesheet" href="{{ asset('css/hero-parallax.css') }}">
+        <style>
+            .viswakarma-popup {
+                position: fixed;
+                inset: 0;
+                z-index: 10000;
+                display: grid;
+                place-items: center;
+                padding: 24px;
+                background: rgba(8, 18, 32, 0.72);
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 220ms ease, visibility 220ms ease;
+            }
+
+            .viswakarma-popup.is-open {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .viswakarma-popup__dialog {
+                position: relative;
+                max-width: min(92vw, 768px);
+                max-height: 92vh;
+                transform: translateY(18px) scale(.97);
+                transition: transform 260ms cubic-bezier(.2, .8, .2, 1);
+            }
+
+            .viswakarma-popup.is-open .viswakarma-popup__dialog {
+                transform: translateY(0) scale(1);
+            }
+
+            .viswakarma-popup__image {
+                display: block;
+                width: auto;
+                max-width: 92vw;
+                max-height: 92vh;
+                height: auto;
+                object-fit: contain;
+                border-radius: 8px;
+                box-shadow: 0 24px 70px rgba(0, 0, 0, .28);
+            }
+
+            .viswakarma-popup__close {
+                position: absolute;
+                top: -14px;
+                right: -14px;
+                display: grid;
+                width: 38px;
+                height: 38px;
+                place-items: center;
+                border: 2px solid #fff;
+                border-radius: 50%;
+                background: #ef233c;
+                color: #fff;
+                font-size: 25px;
+                line-height: 1;
+                cursor: pointer;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, .2);
+            }
+
+            .viswakarma-popup__close:hover,
+            .viswakarma-popup__close:focus-visible {
+                background: #c9182f;
+                outline: 3px solid rgba(255, 255, 255, .7);
+                outline-offset: 2px;
+            }
+
+            @media (max-width: 575px) {
+                .viswakarma-popup {
+                    padding: 18px;
+                }
+
+                .viswakarma-popup__dialog,
+                .viswakarma-popup__image {
+                    max-width: calc(100vw - 36px);
+                    max-height: 88vh;
+                }
+
+                .viswakarma-popup__close {
+                    top: -10px;
+                    right: -10px;
+                    width: 34px;
+                    height: 34px;
+                    font-size: 22px;
+                }
+            }
+        </style>
     </head>
     <body>
+
+        <div class="viswakarma-popup is-open" id="viswakarmaPopup" role="dialog" aria-modal="true" aria-label="Viswakarma Puja greeting">
+            <div class="viswakarma-popup__dialog">
+                <button class="viswakarma-popup__close" type="button" id="viswakarmaPopupClose" aria-label="Close poster">&times;</button>
+                <img class="viswakarma-popup__image" src="{{ asset('images/viswakarma-puja-poster.png') }}" alt="United Auto Viswakarma Puja greeting poster">
+            </div>
+        </div>
 
         @include('frontend.partials.header')
 
@@ -83,6 +177,29 @@
         </main>
 
         @include('frontend.partials.footer')
+
+        <script>
+            (function () {
+                const popup = document.getElementById('viswakarmaPopup');
+                const closeButton = document.getElementById('viswakarmaPopupClose');
+                if (!popup || !closeButton) return;
+
+                function closePopup() {
+                    popup.classList.remove('is-open');
+                    window.setTimeout(function () {
+                        popup.hidden = true;
+                    }, 240);
+                }
+
+                closeButton.addEventListener('click', closePopup);
+                popup.addEventListener('click', function (event) {
+                    if (event.target === popup) closePopup();
+                });
+                document.addEventListener('keydown', function (event) {
+                    if (event.key === 'Escape' && !popup.hidden) closePopup();
+                });
+            })();
+        </script>
 
     <!-- Core JS -->
         <script src="{{ asset('front/assets/js/jquery-3.6.0.min.js') }}"></script>
