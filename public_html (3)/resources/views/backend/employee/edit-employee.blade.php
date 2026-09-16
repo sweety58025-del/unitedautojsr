@@ -6,7 +6,7 @@
     <div class="col-sm-12 col-md-12">
         <div class="card">
             <div class="card-header pb-0"><h4>Edit Employee</h4></div>
-            <form class="form theme-form" method="post" action="{{ route('employee.update',$user->id) }}">
+            <form class="form theme-form" method="post" action="{{ route('employee.update',$user->id) }}" enctype="multipart/form-data">
                 @csrf
             <div class="card-body">
                 @if(session('message'))
@@ -42,6 +42,14 @@
                         <label class="form-label">Password</label>
                         <input class="form-control" type="password" name="password" value="{{ old('password') }}" >
                         <span class="text-danger">@error('password'){{ $message }} @enderror</span>
+                    </div>
+                    <div class="col-12 form-group mb-3">
+                        <label class="form-label">Profile image</label>
+                        <input class="form-control" type="file" name="profile_image" accept="image/jpeg,image/png,image/webp">
+                        @if ($user->profile_image)
+                            <img class="rounded-circle mt-2" src="{{ asset('assets/images/users/' . $user->profile_image) }}" alt="{{ $user->name }}" width="56" height="56" style="object-fit: cover;">
+                        @endif
+                        <span class="text-danger d-block">@error('profile_image'){{ $message }} @enderror</span>
                     </div>
                     <div class="col-12 form-group">
                         <div class="row">

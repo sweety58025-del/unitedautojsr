@@ -17,11 +17,11 @@ class DatabaseSeeder extends Seeder
         $admin = User::updateOrCreate(
             ['email' => 'admin@example.com'],
             [
-                'name'              => 'Admin User',
+                'name'              => 'Amit Mukherjee',
                 'email_verified_at' => now(),
                 'password'          => Hash::make(env('SEED_ADMIN_PASSWORD', Str::random(16))),
                 'phone'             => '9876543210',
-                'profile_image'     => 'default.png',
+                'profile_image'     => 'user-13.jpg',
                 'city'              => 'Ranchi',
                 'state'             => 'Jharkhand',
                 'country'           => 'India',

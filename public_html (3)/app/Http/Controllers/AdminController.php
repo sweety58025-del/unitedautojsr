@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\CompanySetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,20 @@ class AdminController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('backend.index', compact('user'));
+        $company = CompanySetting::firstRecord();
+        $appointments = Appointment::query()
+            ->whereDate('appointment_date', '>=', today())
+            ->orderBy('appointment_date')
+            ->orderBy('appointment_time')
+            ->limit(8)
+            ->get();
+        $appointmentStats = [
+            'total' => Appointment::count(),
+            'pending' => Appointment::where('status', 'pending')->count(),
+            'confirmed' => Appointment::where('status', 'confirmed')->count(),
+        ];
+
+        return view('backend.index', compact('user', 'company', 'appointments', 'appointmentStats'));
     }
 
     public function setting(){

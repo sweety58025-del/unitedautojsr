@@ -104,6 +104,7 @@ class EmployeeController extends Controller implements HasMiddleware
             'state' => 'nullable|string|max:100',
             'password' => 'nullable|min:6', // optional during update
             'roles' => 'required|array|min:1',
+            'profile_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ], [
             'roles.required' => 'Please select at least one role.',
             'phone.regex' => 'The phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.',
@@ -123,6 +124,23 @@ class EmployeeController extends Controller implements HasMiddleware
         // Update password only if entered
         if (!empty($request->password)) {
             $data['password'] = Hash::make($request->password);
+        }
+
+        if ($request->hasFile('profile_image')) {
+            $path = public_path('assets/images/users');
+            if (! is_dir($path)) {
+                mkdir($path, 0775, true);
+            }
+
+            if ($user->profile_image && $user->profile_image !== 'user-13.jpg') {
+                $oldImage = $path . DIRECTORY_SEPARATOR . $user->profile_image;
+                if (is_file($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+
+            $data['profile_image'] = time() . '_' . $request->file('profile_image')->getClientOriginalName();
+            $request->file('profile_image')->move($path, $data['profile_image']);
         }
 
         // Update user

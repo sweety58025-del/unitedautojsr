@@ -18,27 +18,6 @@
         @endif
 
         <div class="booking-dashboard">
-            <aside class="booking-side-card booking-duration-card">
-                <div class="booking-card-heading"><i class="bi bi-stopwatch" aria-hidden="true"></i><strong>Service Duration</strong></div>
-                <label for="duration_preset">Select Service Duration</label>
-                <select id="duration_preset" class="booking-dashboard-select">
-                    <option>30 minutes</option>
-                    <option>45 minutes</option>
-                    <option>60 minutes</option>
-                    <option>90 minutes</option>
-                </select>
-                <div class="booking-rate-row"><span>Base Time (30 mins)</span><strong id="durationBasePrice">₹0.00</strong></div>
-                <div class="booking-rate-row"><span>Extra Time (per 15 mins)</span><strong>₹0.00</strong></div>
-                <div class="booking-total-row"><span>Total Price</span><strong id="durationTotalPrice">₹0.00</strong></div>
-                <div class="booking-duration-options" aria-label="Quick duration selection">
-                    <button type="button" data-duration="30">30<br><small>Min</small></button>
-                    <button type="button" data-duration="60" class="is-selected">60<br><small>Min</small></button>
-                    <button type="button" data-duration="90">90<br><small>Min</small></button>
-                    <button type="button" data-duration="120">120<br><small>Min</small></button>
-                </div>
-                <button type="button" class="booking-red-button booking-check-button"><i class="bi bi-calendar-check" aria-hidden="true"></i> Check Availability</button>
-            </aside>
-
             <div class="booking-wizard-card">
                 <div class="booking-dashboard-heading">
                     <div><i class="bi bi-calendar2-check" aria-hidden="true"></i><h1>Book a Service Appointment</h1></div>
@@ -88,12 +67,11 @@
                     <div class="booking-service-list" id="serviceOptions" role="menu">
                         @forelse ($services as $service)
                             <div>
-                                <label class="service-option" data-price="{{ $service->price }}" data-name="{{ $service->name }}">
+                                <label class="service-option" data-name="{{ $service->name }}">
                                     <input
                                         type="radio"
                                         name="service_id"
                                         value="{{ $service->id }}"
-                                        data-price="{{ $service->price }}"
                                         data-name="{{ $service->name }}"
                                         {{ old('service_id', $selectedServiceId ?: $services->first()?->id) == $service->id ? 'checked' : '' }}
                                         required
@@ -105,7 +83,6 @@
                                                 <small class="d-block text-muted">{{ $service->category->name }}</small>
                                             @endif
                                         </span>
-                                        <span class="service-option-price">₹{{ number_format($service->price, 2) }}</span>
                                     </span>
                                 </label>
                             </div>
@@ -119,9 +96,8 @@
                     <div class="booking-selected-service">
                         <div class="booking-service-icon"><i class="bi bi-car-front-fill" aria-hidden="true"></i></div>
                         <h3 id="selectedServiceTitle">Select a service</h3>
-                        <strong id="selectedServicePrice">₹0.00</strong>
-                        <p id="selectedServiceDescription">Choose a service to see its price and details here.</p>
-                        <div class="booking-service-meta"><span><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Routine Maintenance</span><span><i class="bi bi-clock-fill" aria-hidden="true"></i> 60 mins</span></div>
+                        <p id="selectedServiceDescription">Choose a service to see its details here.</p>
+                        <div class="booking-service-meta"><span><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Routine Maintenance</span></div>
                     </div>
                     </div>
                     <div class="booking-pane-actions">
@@ -256,7 +232,6 @@
                     <h5 class="booking-pane-title">Review &amp; Confirm</h5>
                     <div class="booking-summary" id="bookingSummary">
                         <div class="booking-summary-row"><span>Service</span><strong id="summaryService">-</strong></div>
-                        <div class="booking-summary-row"><span>Price</span><strong id="summaryPrice">-</strong></div>
                         <div class="booking-summary-row"><span>Vehicle</span><strong id="summaryVehicle">-</strong></div>
                         <div class="booking-summary-row"><span>Registration No.</span><strong id="summaryReg">-</strong></div>
                         <div class="booking-summary-row"><span>Date &amp; Time</span><strong id="summaryDateTime">-</strong></div>
@@ -281,10 +256,6 @@
                 <div class="booking-card-heading"><i class="bi bi-gear" aria-hidden="true"></i><strong>Service</strong><button type="button" aria-label="Close service panel"><i class="bi bi-x-lg" aria-hidden="true"></i></button></div>
                 <label for="service_editor_name">Service</label>
                 <div class="booking-editor-select"><i class="bi bi-car-front" aria-hidden="true"></i><span id="editorServiceName">Select a service</span><i class="bi bi-chevron-down" aria-hidden="true"></i></div>
-                <label for="service_editor_price">Price</label>
-                <input id="service_editor_price" class="booking-dashboard-input" value="₹0.00" readonly>
-                <label for="service_editor_duration">Duration</label>
-                <input id="service_editor_duration" class="booking-dashboard-input" value="60 mins" readonly>
                 <button type="button" class="booking-red-button booking-save-button"><i class="bi bi-calendar-check" aria-hidden="true"></i> Save</button>
             </aside>
         </div>
@@ -432,12 +403,6 @@
         color: var(--color-text-dark);
     }
 
-    .service-option-price {
-        color: var(--color-primary-red);
-        font-weight: var(--font-weight-bold);
-        white-space: nowrap;
-    }
-
     .service-option:has(input:checked) {
         border-color: var(--color-primary-red);
         box-shadow: 0 0 0 2px rgba(233, 28, 45, 0.15);
@@ -560,8 +525,6 @@
         font-weight: 700;
     }
 
-    .booking-dashboard-select,
-    .booking-dashboard-input,
     .booking-editor-select {
         width: 100%;
         min-height: 40px;
@@ -573,14 +536,6 @@
         font-size: 12px;
     }
 
-    .booking-duration-card .nice-select.booking-dashboard-select {
-        display: flex;
-        align-items: center;
-        float: none;
-        width: 100%;
-        margin: 0;
-    }
-
     .booking-editor-select {
         display: flex;
         align-items: center;
@@ -590,76 +545,6 @@
 
     .booking-editor-select i:first-child {
         color: #ef233c;
-    }
-
-    .booking-rate-row,
-    .booking-total-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        gap: 12px;
-        min-width: 0;
-        padding: 8px 0;
-        color: #42516a;
-        font-size: 11px;
-    }
-
-    .booking-rate-row span,
-    .booking-rate-row strong,
-    .booking-total-row span,
-    .booking-total-row strong {
-        min-width: 0;
-    }
-
-    .booking-rate-row span,
-    .booking-total-row span {
-        overflow-wrap: anywhere;
-    }
-
-    .booking-total-row {
-        margin-top: 7px;
-        padding-top: 13px;
-        border-top: 1px solid #e9edf3;
-        color: #172842;
-        font-size: 12px;
-    }
-
-    .booking-total-row strong,
-    .booking-rate-row strong {
-        white-space: nowrap;
-    }
-
-    .booking-total-row strong {
-        color: #ef233c;
-        font-size: 16px;
-    }
-
-    .booking-duration-options {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 6px;
-        margin: 14px 0;
-    }
-
-    .booking-duration-options button {
-        padding: 9px 2px;
-        border: 1px solid #e1e7ef;
-        border-radius: 8px;
-        background: #fbfcfe;
-        color: #40506a;
-        font-size: 11px;
-        font-weight: 700;
-    }
-
-    .booking-duration-options button.is-selected,
-    .booking-duration-options button:hover {
-        border-color: #ef233c;
-        background: #ef233c;
-        color: #fff;
-    }
-
-    .booking-duration-options small {
-        font-size: 9px;
     }
 
     .booking-red-button {
@@ -817,11 +702,6 @@
         font-size: 9px;
     }
 
-    .service-option-price {
-        color: #172842;
-        font-size: 12px;
-    }
-
     .service-option:has(input:checked) {
         border-color: #ef233c;
         background: #fff7f8;
@@ -915,16 +795,6 @@
         .booking-wizard-card {
             width: 100%;
             min-width: 0;
-        }
-
-        .booking-rate-row,
-        .booking-total-row {
-            gap: 8px;
-        }
-
-        .booking-rate-row strong,
-        .booking-total-row strong {
-            flex: 0 0 auto;
         }
 
         .booking-editor-card {
@@ -1075,7 +945,6 @@
         function updateSummary() {
             const selectedService = form.querySelector('input[name="service_id"]:checked');
             document.getElementById('summaryService').textContent = selectedService ? selectedService.dataset.name : '-';
-            document.getElementById('summaryPrice').textContent = selectedService ? '₹' + Number(selectedService.dataset.price).toFixed(2) : '-';
             document.getElementById('summaryVehicle').textContent = document.getElementById('vehicle_make_model').value || '-';
             document.getElementById('summaryReg').textContent = document.getElementById('registration_number').value || '-';
 
@@ -1090,26 +959,17 @@
         function updateSelectedService() {
             const selectedService = form.querySelector('input[name="service_id"]:checked');
             const title = document.getElementById('selectedServiceTitle');
-            const price = document.getElementById('selectedServicePrice');
             const description = document.getElementById('selectedServiceDescription');
             const triggerName = document.getElementById('serviceTriggerName');
             const editorName = document.getElementById('editorServiceName');
-            const editorPrice = document.getElementById('service_editor_price');
-            const basePrice = document.getElementById('durationBasePrice');
-            const totalPrice = document.getElementById('durationTotalPrice');
 
             if (!selectedService) return;
 
             const serviceName = selectedService.dataset.name || 'Selected service';
-            const servicePrice = Number(selectedService.dataset.price || 0).toFixed(2);
             title.textContent = serviceName;
-            price.textContent = '₹' + servicePrice;
             triggerName.textContent = serviceName;
             description.textContent = 'Professional ' + serviceName.toLowerCase() + ' support from the United Auto workshop team.';
             editorName.textContent = serviceName;
-            editorPrice.value = '₹' + servicePrice;
-            basePrice.textContent = '₹' + servicePrice;
-            totalPrice.textContent = '₹' + servicePrice;
         }
 
         form.querySelectorAll('input[name="service_id"]').forEach(function (serviceInput) {
@@ -1147,16 +1007,6 @@
                 servicePicker.classList.remove('opens-up');
                 serviceTrigger.setAttribute('aria-expanded', 'false');
             }
-        });
-
-        document.querySelectorAll('[data-duration]').forEach(function (button) {
-            button.addEventListener('click', function () {
-                document.querySelectorAll('[data-duration]').forEach(function (item) {
-                    item.classList.toggle('is-selected', item === button);
-                });
-                document.getElementById('duration_preset').value = button.dataset.duration + ' minutes';
-                document.getElementById('service_editor_duration').value = button.dataset.duration + ' mins';
-            });
         });
 
         updateSelectedService();

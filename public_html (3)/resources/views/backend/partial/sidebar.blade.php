@@ -1,11 +1,11 @@
 @php
     use App\Models\CompanySetting;
     $logo = CompanySetting::firstRecord();
-    $logo_image = "";
+    $logo_image = 'logo.png';
 @endphp
 @if ($logo)
     @php
-        $logo_image = $logo->logo
+        $logo_image = $logo->logo ?: 'logo.png'
     @endphp
 @endif
 
@@ -22,7 +22,7 @@
                         <img src="{{ asset('assets/images/logo-sm.png') }}" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('assets/images/company/'.$logo_image) }}" alt="" height="24">
+                        <img src="{{ asset('assets/images/company/'.$logo_image) }}" alt="{{ $logo?->company_name ?? 'United Auto' }}" height="24">
                     </span>
                 </a>
                 <a href="{{ route('admindashboard.get') }}" class="logo logo-dark">
@@ -30,7 +30,7 @@
                         <img src="{{ asset('assets/images/logo-sm.png') }}" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('assets/images/company/'.$logo_image) }}" alt="" height="24">
+                        <img src="{{ asset('assets/images/company/'.$logo_image) }}" alt="{{ $logo?->company_name ?? 'United Auto' }}" height="24">
                     </span>
                 </a>
             </div>

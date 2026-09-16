@@ -1,10 +1,13 @@
 @php
     use App\Models\Service;
-    $services = Service::with('category')
-        ->where('status', 'yes')
-        ->orderBy('sort_order')
-        ->orderBy('name')
-        ->get();
+    use Illuminate\Support\Facades\Schema;
+    $services = Schema::hasTable((new Service)->getTable())
+        ? Service::with('category')
+            ->where('status', 'yes')
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get()
+        : collect();
     $serviceIcons = [
         'bi-wrench-adjustable',
         'bi-gear-wide-connected',
