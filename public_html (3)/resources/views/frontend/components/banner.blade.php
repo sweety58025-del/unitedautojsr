@@ -19,7 +19,7 @@
                         <div class="wptb-item--inner">
                             <h6 class="wptb-item--subtitle"><span class="text-one">AFFORDABLE &amp; RELIABLE</span></h6>
                             <h1 class="wptb-item--title">Comprehensive<br>Car Care Solutions</h1>
-                            <p class="hero-description">Expert care for your car with genuine parts, transparent pricing &amp; customer satisfaction.</p>
+                                <p class="hero-description">Expert care for your car with genuine parts, clear estimates &amp; customer satisfaction.</p>
 
                             <div class="hero-cta-row" aria-label="Hero actions">
                                 <a href="{{ route('book-appointment') }}" class="hero-cta hero-cta-primary">Book Appointment</a>
@@ -29,7 +29,7 @@
                             <div class="hero-trust-strip" aria-label="Trust highlights">
                                 <div class="hero-trust-item"><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>Experienced Technicians</span></div>
                                 <div class="hero-trust-item"><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>Genuine Parts</span></div>
-                                <div class="hero-trust-item"><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>Transparent Pricing</span></div>
+                                <div class="hero-trust-item"><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>Clear Estimates</span></div>
                                 <div class="hero-trust-item"><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>Customer Satisfaction</span></div>
                             </div>
                         </div>

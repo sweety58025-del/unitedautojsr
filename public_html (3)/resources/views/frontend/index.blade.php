@@ -42,7 +42,6 @@
         ],
         'areaServed' => 'Jamshedpur',
         'openingHours' => 'Mo-Sa 09:00-18:00',
-        'priceRange' => '₹₹',
         'sameAs' => [],
     ];
 @endphp

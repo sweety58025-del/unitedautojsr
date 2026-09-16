@@ -78,7 +78,11 @@ class BookAppointmentTest extends TestCase
         $this->get(route('book-appointment.confirmation', $appointment->id))
             ->assertOk()
             ->assertSee('Mike Johnson')
-            ->assertSee('Brake Inspection');
+            ->assertSee('Brake Inspection')
+            ->assertSee('Maruti Suzuki Swift')
+            ->assertSee('JH-01-AB-1234')
+            ->assertSee('Routine check')
+            ->assertSee('mike@example.com');
     }
 
     public function test_contact_page_renders_using_fallback_company_details_when_no_record_exists()

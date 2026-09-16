@@ -48,9 +48,19 @@ class AppointmentController extends Controller
         $service = Service::findOrFail($validated['service_id']);
 
         $appointment = Appointment::create([
-            ...$validated,
+            'service_id' => $validated['service_id'],
             'service_name'  => $service->name,
             'service_price' => $service->price,
+            'vehicle_make_model' => $validated['vehicle_make_model'],
+            'registration_number' => $validated['registration_number'],
+            'appointment_date' => $validated['appointment_date'],
+            'appointment_time' => $validated['appointment_time'],
+            'customer_name' => $validated['customer_name'],
+            'customer_email' => $validated['customer_email'] ?? null,
+            'customer_phone' => $validated['customer_phone'],
+            'service_reason' => $validated['service_reason'] ?? null,
+            'preferred_contact_method' => $validated['preferred_contact_method'],
+            'additional_issues' => $validated['additional_issues'] ?? null,
             'status'        => 'pending',
         ]);
 

@@ -1,12 +1,8 @@
-@php
-use App\Models\ServicePrice;
-$servicePrices = ServicePrice::allPrices();
-@endphp
 <div class="container my-5">
 
     <div class="wptb-heading">
         <div class="wptb-item--inner text-center">
-            <h1 class="wptb-item--title">Our <span>Service Prices</span></h1>
+            <h1 class="wptb-item--title">Service Pricing</h1>
             <div class="wptb-item--divider"></div>
         </div>
     </div>
@@ -14,38 +10,13 @@ $servicePrices = ServicePrice::allPrices();
     <div class="row mt-4">
         <div class="col-12">
 
-            <div class="table-responsive">
-
-                <table class="table service-price-table">
-
-                    <thead>
-                        <tr>
-                            <th>Service Item</th>
-                            <th>Small Car</th>
-                            <th>Medium Car</th>
-                            <th>SUV / MUV</th>
-                            <th>Premium Car</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        @foreach($servicePrices as $price)
-
-                        <tr>
-                            <td>{{ $price->item }}</td>
-                            <td>₹{{ $price->small_car_price }}</td>
-                            <td>₹{{ $price->medium_price }}</td>
-                            <td>₹{{ $price->suv_muv_price }}</td>
-                            <td>₹{{ $price->premium_price }}</td>
-                        </tr>
-
-                        @endforeach
-
-                    </tbody>
-
-                </table>
-
+            <div class="text-center py-5">
+                <p class="mb-2">For pricing or an estimate, please feel free to contact us via email or WhatsApp.</p>
+                <p class="mb-0">
+                    <a href="mailto:unitedautojsr@gmmail.com">unitedautojsr@gmmail.com</a>
+                    <span class="mx-2">or</span>
+                    <a href="https://wa.me/917992278199" target="_blank" rel="noopener">WhatsApp: 7992278199</a>
+                </p>
             </div>
 
         </div>

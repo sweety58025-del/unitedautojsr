@@ -434,6 +434,12 @@
         color: var(--color-text-muted);
     }
 
+    .booking-summary-row strong {
+        color: var(--color-navy);
+        text-align: right;
+        overflow-wrap: anywhere;
+    }
+
     .booking-page-shell {
         padding: 42px 0 120px;
         background: #f7f9fc;

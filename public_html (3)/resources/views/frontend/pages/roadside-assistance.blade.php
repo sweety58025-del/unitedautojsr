@@ -16,24 +16,6 @@
             </div>
         </div>
 
-        <div class="row">
-            @foreach([
-                ['distance' => '5 km', 'price' => 'Rs. 500'],
-                ['distance' => '7 km', 'price' => 'Rs. 700'],
-                ['distance' => '15 km', 'price' => 'Rs. 1000'],
-                ['distance' => '25 km', 'price' => 'Rs. 1500'],
-            ] as $rate)
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="wptb-image-box1 h-100">
-                        <div class="wptb-item--inner p-4">
-                            <h3>{{ $rate['distance'] }}</h3>
-                            <p class="wptb-item--description">{{ $rate['price'] }}</p>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-
         <div class="row justify-content-center mt-4">
             <div class="col-lg-9">
                 <div class="wptb-service-one p-5">

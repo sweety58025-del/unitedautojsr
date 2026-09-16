@@ -20,6 +20,10 @@
                 <div class="booking-summary-row"><span>Registration No.</span><strong>{{ $appointment->registration_number }}</strong></div>
                 <div class="booking-summary-row"><span>Date &amp; Time</span><strong>{{ $appointment->appointment_date->format('j M Y') }} · {{ $appointment->appointment_time }}</strong></div>
                 <div class="booking-summary-row"><span>Phone</span><strong>{{ $appointment->customer_phone }}</strong></div>
+                <div class="booking-summary-row"><span>Email</span><strong>{{ $appointment->customer_email ?: '-' }}</strong></div>
+                <div class="booking-summary-row"><span>Contact Method</span><strong class="text-capitalize">{{ $appointment->preferred_contact_method }}</strong></div>
+                <div class="booking-summary-row"><span>Service Reason</span><strong>{{ $appointment->service_reason ?: '-' }}</strong></div>
+                <div class="booking-summary-row"><span>Additional Issues</span><strong>{{ $appointment->additional_issues ?: '-' }}</strong></div>
                 <div class="booking-summary-row"><span>Status</span><strong class="text-capitalize">{{ $appointment->status }}</strong></div>
             </div>
 
@@ -68,6 +72,12 @@
 
     .booking-summary-row span {
         color: var(--color-text-muted);
+    }
+
+    .booking-summary-row strong {
+        color: var(--color-navy);
+        text-align: right;
+        overflow-wrap: anywhere;
     }
 </style>
 @endsection
