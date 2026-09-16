@@ -167,7 +167,7 @@
             <div class="viswakarma-popup is-open" id="viswakarmaPopup" role="dialog" aria-modal="true" aria-label="Viswakarma Puja greeting">
                 <div class="viswakarma-popup__dialog">
                     <button class="viswakarma-popup__close" type="button" id="viswakarmaPopupClose" aria-label="Close poster">&times;</button>
-                    <img class="viswakarma-popup__image" src="{{ asset('images/viswakarma-puja-poster.png') }}" alt="United Auto Viswakarma Puja greeting poster">
+                    <img class="viswakarma-popup__image" src="{{ asset('images/viswakarma-puja-poster.webp') }}" alt="United Auto Viswakarma Puja greeting poster">
                 </div>
             </div>
         @endif
