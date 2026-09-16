@@ -96,7 +96,7 @@
             <h6 class="wptb-item--subtitle">UNITED AUTO SERVICES</h6>
             <h1 class="wptb-item--title">Service Pricing</h1>
             <div class="wptb-item--divider"></div>
-            <p>Get a clear estimate for your vehicle before work begins. Our team is available to help you choose the right service.</p>
+            <p>Tell us what your vehicle needs and we will help you understand the expected service cost before work begins.</p>
         </div>
     </div>
 
@@ -104,15 +104,15 @@
         <div class="pricing-page__card">
             <span class="pricing-page__card-label">Email us</span>
             <h2>Request a written estimate</h2>
-            <p>Send your vehicle and service details to our team.</p>
+            <p>Share your vehicle details and the work you are considering so we can prepare an estimate.</p>
             <a href="mailto:unitedautojsr@gmmail.com">unitedautojsr@gmmail.com</a>
         </div>
         <div class="pricing-page__card">
             <span class="pricing-page__card-label">WhatsApp</span>
             <h2>Talk to the workshop</h2>
-            <p>Message us directly for pricing and service guidance.</p>
+            <p>Send a quick message to discuss your requirement and receive pricing guidance.</p>
             <a href="https://wa.me/917992278199" target="_blank" rel="noopener">WhatsApp: 7992278199</a>
         </div>
     </div>
-    <p class="pricing-page__note">Final pricing depends on the vehicle, parts, and work required. We will confirm the estimate with you before proceeding.</p>
+    <p class="pricing-page__note">Estimates may vary with the vehicle condition, parts, and final work required. We confirm the details with you before proceeding.</p>
 </div>

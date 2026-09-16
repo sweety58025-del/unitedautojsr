@@ -10,10 +10,10 @@
     <div class="container">
         <div class="wptb-heading insurance-directory__intro">
             <div class="wptb-item--inner">
-                <h6 class="wptb-item--subtitle">INSURANCE SERVICE</h6>
+                <h6 class="wptb-item--subtitle">CLAIM SUPPORT</h6>
                 <h1 class="wptb-item--title">Insurance Claim Partner</h1>
                 <div class="wptb-item--divider mx-auto"></div>
-                <p>United Auto works with the following insurance providers to support your vehicle claim journey.</p>
+                <p>Find the insurance companies supported for accident repair and claim-related assistance at United Auto.</p>
             </div>
         </div>
 
@@ -40,7 +40,7 @@
                         <li>Tata AIG</li>
             </ul>
             <div class="insurance-directory__action">
-                <a class="btn-two" href="{{ route('contact-us') }}"><span class="btn-wrap"><span class="text-first">Contact the workshop</span><span class="text-second"><i class="bi bi-arrow-right"></i></span></span></a>
+                <a class="btn-two" href="{{ route('contact-us') }}"><span class="btn-wrap"><span class="text-first">Discuss a claim</span><span class="text-second"><i class="bi bi-arrow-right"></i></span></span></a>
             </div>
         </div>
     </div>
