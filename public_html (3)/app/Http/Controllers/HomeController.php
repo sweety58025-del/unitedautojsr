@@ -72,6 +72,16 @@ class HomeController extends Controller
         return view('frontend.pages.insurance');
     }
 
+    public function insuranceClaimPartners()
+    {
+        return view('frontend.pages.insurance-claim-partners');
+    }
+
+    public function insuranceRenewal()
+    {
+        return view('frontend.pages.insurance-renewal');
+    }
+
     public function roadsideAssistance()
     {
         return view('frontend.pages.roadside-assistance');

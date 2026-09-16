@@ -22,6 +22,8 @@ Route::post('contact-us', [ContactController::class, 'store'])->name('contact-us
 Route::get('brands', [HomeController::class, 'brands'])->name('brands');
 Route::get('offers', [HomeController::class, 'offers'])->name('offers');
 Route::get('insurance', [HomeController::class, 'insurance'])->name('insurance');
+Route::get('insurance/claim-partners', [HomeController::class, 'insuranceClaimPartners'])->name('insurance.claim-partners');
+Route::get('insurance/renewal', [HomeController::class, 'insuranceRenewal'])->name('insurance.renewal');
 Route::get('roadside-assistance', [HomeController::class, 'roadsideAssistance'])->name('roadside-assistance');
 Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
 Route::get('articles/{article:slug}', [ArticleController::class, 'show'])->name('articles.show');

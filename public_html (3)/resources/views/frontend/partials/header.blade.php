@@ -92,7 +92,13 @@
 
                             <li class="menu-item"><a href="{{ route('service-price') }}">Pricing</a></li>
                             <li class="menu-item"><a href="{{ route('offers') }}">Offers</a></li>
-                            <li class="menu-item"><a href="{{ route('insurance') }}">Insurance</a></li>
+                            <li class="menu-item menu-item-has-children">
+                                <a href="#">Insurance</a>
+                                <ul class="sub-menu">
+                                    <li class="menu-item"><a href="{{ route('insurance.claim-partners') }}">Insurance Claim Partner</a></li>
+                                    <li class="menu-item"><a href="{{ route('insurance.renewal') }}">Insurance Renewal</a></li>
+                                </ul>
+                            </li>
                             <li class="menu-item"><a href="{{ route('gallery') }}">Gallery</a></li>
                             <li class="menu-item"><a href="{{ route('contact-us') }}">Contact</a></li>
                             <li class="menu-item header-book-cta">
@@ -157,7 +163,13 @@
 
             <li class="menu-item"><a href="{{ route('service-price') }}">Pricing</a></li>
             <li class="menu-item"><a href="{{ route('offers') }}">Offers</a></li>
-            <li class="menu-item"><a href="{{ route('insurance') }}">Insurance</a></li>
+            <li class="menu-item menu-item-has-children">
+                <a href="#" aria-expanded="false">Insurance</a>
+                <ul class="sub-menu">
+                    <li class="menu-item"><a href="{{ route('insurance.claim-partners') }}">Insurance Claim Partner</a></li>
+                    <li class="menu-item"><a href="{{ route('insurance.renewal') }}">Insurance Renewal</a></li>
+                </ul>
+            </li>
             <li class="menu-item"><a href="{{ route('gallery') }}">Gallery</a></li>
             <li class="menu-item"><a href="{{ route('contact-us') }}">Contact</a></li>
         </ul>
