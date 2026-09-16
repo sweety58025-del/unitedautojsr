@@ -26,7 +26,7 @@
                                 </div>
 
                                 <h5 class="wptb-item--title">
-                                    <a href="tel:{{ $contact_us->phone }}">
+                                    <a href="tel:+91{{ preg_replace('/\D+/', '', (string) preg_replace('/\s*\/.*$/', '', (string) $contact_us->phone)) }}">
                                         {{ $contact_us->phone }}
                                     </a>
                                 </h5>

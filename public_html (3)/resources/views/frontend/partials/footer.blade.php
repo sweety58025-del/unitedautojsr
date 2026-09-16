@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="wptb-item--holder">
                                         <p class="wptb-item--description">Need Help</p>
-                                        <h5 class="wptb-item--title"> <a href="tel:+91-{{ $company->phone ?? '' }}">+91-{{ $company->phone ?? '' }}</a></h5>
+                                        <h5 class="wptb-item--title"> <a href="tel:+91-{{ preg_replace('/\D+/', '', (string) preg_replace('/\s*\/.*$/', '', (string) ($company->phone ?? ''))) }}">+91-{{ $company->phone ?? '' }}</a></h5>
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +142,7 @@
                                         <div class="wptb-item--inner flex-start">
                                             <div class="wptb-item--holder">
                                                 <p class="wptb-item--description">Call Us Anytime</p>
-                                                <h5 class="wptb-item--title"><a href="tel:+91-{{ $company->phone ?? '' }}">{{ $company->phone ?? '' }}</a></h5>
+                                                <h5 class="wptb-item--title"><a href="tel:+91-{{ preg_replace('/\D+/', '', (string) preg_replace('/\s*\/.*$/', '', (string) ($company->phone ?? ''))) }}">{{ $company->phone ?? '' }}</a></h5>
                                             </div>
                                         </div>
                                     </div>

@@ -447,10 +447,10 @@
 
     .booking-dashboard {
         display: grid;
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr) 255px;
         align-items: start;
         gap: 20px;
-        max-width: 1080px;
+        max-width: 1240px;
         margin: 0 auto;
     }
 
@@ -775,11 +775,7 @@
 
     @media (max-width: 1199.9px) {
         .booking-dashboard {
-            grid-template-columns: 220px minmax(0, 1fr);
-        }
-
-        .booking-editor-card {
-            grid-column: 2;
+            grid-template-columns: minmax(0, 1fr) 230px;
         }
     }
 
@@ -857,6 +853,7 @@
                 }
             });
             currentStep = step;
+            if (step === steps.length) updateSummary();
             window.scrollTo({ top: form.offsetTop - 120, behavior: 'smooth' });
         }
 
@@ -932,9 +929,7 @@
         document.querySelectorAll('.booking-next-btn').forEach(function (btn) {
             btn.addEventListener('click', function () {
                 if (!validateStep(currentStep)) return;
-                const nextStep = currentStep + 1;
-                if (nextStep === steps.length) updateSummary();
-                if (currentStep < steps.length) showStep(nextStep);
+                if (currentStep < steps.length) showStep(currentStep + 1);
             });
         });
 
@@ -975,6 +970,14 @@
             document.getElementById('summaryReason').textContent = valueOf('service_reason');
             document.getElementById('summaryIssues').textContent = valueOf('additional_issues');
         }
+
+        form.addEventListener('input', function () {
+            if (currentStep === steps.length) updateSummary();
+        });
+
+        form.addEventListener('change', function () {
+            if (currentStep === steps.length) updateSummary();
+        });
 
         function updateSelectedService() {
             const selectedService = form.querySelector('input[name="service_id"]:checked');

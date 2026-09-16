@@ -4,7 +4,7 @@
 @section('og_title', 'United Auto | Car Service & Detailing in Jamshedpur')
 @php
     $homeCompany = \App\Models\CompanySetting::firstRecord();
-    $homePhone = $homeCompany?->phone ?: '9876543210';
+    $homePhone = $homeCompany?->phone ?: '7992278199 / 6201161384';
     $homeAddress = trim(($homeCompany?->address ?: 'Nagesh Tower, Near Goods Shed Road, Burma Mines, Jamshedpur - 831007') . ', ' . ($homeCompany?->city ?: 'Jamshedpur') . ', ' . ($homeCompany?->state ?: 'Jharkhand') . ' - ' . ($homeCompany?->pincode ?: '831007'));
     $homeAddress = preg_replace('/,\s*,/', ',', $homeAddress);
 @endphp

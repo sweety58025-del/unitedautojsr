@@ -28,7 +28,7 @@ class CompanySetting extends Model
             'logo' => 'logo.png',
             'favicon_icon' => 'favicon.png',
             'company_name' => 'United Auto',
-            'phone' => '9876543210',
+            'phone' => '7992278199 / 6201161384',
             'email' => 'hello@unitedauto.in',
             'city' => 'Jamshedpur',
             'state' => 'Jharkhand',

@@ -89,7 +89,7 @@ class BookAppointmentTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('United Auto');
-        $response->assertSee('9876543210');
+        $response->assertSee('7992278199 / 6201161384');
     }
 
     public function test_booking_requires_core_fields()

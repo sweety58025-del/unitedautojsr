@@ -26,9 +26,9 @@
                 </div>
 
                 <div class="header-top-contacts">
-                    <a href="tel:+91{{ preg_replace('/\D+/', '', (string) ($company->phone ?? '')) }}">
+                    <a href="tel:+91{{ preg_replace('/\D+/', '', (string) preg_replace('/\s*\/.*$/', '', (string) ($company->phone ?? ''))) }}">
                         <span class="icon bi bi-telephone-fill"></span>
-                        <span>Call us: {{ $company->phone ?? '079922 78199' }}</span>
+                        <span>Call us: {{ $company->phone ?? '7992278199 / 6201161384' }}</span>
                     </a>
                     <a href="mailto:{{ $contactEmail }}">
                         <span class="icon bi bi-envelope-fill"></span>
