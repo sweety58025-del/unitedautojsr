@@ -237,6 +237,10 @@
                         <div class="booking-summary-row"><span>Date &amp; Time</span><strong id="summaryDateTime">-</strong></div>
                         <div class="booking-summary-row"><span>Name</span><strong id="summaryName">-</strong></div>
                         <div class="booking-summary-row"><span>Phone</span><strong id="summaryPhone">-</strong></div>
+                        <div class="booking-summary-row"><span>Email</span><strong id="summaryEmail">-</strong></div>
+                        <div class="booking-summary-row"><span>Contact Method</span><strong id="summaryContactMethod">-</strong></div>
+                        <div class="booking-summary-row"><span>Service Reason</span><strong id="summaryReason">-</strong></div>
+                        <div class="booking-summary-row"><span>Additional Issues</span><strong id="summaryIssues">-</strong></div>
                     </div>
                     <div class="booking-pane-actions booking-pane-actions-split">
                         <button type="button" class="btn-outline booking-back-btn">Back</button>
@@ -443,10 +447,10 @@
 
     .booking-dashboard {
         display: grid;
-        grid-template-columns: 255px minmax(0, 1fr) 255px;
+        grid-template-columns: minmax(0, 1fr);
         align-items: start;
         gap: 20px;
-        max-width: 1450px;
+        max-width: 1080px;
         margin: 0 auto;
     }
 
@@ -465,6 +469,8 @@
 
     .booking-wizard-card {
         max-width: none;
+        width: 100%;
+        min-width: 0;
         padding: 18px;
     }
 
@@ -588,10 +594,12 @@
 
     .booking-step-line {
         background: #dfe6ef;
+        min-width: 0;
     }
 
     .booking-step.is-active .booking-step-circle,
     .booking-step.is-complete .booking-step-circle {
+        width: 100%;
         background: #ef233c;
         border-color: #ef233c;
     }
@@ -924,8 +932,9 @@
         document.querySelectorAll('.booking-next-btn').forEach(function (btn) {
             btn.addEventListener('click', function () {
                 if (!validateStep(currentStep)) return;
-                if (currentStep === 4) updateSummary();
-                if (currentStep < steps.length) showStep(currentStep + 1);
+                const nextStep = currentStep + 1;
+                if (nextStep === steps.length) updateSummary();
+                if (currentStep < steps.length) showStep(nextStep);
             });
         });
 
@@ -944,16 +953,27 @@
 
         function updateSummary() {
             const selectedService = form.querySelector('input[name="service_id"]:checked');
+            const valueOf = function (id) {
+                const field = document.getElementById(id);
+                return field && field.value.trim() ? field.value.trim() : '-';
+            };
+
             document.getElementById('summaryService').textContent = selectedService ? selectedService.dataset.name : '-';
-            document.getElementById('summaryVehicle').textContent = document.getElementById('vehicle_make_model').value || '-';
-            document.getElementById('summaryReg').textContent = document.getElementById('registration_number').value || '-';
+            document.getElementById('summaryVehicle').textContent = valueOf('vehicle_make_model');
+            document.getElementById('summaryReg').textContent = valueOf('registration_number');
 
-            const date = document.getElementById('appointment_date').value;
-            const time = document.getElementById('appointment_time').value;
-            document.getElementById('summaryDateTime').textContent = (date && time) ? (date + ' · ' + time) : '-';
+            const dateField = document.getElementById('appointment_date');
+            const timeField = document.getElementById('appointment_time');
+            const date = dateField?.value.trim() || '';
+            const time = timeField?.value.trim() || '';
+            document.getElementById('summaryDateTime').textContent = date && time ? (date + ' · ' + time) : '-';
 
-            document.getElementById('summaryName').textContent = document.getElementById('customer_name').value || '-';
-            document.getElementById('summaryPhone').textContent = document.getElementById('customer_phone').value || '-';
+            document.getElementById('summaryName').textContent = valueOf('customer_name');
+            document.getElementById('summaryPhone').textContent = valueOf('customer_phone');
+            document.getElementById('summaryEmail').textContent = valueOf('customer_email');
+            document.getElementById('summaryContactMethod').textContent = valueOf('preferred_contact_method');
+            document.getElementById('summaryReason').textContent = valueOf('service_reason');
+            document.getElementById('summaryIssues').textContent = valueOf('additional_issues');
         }
 
         function updateSelectedService() {
