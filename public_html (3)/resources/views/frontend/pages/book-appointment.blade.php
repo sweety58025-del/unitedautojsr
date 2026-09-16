@@ -853,7 +853,10 @@
                 }
             });
             currentStep = step;
-            if (step === steps.length) updateSummary();
+            if (step === steps.length) {
+                window.requestAnimationFrame(updateSummary);
+                window.setTimeout(updateSummary, 0);
+            }
             window.scrollTo({ top: form.offsetTop - 120, behavior: 'smooth' });
         }
 
@@ -948,19 +951,20 @@
 
         function updateSummary() {
             const selectedService = form.querySelector('input[name="service_id"]:checked');
-            const valueOf = function (id) {
-                const field = document.getElementById(id);
-                return field && field.value.trim() ? field.value.trim() : '-';
+            const valueOf = function (name) {
+                const field = form.elements.namedItem(name);
+                const value = field && typeof field.value === 'string' ? field.value.trim() : '';
+                return value || '-';
             };
 
             document.getElementById('summaryService').textContent = selectedService ? selectedService.dataset.name : '-';
             document.getElementById('summaryVehicle').textContent = valueOf('vehicle_make_model');
             document.getElementById('summaryReg').textContent = valueOf('registration_number');
 
-            const dateField = document.getElementById('appointment_date');
-            const timeField = document.getElementById('appointment_time');
-            const date = dateField?.value.trim() || '';
-            const time = timeField?.value.trim() || '';
+            const dateField = form.elements.namedItem('appointment_date');
+            const timeField = form.elements.namedItem('appointment_time');
+            const date = dateField && typeof dateField.value === 'string' ? dateField.value.trim() : '';
+            const time = timeField && typeof timeField.value === 'string' ? timeField.value.trim() : '';
             document.getElementById('summaryDateTime').textContent = date && time ? (date + ' · ' + time) : '-';
 
             document.getElementById('summaryName').textContent = valueOf('customer_name');
