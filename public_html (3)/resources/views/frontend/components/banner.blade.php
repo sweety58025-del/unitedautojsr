@@ -47,22 +47,22 @@
     <div class="hero-parallax__stats">
         <div class="hero-parallax__stat">
             <div class="hero-parallax__stat-icon"><i class="bi bi-briefcase-fill" aria-hidden="true"></i></div>
-            <div class="hero-parallax__stat-value" data-count="65250">0+</div>
+            <div class="hero-parallax__stat-value" data-count="46800">0+</div>
             <div class="hero-parallax__stat-label">Hours of Works</div>
         </div>
         <div class="hero-parallax__stat">
             <div class="hero-parallax__stat-icon"><i class="bi bi-hand-thumbs-up-fill" aria-hidden="true"></i></div>
-            <div class="hero-parallax__stat-value" data-count="23160">0+</div>
+            <div class="hero-parallax__stat-value" data-count="1500">0+</div>
             <div class="hero-parallax__stat-label">Happy Customers</div>
         </div>
         <div class="hero-parallax__stat">
             <div class="hero-parallax__stat-icon"><i class="bi bi-people-fill" aria-hidden="true"></i></div>
-            <div class="hero-parallax__stat-value" data-count="1500">0+</div>
-            <div class="hero-parallax__stat-label">Experienced Workers</div>
+            <div class="hero-parallax__stat-value" data-count="20">0+</div>
+            <div class="hero-parallax__stat-label">No. of Employees</div>
         </div>
         <div class="hero-parallax__stat">
             <div class="hero-parallax__stat-icon"><i class="bi bi-award-fill" aria-hidden="true"></i></div>
-            <div class="hero-parallax__stat-value" data-count="20">0+</div>
+            <div class="hero-parallax__stat-value" data-count="15">0+</div>
             <div class="hero-parallax__stat-label">Years of Experience</div>
         </div>
     </div>
