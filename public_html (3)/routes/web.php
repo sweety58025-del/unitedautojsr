@@ -10,9 +10,36 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionCategoryController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\SubCategoryController;
+use App\Models\Article;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/sitemap.xml', function () {
+    $urls = collect([
+        ['loc' => route('home')],
+        ['loc' => route('about-us')],
+        ['loc' => route('service-price')],
+        ['loc' => route('gallery')],
+        ['loc' => route('contact-us')],
+        ['loc' => route('brands')],
+        ['loc' => route('offers')],
+        ['loc' => route('insurance')],
+        ['loc' => route('insurance.claim-partners')],
+        ['loc' => route('insurance.renewal')],
+        ['loc' => route('roadside-assistance')],
+        ['loc' => route('articles.index')],
+        ['loc' => route('book-appointment')],
+    ])->merge(
+        Article::published()->get()->map(fn (Article $article) => [
+            'loc' => route('articles.show', $article),
+            'lastmod' => $article->updated_at?->toAtomString(),
+        ])
+    );
+
+    return response()->view('frontend.sitemap', compact('urls'))
+        ->header('Content-Type', 'application/xml; charset=UTF-8');
+})->name('sitemap');
 
 Route::get('about-us', [HomeController::class, 'aboutUs'])->name('about-us');
 Route::get('service-price', [HomeController::class, 'servicePrice'])->name('service-price');
