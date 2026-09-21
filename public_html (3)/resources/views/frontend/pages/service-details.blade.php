@@ -1,6 +1,7 @@
 @extends('frontend.partials.master')
 
-@section('title', 'Service Details')
+@section('title', $service->name)
+@section('meta_description', \Illuminate\Support\Str::limit(strip_tags($service->content ?: $service->description ?: 'United Auto provides vehicle service and repair support in Jamshedpur.'), 155))
 
 @section('content')
 
@@ -53,9 +54,9 @@
 
                 <div class="service-content">
 
-                    <h2 class="service-title mb-3">
+                    <h1 class="service-title mb-3">
                         {{ $service->name }}
-                    </h2>
+                    </h1>
 
                     <p class="service-description">
                         {!! nl2br(e($service->description ?: 'Professional vehicle care from the United Auto workshop team.')) !!}
@@ -81,6 +82,17 @@
     </div>
 
 </section>
+
+<script type="application/ld+json">
+{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'Service',
+    'name' => $service->name,
+    'description' => strip_tags($service->content ?: $service->description ?: ''),
+    'provider' => ['@type' => 'AutoRepair', 'name' => 'United Auto', 'areaServed' => 'Jamshedpur'],
+    'url' => url()->current(),
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
 
 <br><br><br><br><br>
 

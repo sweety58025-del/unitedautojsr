@@ -14,4 +14,18 @@
         <div style="white-space: pre-line; line-height: 1.8; color: var(--color-text-muted);">{{ $article->content }}</div>
     </div>
 </article>
+<script type="application/ld+json">
+{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'Article',
+    'headline' => $article->title,
+    'description' => $article->excerpt ?: $article->title,
+    'url' => url()->current(),
+    'datePublished' => optional($article->published_at)->toAtomString(),
+    'dateModified' => optional($article->updated_at)->toAtomString(),
+    'image' => $article->image ? asset($article->image) : asset('assets/images/company/logo.png'),
+    'author' => ['@type' => 'Organization', 'name' => 'United Auto'],
+    'publisher' => ['@type' => 'Organization', 'name' => 'United Auto'],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
 @endsection

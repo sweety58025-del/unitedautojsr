@@ -1,6 +1,7 @@
 @extends('frontend.partials.master')
 
 @section('title', 'Insurance')
+@section('meta_description', 'Learn how United Auto supports vehicle repair workflows after an accident in Jamshedpur.')
 
 @section('content')
 @include('frontend.partials.breadcumbs')

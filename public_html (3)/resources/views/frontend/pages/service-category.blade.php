@@ -1,6 +1,7 @@
 @extends('frontend.partials.master')
 
 @section('title', $service->name)
+@section('meta_description', \Illuminate\Support\Str::limit(strip_tags($service->description ?: 'United Auto provides vehicle care services in Jamshedpur.'), 155))
 
 @section('content')
 
@@ -53,9 +54,9 @@
 
                 <div class="service-content">
 
-                    <h2 class="service-title mb-3">
+                    <h1 class="service-title mb-3">
                         {{ $service->name }}
-                    </h2>
+                    </h1>
 
                     <p class="service-description">
                         {!! $service->content !!}

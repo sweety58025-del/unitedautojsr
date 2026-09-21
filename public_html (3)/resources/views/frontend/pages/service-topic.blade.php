@@ -1,6 +1,7 @@
 @extends('frontend.partials.master')
 
 @section('title', $topic)
+@section('meta_description', 'Learn about ' . $topic . ' service options from United Auto in Jamshedpur and book an appointment with the workshop team.')
 
 @section('content')
 @include('frontend.partials.breadcumbs')

@@ -1,6 +1,7 @@
 @extends('frontend.partials.master')
 
 @section('title', 'Gallery')
+@section('meta_description', 'View United Auto vehicle repair, detailing, paint protection, and workshop project photos from Jamshedpur.')
 
 @section('content')
 

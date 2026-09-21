@@ -1,6 +1,7 @@
 @extends('frontend.partials.master')
 
 @section('title', 'Offers')
+@section('meta_description', 'Explore current United Auto service and roadside assistance offers available to vehicle owners in Jamshedpur.')
 
 @section('content')
 @include('frontend.partials.breadcumbs')

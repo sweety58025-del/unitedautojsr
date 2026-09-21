@@ -3,6 +3,9 @@
     $company = CompanySetting::firstRecord();
     $favicon_icon = $company?->favicon_icon ?? 'favicon.png';
     $logo_image = "";
+    $pageTitle = trim($__env->yieldContent('title')) ?: 'United Auto | Car Service & Detailing in Jamshedpur';
+    $pageDescription = trim($__env->yieldContent('meta_description')) ?: 'United Auto provides car servicing, detailing, paint protection, and maintenance in Jamshedpur.';
+    $pageRobots = trim($__env->yieldContent('robots')) ?: 'index, follow';
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -11,23 +14,23 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="@yield('meta_description', 'United Auto provides premium car servicing, detailing, paint protection, and maintenance in Jamshedpur.')">
+        <meta name="description" content="{{ $pageDescription }}">
         <meta name="author" content="United Auto">
-        <meta name="robots" content="index, follow">
+        <meta name="robots" content="{{ $pageRobots }}">
         <meta name="geo.region" content="IN-JH">
         <meta name="geo.placename" content="Jamshedpur, Jharkhand, India">
         <link rel="canonical" href="{{ url()->current() }}">
         <meta property="og:type" content="website">
         <meta property="og:locale" content="en_IN">
         <meta property="og:site_name" content="United Auto">
-        <meta property="og:title" content="@yield('og_title', 'United Auto | Car Service & Detailing in Jamshedpur')">
-        <meta property="og:description" content="@yield('meta_description', 'United Auto provides premium car servicing, detailing, paint protection, and maintenance in Jamshedpur.')">
+        <meta property="og:title" content="{{ trim($__env->yieldContent('og_title')) ?: $pageTitle }}">
+        <meta property="og:description" content="{{ $pageDescription }}">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:image" content="{{ asset('assets/images/company/' . ($company->logo ?? 'logo.png')) }}">
         <meta property="og:image:alt" content="United Auto car service and detailing workshop in Jamshedpur">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="@yield('og_title', 'United Auto | Car Service & Detailing in Jamshedpur')">
-        <meta name="twitter:description" content="@yield('meta_description', 'United Auto provides premium car servicing, detailing, paint protection, and maintenance in Jamshedpur.')">
+        <meta name="twitter:title" content="{{ trim($__env->yieldContent('og_title')) ?: $pageTitle }}">
+        <meta name="twitter:description" content="{{ $pageDescription }}">
         <meta name="twitter:image" content="{{ asset('assets/images/company/' . ($company->logo ?? 'logo.png')) }}">
 
         <!-- Favicon and touch Icons -->
@@ -38,7 +41,7 @@
         <link href="{{ asset('assets/images/company/'.$favicon_icon) }}" rel="apple-touch-icon" sizes="144x144">
 
         <!-- Page Title -->
-        <title>@yield('title', 'United Auto')</title>    
+        <title>{{ $pageTitle }}</title>
         
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">

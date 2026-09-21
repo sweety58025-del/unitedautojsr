@@ -1,6 +1,7 @@
 @extends('frontend.partials.master')
 
 @section('title', 'Brands We Service')
+@section('meta_description', 'See the vehicle brands supported by United Auto for servicing, repair, detailing, and maintenance in Jamshedpur.')
 
 @section('content')
 @include('frontend.partials.breadcumbs')

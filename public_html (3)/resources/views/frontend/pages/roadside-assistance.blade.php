@@ -1,6 +1,7 @@
 @extends('frontend.partials.master')
 
 @section('title', 'Roadside Assistance')
+@section('meta_description', 'Review United Auto roadside assistance information, booking steps, coverage details, and service conditions.')
 
 @section('content')
 @include('frontend.partials.breadcumbs')

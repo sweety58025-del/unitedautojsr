@@ -1,5 +1,6 @@
 @extends('frontend.partials.master')
 @section('title', 'Appointment Confirmed')
+@section('robots', 'noindex, nofollow')
 @section('content')
 @include('frontend.partials.breadcumbs')
 

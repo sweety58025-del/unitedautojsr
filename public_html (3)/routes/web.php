@@ -11,6 +11,8 @@ use App\Http\Controllers\PermissionCategoryController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\SubCategoryController;
 use App\Models\Article;
+use App\Models\Service;
+use App\Models\SubCategory;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -34,6 +36,16 @@ Route::get('/sitemap.xml', function () {
         Article::published()->get()->map(fn (Article $article) => [
             'loc' => route('articles.show', $article),
             'lastmod' => $article->updated_at?->toAtomString(),
+        ])
+    )->merge(
+        Service::query()->where('status', 'yes')->get()->map(fn (Service $service) => [
+            'loc' => route('service.details', $service->slug),
+            'lastmod' => $service->updated_at?->toAtomString(),
+        ])
+    )->merge(
+        SubCategory::query()->get()->map(fn (SubCategory $service) => [
+            'loc' => route('service-category.details', $service->slug),
+            'lastmod' => $service->updated_at?->toAtomString(),
         ])
     );
 
