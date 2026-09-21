@@ -14,13 +14,17 @@
         <meta name="description" content="@yield('meta_description', 'United Auto provides premium car servicing, detailing, paint protection, and maintenance in Jamshedpur.')">
         <meta name="author" content="United Auto">
         <meta name="robots" content="index, follow">
+        <meta name="geo.region" content="IN-JH">
+        <meta name="geo.placename" content="Jamshedpur, Jharkhand, India">
         <link rel="canonical" href="{{ url()->current() }}">
         <meta property="og:type" content="website">
+        <meta property="og:locale" content="en_IN">
         <meta property="og:site_name" content="United Auto">
         <meta property="og:title" content="@yield('og_title', 'United Auto | Car Service & Detailing in Jamshedpur')">
         <meta property="og:description" content="@yield('meta_description', 'United Auto provides premium car servicing, detailing, paint protection, and maintenance in Jamshedpur.')">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:image" content="{{ asset('assets/images/company/' . ($company->logo ?? 'logo.png')) }}">
+        <meta property="og:image:alt" content="United Auto car service and detailing workshop in Jamshedpur">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="@yield('og_title', 'United Auto | Car Service & Detailing in Jamshedpur')">
         <meta name="twitter:description" content="@yield('meta_description', 'United Auto provides premium car servicing, detailing, paint protection, and maintenance in Jamshedpur.')">
