@@ -15,55 +15,23 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        $catalogServiceNames = collect(config('service-catalog', []))
-            ->flatMap(fn ($group) => $group['items'] ?? [])
-            ->map(fn ($name) => trim((string) $name))
-            ->filter()
-            ->unique(fn ($name) => Str::slug($name))
-            ->values();
-
         $services = Service::with('category')
             ->where('status', 'yes')
             ->orderBy('sort_order')
             ->orderBy('name')
             ->get();
 
-        if ($catalogServiceNames->isNotEmpty()) {
-            $services = $services->filter(function ($service) use ($catalogServiceNames) {
-                $serviceName = trim((string) $service->name);
-                $serviceKey = Str::slug($serviceName);
-
-                return $catalogServiceNames->contains(function ($catalogName) use ($serviceName, $serviceKey) {
-                    $catalogKey = Str::slug((string) $catalogName);
-
-                    return strtolower($serviceName) === strtolower(trim((string) $catalogName))
-                        || $serviceKey === $catalogKey;
-                });
-            })->values();
-        }
-
-        if ($services->isEmpty()) {
-            $services = Service::with('category')
-                ->where('status', 'yes')
-                ->orderBy('sort_order')
-                ->orderBy('name')
-                ->get();
-        }
-
         $selectedServiceId = request()->integer('service');
         $selectedServiceSlug = trim((string) request()->input('service'));
 
         if ((! $selectedServiceId || $selectedServiceId < 1) && $selectedServiceSlug !== '') {
             $selectedService = $services->first(function ($service) use ($selectedServiceSlug) {
-                $matchValues = [
-                    (string) $service->slug,
-                    Str::slug((string) $service->name),
-                    strtolower((string) $service->name),
-                    strtolower(str_replace('-', ' ', $selectedServiceSlug)),
-                ];
+                $serviceName = trim((string) $service->name);
+                $serviceSlug = (string) ($service->slug ?: Str::slug($serviceName));
 
-                return in_array(strtolower($selectedServiceSlug), array_map('strtolower', $matchValues), true)
-                    || in_array(strtolower(str_replace('-', ' ', $selectedServiceSlug)), array_map('strtolower', $matchValues), true);
+                return strtolower($serviceSlug) === strtolower($selectedServiceSlug)
+                    || strtolower(Str::slug($serviceName)) === strtolower($selectedServiceSlug)
+                    || strtolower($serviceName) === strtolower(str_replace('-', ' ', $selectedServiceSlug));
             });
 
             $selectedServiceId = $selectedService?->id ?? null;
