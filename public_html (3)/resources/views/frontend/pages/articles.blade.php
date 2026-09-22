@@ -1,5 +1,5 @@
 @extends('frontend.partials.master')
-@section('title', 'Articles')
+@section('title', 'Car Care Articles | United Auto')
 @section('meta_description', 'Automotive care tips, maintenance guidance, and vehicle protection articles from United Auto.')
 @section('content')
 @include('frontend.partials.breadcumbs')

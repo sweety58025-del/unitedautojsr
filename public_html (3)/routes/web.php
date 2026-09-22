@@ -18,36 +18,45 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/sitemap.xml', function () {
+    $configuredAppUrl = rtrim((string) config('app.url'), '/');
+    $canonicalBase = $configuredAppUrl && ! str_contains($configuredAppUrl, 'localhost')
+        ? preg_replace('/^http:/i', 'https:', $configuredAppUrl)
+        : 'https://unitedautojsr.in';
+    $canonicalRoute = function (string $name, array $parameters = []) use ($canonicalBase): string {
+        $path = ltrim(route($name, $parameters, false), '/');
+
+        return $canonicalBase . ($path === '' ? '' : '/' . $path);
+    };
     $urls = collect([
-        ['loc' => route('home')],
-        ['loc' => route('about-us')],
-        ['loc' => route('service-price')],
-        ['loc' => route('gallery')],
-        ['loc' => route('contact-us')],
-        ['loc' => route('brands')],
-        ['loc' => route('offers')],
-        ['loc' => route('insurance')],
-        ['loc' => route('insurance.claim-partners')],
-        ['loc' => route('insurance.renewal')],
-        ['loc' => route('roadside-assistance')],
-        ['loc' => route('articles.index')],
-        ['loc' => route('book-appointment')],
+        ['loc' => $canonicalRoute('home')],
+        ['loc' => $canonicalRoute('about-us')],
+        ['loc' => $canonicalRoute('service-price')],
+        ['loc' => $canonicalRoute('gallery')],
+        ['loc' => $canonicalRoute('contact-us')],
+        ['loc' => $canonicalRoute('brands')],
+        ['loc' => $canonicalRoute('offers')],
+        ['loc' => $canonicalRoute('insurance')],
+        ['loc' => $canonicalRoute('insurance.claim-partners')],
+        ['loc' => $canonicalRoute('insurance.renewal')],
+        ['loc' => $canonicalRoute('roadside-assistance')],
+        ['loc' => $canonicalRoute('articles.index')],
+        ['loc' => $canonicalRoute('book-appointment')],
     ])->merge(
-        Article::published()->get()->map(fn (Article $article) => [
-            'loc' => route('articles.show', $article),
+        Article::published()->whereNotNull('slug')->where('slug', '!=', '')->get()->map(fn (Article $article) => [
+            'loc' => $canonicalRoute('articles.show', [$article]),
             'lastmod' => $article->updated_at?->toAtomString(),
         ])
     )->merge(
-        Service::query()->where('status', 'yes')->get()->map(fn (Service $service) => [
-            'loc' => route('service.details', $service->slug),
+        Service::query()->where('status', 'yes')->whereNotNull('slug')->where('slug', '!=', '')->get()->map(fn (Service $service) => [
+            'loc' => $canonicalRoute('service.details', [$service->slug]),
             'lastmod' => $service->updated_at?->toAtomString(),
         ])
     )->merge(
-        SubCategory::query()->get()->map(fn (SubCategory $service) => [
-            'loc' => route('service-category.details', $service->slug),
+        SubCategory::query()->whereNotNull('slug')->where('slug', '!=', '')->get()->map(fn (SubCategory $service) => [
+            'loc' => $canonicalRoute('service-category.details', [$service->slug]),
             'lastmod' => $service->updated_at?->toAtomString(),
         ])
-    );
+    )->unique('loc')->values();
 
     return response()->view('frontend.sitemap', compact('urls'))
         ->header('Content-Type', 'application/xml; charset=UTF-8');

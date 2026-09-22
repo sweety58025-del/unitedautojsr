@@ -1,6 +1,6 @@
 @extends('frontend.partials.master')
 
-@section('title', 'Insurance')
+@section('title', 'Vehicle Insurance Support | United Auto')
 @section('meta_description', 'Learn how United Auto supports vehicle repair workflows after an accident in Jamshedpur.')
 
 @section('content')

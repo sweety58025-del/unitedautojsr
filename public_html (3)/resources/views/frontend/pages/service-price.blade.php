@@ -1,5 +1,5 @@
 @extends('frontend.partials.master')
-@section('title', 'Service Price')
+@section('title', 'Car Service Prices and Packages | United Auto')
 @section('meta_description', 'Review United Auto service pricing information in Jamshedpur and request a written estimate for your vehicle.')
 @section('content')
 @include('frontend.partials.breadcumbs')

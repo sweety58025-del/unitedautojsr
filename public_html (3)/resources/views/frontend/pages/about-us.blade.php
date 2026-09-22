@@ -1,5 +1,5 @@
 @extends('frontend.partials.master')
-@section('title', 'About Us')
+@section('title', 'About United Auto | Car Service in Jamshedpur')
 @section('meta_description', 'Learn about United Auto, our workshop expertise, quality service standards, and trusted car care in Jamshedpur.')
 @section('og_title', 'About United Auto | Trusted Car Service in Jamshedpur')
 

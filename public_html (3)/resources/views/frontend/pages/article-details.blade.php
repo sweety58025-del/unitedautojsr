@@ -1,5 +1,5 @@
 @extends('frontend.partials.master')
-@section('title', $article->title)
+@section('title', $article->title . ' | United Auto')
 @section('meta_description', $article->excerpt ?: $article->title)
 @section('content')
 @include('frontend.partials.breadcumbs')
@@ -20,12 +20,14 @@
     '@type' => 'Article',
     'headline' => $article->title,
     'description' => $article->excerpt ?: $article->title,
-    'url' => url()->current(),
+    'url' => $canonicalUrl,
+    'author' => ['@id' => $businessId],
+    'publisher' => ['@id' => $businessId],
+    'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $canonicalUrl],
+] + array_filter([
     'datePublished' => optional($article->published_at)->toAtomString(),
     'dateModified' => optional($article->updated_at)->toAtomString(),
-    'image' => $article->image ? asset($article->image) : asset('assets/images/company/logo.png'),
-    'author' => ['@type' => 'Organization', 'name' => 'United Auto'],
-    'publisher' => ['@type' => 'Organization', 'name' => 'United Auto'],
-], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    'image' => $article->image ? asset($article->image) : null,
+], fn ($value) => filled($value)), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}
 </script>
 @endsection

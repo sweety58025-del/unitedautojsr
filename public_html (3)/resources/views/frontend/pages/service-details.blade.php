@@ -1,6 +1,6 @@
 @extends('frontend.partials.master')
 
-@section('title', $service->name)
+@section('title', $service->name . ' in Jamshedpur | United Auto')
 @section('meta_description', \Illuminate\Support\Str::limit(strip_tags($service->content ?: $service->description ?: 'United Auto provides vehicle service and repair support in Jamshedpur.'), 155))
 
 @section('content')
@@ -89,9 +89,10 @@
     '@type' => 'Service',
     'name' => $service->name,
     'description' => strip_tags($service->content ?: $service->description ?: ''),
-    'provider' => ['@type' => 'AutoRepair', 'name' => 'United Auto', 'areaServed' => 'Jamshedpur'],
-    'url' => url()->current(),
-], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    'provider' => ['@id' => $businessId],
+    'areaServed' => ['@type' => 'City', 'name' => $company?->city ?: 'Jamshedpur'],
+    'url' => $canonicalUrl,
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}
 </script>
 
 <br><br><br><br><br>

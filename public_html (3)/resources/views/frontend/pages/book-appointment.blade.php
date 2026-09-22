@@ -1,5 +1,5 @@
 @extends('frontend.partials.master')
-@section('title', 'Book a Service Appointment')
+@section('title', 'Book a Car Service Appointment | United Auto')
 @section('content')
 @include('frontend.partials.breadcumbs')
 

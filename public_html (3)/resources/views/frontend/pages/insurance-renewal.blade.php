@@ -1,6 +1,7 @@
 @extends('frontend.partials.master')
 
-@section('title', 'Insurance Renewal')
+@section('title', 'Car Insurance Renewal Support | United Auto')
+@section('meta_description', 'Get information about vehicle insurance renewal support from United Auto in Jamshedpur.')
 
 @section('content')
 @include('frontend.partials.breadcumbs')

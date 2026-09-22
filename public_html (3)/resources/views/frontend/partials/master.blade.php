@@ -2,10 +2,60 @@
     use App\Models\CompanySetting;
     $company = CompanySetting::firstRecord();
     $favicon_icon = $company?->favicon_icon ?? 'favicon.png';
-    $logo_image = "";
     $pageTitle = trim($__env->yieldContent('title')) ?: 'United Auto | Car Service & Detailing in Jamshedpur';
     $pageDescription = trim($__env->yieldContent('meta_description')) ?: 'United Auto provides car servicing, detailing, paint protection, and maintenance in Jamshedpur.';
     $pageRobots = trim($__env->yieldContent('robots')) ?: 'index, follow';
+    $configuredAppUrl = rtrim((string) config('app.url'), '/');
+    $canonicalBase = $configuredAppUrl && ! str_contains($configuredAppUrl, 'localhost')
+        ? preg_replace('/^http:/i', 'https:', $configuredAppUrl)
+        : 'https://unitedautojsr.in';
+    $canonicalPath = request()->getPathInfo();
+    $defaultCanonicalUrl = $canonicalBase . ($canonicalPath === '/' ? '' : '/' . ltrim($canonicalPath, '/'));
+    $canonicalUrl = trim($__env->yieldContent('canonical')) ?: $defaultCanonicalUrl;
+    $ogTitle = trim($__env->yieldContent('og_title')) ?: $pageTitle;
+    $ogDescription = trim($__env->yieldContent('og_description')) ?: $pageDescription;
+    $ogImage = trim($__env->yieldContent('og_image')) ?: asset('assets/images/company/' . ($company?->logo ?? 'logo.png'));
+    $businessId = $canonicalBase . '/#business';
+    $websiteId = $canonicalBase . '/#website';
+    $businessSchema = [
+        '@type' => 'AutoRepair',
+        '@id' => $businessId,
+        'name' => $company?->company_name ?: 'United Auto',
+        'url' => $canonicalBase . '/',
+    ];
+    if ($company?->logo) {
+        $businessSchema['logo'] = asset('assets/images/company/' . $company->logo);
+        $businessSchema['image'] = asset('assets/images/company/' . $company->logo);
+    }
+    if ($company?->phone) {
+        $businessSchema['telephone'] = $company->phone;
+    }
+    if ($company?->email) {
+        $businessSchema['email'] = $company->email;
+    }
+    if ($company?->address || $company?->city || $company?->state || $company?->pincode) {
+        $businessSchema['address'] = array_filter([
+            '@type' => 'PostalAddress',
+            'streetAddress' => $company->address,
+            'addressLocality' => $company->city,
+            'addressRegion' => $company->state,
+            'postalCode' => $company->pincode,
+            'addressCountry' => 'IN',
+        ]);
+    }
+    if ($company?->city) {
+        $businessSchema['areaServed'] = [
+            '@type' => 'City',
+            'name' => $company->city,
+        ];
+    }
+    $websiteSchema = [
+        '@type' => 'WebSite',
+        '@id' => $websiteId,
+        'name' => $company?->company_name ?: 'United Auto',
+        'url' => $canonicalBase . '/',
+        'publisher' => ['@id' => $businessId],
+    ];
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -14,24 +64,24 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="{{ $pageDescription }}">
+        <meta name="description" content="{{ html_entity_decode($pageDescription, ENT_QUOTES, 'UTF-8') }}">
         <meta name="author" content="United Auto">
         <meta name="robots" content="{{ $pageRobots }}">
         <meta name="geo.region" content="IN-JH">
         <meta name="geo.placename" content="Jamshedpur, Jharkhand, India">
-        <link rel="canonical" href="{{ url()->current() }}">
+        <link rel="canonical" href="{{ $canonicalUrl }}">
         <meta property="og:type" content="website">
         <meta property="og:locale" content="en_IN">
         <meta property="og:site_name" content="United Auto">
-        <meta property="og:title" content="{{ trim($__env->yieldContent('og_title')) ?: $pageTitle }}">
-        <meta property="og:description" content="{{ $pageDescription }}">
-        <meta property="og:url" content="{{ url()->current() }}">
-        <meta property="og:image" content="{{ asset('assets/images/company/' . ($company->logo ?? 'logo.png')) }}">
+        <meta property="og:title" content="{{ html_entity_decode($ogTitle, ENT_QUOTES, 'UTF-8') }}">
+        <meta property="og:description" content="{{ html_entity_decode($ogDescription, ENT_QUOTES, 'UTF-8') }}">
+        <meta property="og:url" content="{{ $canonicalUrl }}">
+        <meta property="og:image" content="{{ $ogImage }}">
         <meta property="og:image:alt" content="United Auto car service and detailing workshop in Jamshedpur">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="{{ trim($__env->yieldContent('og_title')) ?: $pageTitle }}">
-        <meta name="twitter:description" content="{{ $pageDescription }}">
-        <meta name="twitter:image" content="{{ asset('assets/images/company/' . ($company->logo ?? 'logo.png')) }}">
+        <meta name="twitter:title" content="{{ html_entity_decode($ogTitle, ENT_QUOTES, 'UTF-8') }}">
+        <meta name="twitter:description" content="{{ html_entity_decode($ogDescription, ENT_QUOTES, 'UTF-8') }}">
+        <meta name="twitter:image" content="{{ $ogImage }}">
 
         <!-- Favicon and touch Icons -->
         <link href="{{ asset('assets/images/company/'.$favicon_icon) }}" rel="shortcut icon" type="image/png">
@@ -41,7 +91,11 @@
         <link href="{{ asset('assets/images/company/'.$favicon_icon) }}" rel="apple-touch-icon" sizes="144x144">
 
         <!-- Page Title -->
-        <title>{{ $pageTitle }}</title>
+        <title>{{ html_entity_decode($pageTitle, ENT_QUOTES, 'UTF-8') }}</title>
+
+        <script type="application/ld+json">
+        {!! json_encode(['@context' => 'https://schema.org', '@graph' => [$businessSchema, $websiteSchema]], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}
+        </script>
         
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">

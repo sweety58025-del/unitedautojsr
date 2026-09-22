@@ -1,6 +1,7 @@
 @extends('frontend.partials.master')
 
-@section('title', 'Insurance Claim Partner')
+@section('title', 'Insurance Claim Support | United Auto')
+@section('meta_description', 'Learn how United Auto supports vehicle insurance claim repair coordination through its workshop in Jamshedpur.')
 
 @section('content')
 @include('frontend.partials.breadcumbs')
