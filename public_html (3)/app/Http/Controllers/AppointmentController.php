@@ -17,7 +17,8 @@ class AppointmentController extends Controller
     {
         $catalogServiceNames = collect(config('service-catalog', []))
             ->flatMap(fn ($group) => $group['items'] ?? [])
-            ->map(fn ($item) => (string) $item)
+            ->map(fn ($item) => trim((string) $item))
+            ->filter()
             ->values()
             ->all();
 
@@ -36,6 +37,8 @@ class AppointmentController extends Controller
                     || in_array(Str::slug($serviceName), $catalogServiceSlugs, true)
                     || in_array(strtolower($serviceName), array_map('strtolower', $catalogServiceNames), true);
             })
+            ->groupBy(fn ($service) => strtolower((string) ($service->slug ?: Str::slug(trim((string) $service->name)))))
+            ->map(fn ($group) => $group->sortByDesc('id')->first())
             ->sortBy(function ($service) use ($catalogServiceOrder) {
                 $key = strtolower(trim((string) $service->name));
 
@@ -56,7 +59,7 @@ class AppointmentController extends Controller
                     || strtolower($serviceName) === strtolower(str_replace('-', ' ', $selectedServiceSlug));
             })->values();
 
-            $selectedService = $matchingServices->isNotEmpty() ? $matchingServices->sortByDesc('id')->first() : null;
+            $selectedService = $matchingServices->isNotEmpty() ? $matchingServices->first() : null;
             $selectedServiceId = $selectedService?->id ?? null;
         }
 
