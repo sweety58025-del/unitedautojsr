@@ -25,15 +25,16 @@ class AppointmentController extends Controller
         $selectedServiceSlug = trim((string) request()->input('service'));
 
         if ((! $selectedServiceId || $selectedServiceId < 1) && $selectedServiceSlug !== '') {
-            $selectedService = $services->first(function ($service) use ($selectedServiceSlug) {
+            $matchingServices = $services->filter(function ($service) use ($selectedServiceSlug) {
                 $serviceName = trim((string) $service->name);
                 $serviceSlug = (string) ($service->slug ?: Str::slug($serviceName));
 
                 return strtolower($serviceSlug) === strtolower($selectedServiceSlug)
                     || strtolower(Str::slug($serviceName)) === strtolower($selectedServiceSlug)
                     || strtolower($serviceName) === strtolower(str_replace('-', ' ', $selectedServiceSlug));
-            });
+            })->values();
 
+            $selectedService = $matchingServices->isNotEmpty() ? $matchingServices->sortByDesc('id')->first() : null;
             $selectedServiceId = $selectedService?->id ?? null;
         }
 

@@ -1,0 +1,12 @@
+
+   PASS  Tests\Feature\BookAppointmentTest
+  Γ£ô booking page loads with available services                           0.80s  
+  Γ£ô a customer can submit a booking and reach confirmation               0.09s  
+  Γ£ô contact page renders using fallback company details when no recordΓÇª  0.05s  
+  Γ£ô booking page preselects service from service slug                    0.06s  
+  Γ£ô booking requires core fields                                         0.04s  
+  Γ£ô booking rejects a past date                                          0.03s  
+
+  Tests:    6 passed (28 assertions)
+  Duration: 1.28s
+

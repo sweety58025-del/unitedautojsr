@@ -68,14 +68,7 @@
                         @forelse ($services as $service)
                             <div>
                                 <label class="service-option" data-name="{{ $service->name }}">
-                                    <input
-                                        type="radio"
-                                        name="service_id"
-                                        value="{{ $service->id }}"
-                                        data-name="{{ $service->name }}"
-                                        {{ old('service_id', $selectedServiceId ?: $services->first()?->id) == $service->id ? 'checked' : '' }}
-                                        required
-                                    >
+                                    <input type="radio" name="service_id" value="{{ $service->id }}" data-name="{{ $service->name }}" {{ old('service_id', $selectedServiceId ?: $services->first()?->id) == $service->id ? 'checked' : '' }} required>
                                     <span class="service-option-body">
                                         <span class="service-option-name">
                                             {{ $service->name }}
