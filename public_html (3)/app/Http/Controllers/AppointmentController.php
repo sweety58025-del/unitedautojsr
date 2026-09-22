@@ -15,11 +15,33 @@ class AppointmentController extends Controller
      */
     public function create()
     {
+        $catalogServiceNames = collect(config('service-catalog', []))
+            ->flatMap(fn ($group) => $group['items'] ?? [])
+            ->map(fn ($item) => (string) $item)
+            ->values()
+            ->all();
+
+        $catalogServiceSlugs = array_map(fn ($name) => Str::slug($name), $catalogServiceNames);
+        $catalogServiceOrder = array_flip(array_map('strtolower', $catalogServiceNames));
+
         $services = Service::with('category')
             ->where('status', 'yes')
-            ->orderBy('sort_order')
-            ->orderBy('name')
-            ->get();
+            ->get()
+            ->filter(function ($service) use ($catalogServiceNames, $catalogServiceSlugs) {
+                $serviceName = trim((string) $service->name);
+                $serviceSlug = (string) ($service->slug ?: Str::slug($serviceName));
+
+                return in_array($serviceName, $catalogServiceNames, true)
+                    || in_array($serviceSlug, $catalogServiceSlugs, true)
+                    || in_array(Str::slug($serviceName), $catalogServiceSlugs, true)
+                    || in_array(strtolower($serviceName), array_map('strtolower', $catalogServiceNames), true);
+            })
+            ->sortBy(function ($service) use ($catalogServiceOrder) {
+                $key = strtolower(trim((string) $service->name));
+
+                return $catalogServiceOrder[$key] ?? PHP_INT_MAX;
+            })
+            ->values();
 
         $selectedServiceId = request()->integer('service');
         $selectedServiceSlug = trim((string) request()->input('service'));

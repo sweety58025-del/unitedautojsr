@@ -13,25 +13,28 @@ class BookAppointmentTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_booking_page_loads_with_available_services()
+    public function test_booking_page_loads_with_available_services_matching_navbar_catalog()
     {
-        $category = Category::create([
-            'name' => 'Maintenance',
-            'slug' => 'maintenance',
-            'status' => 'yes',
-        ]);
+        $category = Category::firstOrCreate(
+            ['name' => 'Mechanical Job'],
+            ['slug' => 'mechanical-job', 'status' => 'yes']
+        );
 
-        $service = Service::create([
-            'category_id' => $category->id,
-            'name' => 'Oil Change',
-            'price' => 49.00,
-            'unit' => 'each',
-        ]);
+        Service::firstOrCreate(
+            ['name' => 'Periodic Maintenance Service'],
+            ['category_id' => $category->id, 'slug' => 'periodic-maintenance-service', 'price' => 120.00, 'unit' => 'each', 'status' => 'yes']
+        );
+
+        Service::firstOrCreate(
+            ['name' => 'Oil Change'],
+            ['category_id' => $category->id, 'slug' => 'oil-change', 'price' => 49.00, 'unit' => 'each', 'status' => 'yes']
+        );
 
         $response = $this->get(route('book-appointment'));
 
         $response->assertOk();
-        $response->assertSee('Oil Change');
+        $response->assertSee('Periodic Maintenance Service');
+        $response->assertDontSee('Oil Change');
     }
 
     public function test_a_customer_can_submit_a_booking_and_reach_confirmation()
