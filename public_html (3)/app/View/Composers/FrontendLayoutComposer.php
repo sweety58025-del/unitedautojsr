@@ -5,6 +5,7 @@ namespace App\View\Composers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\CompanySetting;
+use App\Models\Service;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
@@ -17,22 +18,69 @@ class FrontendLayoutComposer
         $hasServices = Schema::hasTable('services');
         $hasBrands = Schema::hasTable('brands');
         $company = CompanySetting::firstRecord();
-        $serviceCatalog = collect(config('service-catalog', []))
-            ->map(function ($group) {
-                $items = collect($group['items'] ?? [])
-                    ->map(fn ($item) => [
-                        'name' => (string) $item,
-                        'slug' => Str::slug((string) $item),
-                    ])
-                    ->values();
 
-                return [
-                    'name' => $group['name'] ?? '',
-                    'items' => $items,
-                ];
-            })
-            ->filter(fn ($group) => !empty($group['name']) && $group['items']->isNotEmpty())
-            ->values();
+        if ($hasServices) {
+            $serviceCatalog = Category::query()
+                ->where('status', 'yes')
+                ->with(['services' => fn ($query) => $query
+                    ->where('status', 'yes')
+                    ->orderBy('sort_order')
+                    ->orderBy('name')
+                ])
+                ->orderBy('name')
+                ->get()
+                ->map(function ($category) {
+                    $items = $category->services
+                        ->map(fn ($service) => [
+                            'name' => (string) $service->name,
+                            'slug' => (string) ($service->slug ?: Str::slug($service->name)),
+                        ])
+                        ->values();
+
+                    return [
+                        'name' => (string) $category->name,
+                        'items' => $items,
+                    ];
+                })
+                ->filter(fn ($group) => ! empty($group['name']) && $group['items']->isNotEmpty())
+                ->values();
+
+            $ungroupedServices = Service::query()
+                ->where('status', 'yes')
+                ->whereNull('category_id')
+                ->orderBy('sort_order')
+                ->orderBy('name')
+                ->get()
+                ->map(fn ($service) => [
+                    'name' => (string) $service->name,
+                    'slug' => (string) ($service->slug ?: Str::slug($service->name)),
+                ])
+                ->values();
+
+            if ($ungroupedServices->isNotEmpty()) {
+                $serviceCatalog->push([
+                    'name' => 'General Services',
+                    'items' => $ungroupedServices,
+                ]);
+            }
+        } else {
+            $serviceCatalog = collect(config('service-catalog', []))
+                ->map(function ($group) {
+                    $items = collect($group['items'] ?? [])
+                        ->map(fn ($item) => [
+                            'name' => (string) $item,
+                            'slug' => Str::slug((string) $item),
+                        ])
+                        ->values();
+
+                    return [
+                        'name' => $group['name'] ?? '',
+                        'items' => $items,
+                    ];
+                })
+                ->filter(fn ($group) => ! empty($group['name']) && $group['items']->isNotEmpty())
+                ->values();
+        }
 
         $view->with([
             'serviceCatalog' => $serviceCatalog,

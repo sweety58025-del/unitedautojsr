@@ -96,6 +96,29 @@ class BookAppointmentTest extends TestCase
         $response->assertSee('7992278199 / 6201161384');
     }
 
+    public function test_booking_page_preselects_service_from_service_slug()
+    {
+        $category = Category::create([
+            'name' => 'Maintenance',
+            'slug' => 'maintenance',
+            'status' => 'yes',
+        ]);
+
+        $service = Service::create([
+            'category_id' => $category->id,
+            'name' => 'Periodic Maintenance Service',
+            'slug' => 'periodic-maintenance-service',
+            'price' => 120.00,
+            'unit' => 'each',
+            'status' => 'yes',
+        ]);
+
+        $response = $this->get(route('book-appointment', ['service' => 'periodic-maintenance-service']));
+
+        $response->assertOk();
+        $response->assertSee('value="' . $service->id . '" data-name="Periodic Maintenance Service" checked', false);
+    }
+
     public function test_booking_requires_core_fields()
     {
         $response = $this->post(route('book-appointment.store'), []);

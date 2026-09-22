@@ -36,7 +36,7 @@
                     @else
                         <p class="service-description">Professional {{ strtolower($topic) }} support from the United Auto workshop team. Contact us to confirm availability and arrange your service.</p>
                     @endif
-                    <a class="btn btn-primary mt-3" href="{{ route('book-appointment') }}">Book This Service</a>
+                    <a class="btn btn-primary mt-3" href="{{ route('book-appointment', ['service' => $service?->slug ?: Str::slug($topic)]) }}">Book This Service</a>
                 </div>
             </div>
         </div>
