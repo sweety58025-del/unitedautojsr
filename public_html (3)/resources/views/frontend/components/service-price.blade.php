@@ -89,6 +89,11 @@
     }
 </style>
 
+@php
+    use App\Models\ServicePrice;
+    $servicePrices = ServicePrice::allPrices();
+@endphp
+
 <div class="container pricing-page">
 
     <div class="wptb-heading pricing-page__intro">
@@ -99,6 +104,19 @@
             <p>Tell us what your vehicle needs and we will help you understand the expected service cost before work begins.</p>
         </div>
     </div>
+
+    @if($servicePrices->isNotEmpty())
+        <div class="table-responsive mb-4">
+            <table class="table table-bordered align-middle">
+                <thead><tr><th>Service</th><th>Small car</th><th>Medium</th><th>SUV/MUV</th><th>Premium</th></tr></thead>
+                <tbody>
+                    @foreach($servicePrices as $price)
+                        <tr><td>{{ $price->item }}</td><td>{{ $price->small_car_price ?? '-' }}</td><td>{{ $price->medium_price ?? '-' }}</td><td>{{ $price->suv_muv_price ?? '-' }}</td><td>{{ $price->premium_price ?? '-' }}</td></tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
 
     <div class="pricing-page__grid">
         <div class="pricing-page__card">

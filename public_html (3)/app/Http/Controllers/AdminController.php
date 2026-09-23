@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use App\Models\CompanySetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -66,7 +67,7 @@ class AdminController extends Controller
             }
     
             // upload new file
-            $filename = time() . '_' . $request->file('logo')->getClientOriginalName();
+            $filename = Str::uuid()->toString() . '.' . $request->file('logo')->extension();
             $request->file('logo')->move($path, $filename);
     
             $data->logo = $filename;
@@ -87,7 +88,7 @@ class AdminController extends Controller
             }
     
             // upload new file
-            $faviconfilename = time() . '_' . $request->file('favicon_icon')->getClientOriginalName();
+            $faviconfilename = Str::uuid()->toString() . '.' . $request->file('favicon_icon')->extension();
             $request->file('favicon_icon')->move($favicon_path, $faviconfilename);
     
             $data->favicon_icon = $faviconfilename;

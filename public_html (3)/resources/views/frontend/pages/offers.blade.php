@@ -1,7 +1,7 @@
 @extends('frontend.partials.master')
 
-@section('title', 'Car Service Offers | United Auto')
-@section('meta_description', 'Explore current United Auto service and roadside assistance offers available to vehicle owners in Jamshedpur.')
+@section('title', $pageContent->meta_title ?: 'Car Service Offers | United Auto')
+@section('meta_description', $pageContent->meta_description ?: 'Explore current United Auto service and roadside assistance offers available to vehicle owners in Jamshedpur.')
 
 @section('content')
 @include('frontend.partials.breadcumbs')
@@ -178,10 +178,10 @@
     <div class="container">
         <div class="wptb-heading offers-page__intro">
             <div class="wptb-item--inner">
-                <h6 class="wptb-item--subtitle">UNITED AUTO OFFERS</h6>
-                <h1 class="wptb-item--title">Offers for your next visit</h1>
+                        <h6 class="wptb-item--subtitle">{{ $pageContent->eyebrow }}</h6>
+                        <h1 class="wptb-item--title">{{ $pageContent->title }}</h1>
                 <div class="wptb-item--divider mx-auto"></div>
-                <p class="wptb-item--description">Explore the current service-card and roadside assistance offers available from United Auto.</p>
+                        <p class="wptb-item--description">{{ $pageContent->intro }}</p>
             </div>
         </div>
 
@@ -192,8 +192,8 @@
                 </div>
                 <div class="offer-card__body">
                     <p class="offer-card__eyebrow">Printed service card</p>
-                    <h2>Service Card Offer</h2>
-                    <p>Enjoy service benefits and discounts through the United Auto VIP Membership card. Ask our team about eligibility, included services, and applicable terms.</p>
+                    <h2>{{ $pageContent->section_one_title }}</h2>
+                    <p>{{ $pageContent->section_one_body }}</p>
                 </div>
             </article>
 
@@ -203,8 +203,8 @@
                 </div>
                 <div class="offer-card__body">
                     <p class="offer-card__eyebrow">Roadside support</p>
-                    <h2>25 km Road Assistance</h2>
-                    <p>Road Assistance for break down to any customer within a range of 25 km from our workshop. <a href="{{ route('contact-us') }}" style="color: #fff; text-decoration: underline; text-underline-offset: 3px;">Workshop Location</a> in Google Maps with address to be delivered to customer who wants to avail the road side assistance.</p>
+                    <h2>{{ $pageContent->section_two_title }}</h2>
+                    <p>{{ $pageContent->section_two_body }} <a href="{{ route('contact-us') }}" style="color: #fff; text-decoration: underline; text-underline-offset: 3px;">Workshop Location</a>.</p>
                 </div>
             </article>
         </div>

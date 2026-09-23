@@ -60,10 +60,10 @@
                                 <a href="{{ route('services.index') }}" class="tp-link">Service List</a>
                             </li>
                             <li>
-                                <a href="{{ route('category.index') }}" class="tp-link">Service</a>
+                                <a href="{{ route('category.index') }}" class="tp-link">Service Categories</a>
                             </li>
                             <li>
-                                <a href="{{ route('subcategory.index') }}" class="tp-link">Category</a>
+                                <a href="{{ route('subcategory.index') }}" class="tp-link">Service Topics</a>
                             </li>
                         </ul>
                     </div>
@@ -82,6 +82,9 @@
                             </li>
                             <li>
                                 <a href="{{ route('website_content.hero_banner') }}" class="tp-link">Hero Banner</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('page-content.edit', 'offers') }}" class="tp-link">Static Pages</a>
                             </li>
                             <li>
                                 <a href="{{ route('service-price.index') }}" class="tp-link">Price List</a>
@@ -104,24 +107,36 @@
                             <li>
                                 <a href="{{ route('appointment.index') }}" class="tp-link">Appointments</a>
                             </li>
+                            <li>
+                                <a href="{{ route('admin.setting') }}" class="tp-link">Company Settings</a>
+                            </li>
                         </ul>
                     </div>
                 </li> 
 
-                {{-- <li>
+                <li>
                     <a href="#sidebarAuth" data-bs-toggle="collapse">
                         <i data-feather="users"></i>
-                        <span> Employees </span>
+                        <span> Administration </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarAuth">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('employee') }}" class="tp-link">Employee List</a>
+                                <a href="{{ route('employee') }}" class="tp-link">Employees</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('roles') }}" class="tp-link">Roles</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('permission') }}" class="tp-link">Permissions</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('permission-categories.index') }}" class="tp-link">Permission Categories</a>
                             </li>
                         </ul>
                     </div>
-                </li>  --}}
+                </li>
 
                 {{-- <li>
                     <a href="widgets.html" class="tp-link">

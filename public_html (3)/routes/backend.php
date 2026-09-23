@@ -12,6 +12,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PermissionCategoryController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PageContentController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServicePriceController;
 use App\Http\Controllers\SubCategoryController;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->prefix('backend')->group(function () {
 
+    Route::get('/', [AdminController::class, 'index'])->name('admindashboard.get');
     Route::get('/setting', [AdminController::class, 'setting'])->name('admin.setting');
     Route::post('/store-company', [AdminController::class, 'storeCompany'])->name('admin.store-company');
     Route::post('/change-password', [AdminController::class, 'changePassword'])->name('admin.change-password');
@@ -51,6 +53,8 @@ Route::middleware(['auth'])->prefix('backend')->group(function () {
     Route::post('/website-content/about-website/store', [AboutWebsiteController::class, 'storeOrUpdate'])->name('about_website.store');
     Route::get('/website-content/hero-banner', [AboutWebsiteController::class, 'hero_banner'])->name('website_content.hero_banner');
     Route::post('/website-content/hero-banner/store', [AboutWebsiteController::class, 'heroBannerStore'])->name('hero-banner.store');
+    Route::get('/website-content/pages/{page}', [PageContentController::class, 'index'])->name('page-content.edit');
+    Route::put('/website-content/pages/{page}', [PageContentController::class, 'update'])->name('page-content.update');
 
     Route::resource('service-price', ServicePriceController::class);
 

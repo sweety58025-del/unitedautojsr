@@ -1,10 +1,17 @@
 @extends('frontend.partials.master')
 
-@section('title', 'Roadside Assistance in Jamshedpur | United Auto')
-@section('meta_description', 'Review United Auto roadside assistance information, booking steps, coverage details, and service conditions.')
+@section('title', $pageContent->meta_title ?: 'Roadside Assistance in Jamshedpur | United Auto')
+@section('meta_description', $pageContent->meta_description ?: 'Review United Auto roadside assistance information, booking steps, coverage details, and service conditions.')
 
 @section('content')
 @include('frontend.partials.breadcumbs')
+
+@php
+    $hoursItems = collect($pageContent->hours_items)->map(fn ($item) => array_pad(explode('|', $item, 2), 2, ''));
+    $pricingItems = collect($pageContent->pricing_items)->map(fn ($item) => array_pad(explode('|', $item, 2), 2, ''));
+    $majorBreakdownItems = collect(preg_split('/\r\n|\r|\n/', (string) $pageContent->section_three_body))->filter();
+    $benefitItems = collect(preg_split('/\r\n|\r|\n/', (string) $pageContent->section_four_body))->filter();
+@endphp
 
 <style>
     .roadside-terms {
@@ -153,25 +160,20 @@
     <div class="container">
         <div class="wptb-heading roadside-terms__intro">
             <div class="wptb-item--inner">
-                <h6 class="wptb-item--subtitle">ROAD SERVICE ASSISTANCE</h6>
-                <h1 class="wptb-item--title">Roadside Assistance Terms</h1>
+                <h6 class="wptb-item--subtitle">{{ $pageContent->eyebrow }}</h6>
+                <h1 class="wptb-item--title">{{ $pageContent->title }}</h1>
                 <div class="wptb-item--divider mx-auto"></div>
-                <p class="wptb-item--description">Please review the service hours, charges, coverage, and booking conditions before requesting roadside assistance.</p>
+                <p class="wptb-item--description">{{ $pageContent->intro }}</p>
             </div>
         </div>
 
         <div class="roadside-terms__grid">
             <section class="roadside-terms__card" aria-labelledby="roadside-hours-title">
-                <h2 id="roadside-hours-title">Working hours</h2>
+                <h2 id="roadside-hours-title">{{ $pageContent->hours_title }}</h2>
                 <dl class="roadside-terms__hours">
-                    <div>
-                        <dt>Road Service Assistance</dt>
-                        <dd>9:00 am to 9:00 pm</dd>
-                    </div>
-                    <div>
-                        <dt>Emergency Service</dt>
-                        <dd>9:00 pm to 9:00 am</dd>
-                    </div>
+                    @foreach($hoursItems as $item)
+                        <div><dt>{{ $item[0] }}</dt><dd>{{ $item[1] }}</dd></div>
+                    @endforeach
                     <div>
                         <dt>Emergency contact</dt>
                         <dd>{{ $company?->phone ?? 'Contact the workshop' }}</dd>
@@ -180,7 +182,7 @@
             </section>
 
             <section class="roadside-terms__card" aria-labelledby="roadside-charges-title">
-                <h2 id="roadside-charges-title">Service charges</h2>
+                <h2 id="roadside-charges-title">{{ $pageContent->pricing_title }}</h2>
                 <table class="roadside-terms__pricing">
                     <thead>
                         <tr>
@@ -189,44 +191,36 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>5 km</td><td>Rs. 500</td></tr>
-                        <tr><td>7 km</td><td>Rs. 700</td></tr>
-                        <tr><td>15 km</td><td>Rs. 1,000</td></tr>
-                        <tr><td>25 km</td><td>Rs. 1,500</td></tr>
+                        @foreach($pricingItems as $item)
+                            <tr><td>{{ $item[0] }}</td><td>{{ $item[1] }}</td></tr>
+                        @endforeach
                     </tbody>
                 </table>
             </section>
 
             <section class="roadside-terms__card roadside-terms__card--wide" aria-labelledby="roadside-process-title">
-                <h2 id="roadside-process-title">Booking and technician dispatch</h2>
-                <p>The technician will start after successful completion of the booking formality and will reach as fast as possible according to the distance.</p>
+                <h2 id="roadside-process-title">{{ $pageContent->section_one_title }}</h2>
+                <p>{{ $pageContent->section_one_body }}</p>
             </section>
 
             <section class="roadside-terms__card" aria-labelledby="minor-breakdown-title">
-                <h2 id="minor-breakdown-title">Minor breakdown cover</h2>
+                <h2 id="minor-breakdown-title">{{ $pageContent->section_two_title }}</h2>
                 <ul>
-                    <li>Battery jump start</li>
-                    <li>Flattened tyre replacement</li>
-                    <li>Fuel supply up to Rs. 500 extra</li>
-                    <li>Minor electrical and mechanical problems according to standard tools and tackles available for breakdown assistance</li>
+                    @foreach($pageContent->list_items as $item)<li>{{ $item }}</li>@endforeach
                 </ul>
             </section>
 
             <section class="roadside-terms__card" aria-labelledby="major-breakdown-title">
-                <h2 id="major-breakdown-title">Major breakdown cover</h2>
+                <h2 id="major-breakdown-title">{{ $pageContent->section_three_title }}</h2>
                 <ul>
-                    <li>Towing of the vehicle to the workshop, with charges extra</li>
-                    <li>Passenger drop to the destination by private car, with charges extra</li>
+                    @foreach($majorBreakdownItems as $item)<li>{{ $item }}</li>@endforeach
                 </ul>
             </section>
 
             <section class="roadside-terms__card roadside-terms__card--wide" aria-labelledby="roadside-benefits-title">
-                <h2 id="roadside-benefits-title">Additional benefits</h2>
+                <h2 id="roadside-benefits-title">{{ $pageContent->section_four_title }}</h2>
                 <ul>
-                    <li>Estimate will be provided to the customer free of cost.</li>
-                    <li>All service charges will be removed from the final bill if the work is done by United Auto.</li>
-                    <li>Discount on labour charges is available if enrolled for our Service Card.</li>
-                    <li>References will attract one extra value-added service on the next visit within the listed options.</li>
+                    @foreach($benefitItems as $item)<li>{{ $item }}</li>@endforeach
                 </ul>
                 <div class="roadside-terms__actions">
                     <a class="btn-two" href="{{ route('book-appointment') }}"><span class="btn-wrap"><span class="text-first">Book assistance</span><span class="text-second"><i class="bi bi-arrow-right"></i></span></span></a>

@@ -11,6 +11,7 @@ use App\Models\Gallery;
 use App\Models\RepairProject;
 use App\Models\Service;
 use App\Models\SubCategory;
+use App\Models\PageContent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
@@ -64,27 +65,27 @@ class HomeController extends Controller
 
     public function offers()
     {
-        return view('frontend.pages.offers');
+        return view('frontend.pages.offers', ['pageContent' => PageContent::forPage('offers')]);
     }
 
     public function insurance()
     {
-        return view('frontend.pages.insurance');
+        return view('frontend.pages.insurance', ['pageContent' => PageContent::forPage('insurance')]);
     }
 
     public function insuranceClaimPartners()
     {
-        return view('frontend.pages.insurance-claim-partners');
+        return view('frontend.pages.insurance-claim-partners', ['pageContent' => PageContent::forPage('insurance-claim-partners')]);
     }
 
     public function insuranceRenewal()
     {
-        return view('frontend.pages.insurance-renewal');
+        return view('frontend.pages.insurance-renewal', ['pageContent' => PageContent::forPage('insurance-renewal')]);
     }
 
     public function roadsideAssistance()
     {
-        return view('frontend.pages.roadside-assistance');
+        return view('frontend.pages.roadside-assistance', ['pageContent' => PageContent::forPage('roadside-assistance')]);
     }
 
     public function serviceDetails($slug){
@@ -122,6 +123,20 @@ class HomeController extends Controller
 
     public function serviceTopic($slug)
     {
+        $service = Service::with(['category', 'subcategory'])
+            ->where('status', 'yes')
+            ->where(function ($query) use ($slug) {
+                $query->where('slug', $slug)
+                    ->orWhereRaw('LOWER(name) = ?', [strtolower(str_replace('-', ' ', $slug))]);
+            })
+            ->first();
+
+        if ($service) {
+            $topic = $service->name;
+
+            return view('frontend.pages.service-topic', compact('topic', 'service'));
+        }
+
         $topic = collect(config('service-catalog'))
             ->flatMap(fn ($group) => $group['items'])
             ->first(fn ($item) => (string) str($item)->slug() === $slug);

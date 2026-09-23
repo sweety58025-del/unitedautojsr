@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
@@ -45,6 +46,7 @@ class EmployeeController extends Controller implements HasMiddleware
             'state' => 'nullable|string|max:100',
             'password' => 'required|min:6',
             'roles' => 'required|array|min:1',
+            'profile_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ], [
             'roles.required' => 'Please select at least one role.',
             'phone.regex' => 'The phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.',
@@ -52,7 +54,7 @@ class EmployeeController extends Controller implements HasMiddleware
 
         try {
 
-            $user = User::create([
+            $data = [
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
@@ -60,7 +62,20 @@ class EmployeeController extends Controller implements HasMiddleware
                 'state' => $request->state,
                 'password' => Hash::make($request->password),
                 'is_active' => 'yes', // optional default active status
-            ]);
+            ];
+
+            if ($request->hasFile('profile_image')) {
+                $path = public_path('assets/images/users');
+                if (! is_dir($path)) {
+                    mkdir($path, 0775, true);
+                }
+
+                $filename = Str::uuid()->toString() . '.' . $request->file('profile_image')->extension();
+                $request->file('profile_image')->move($path, $filename);
+                $data['profile_image'] = $filename;
+            }
+
+            $user = User::create($data);
 
             // Assign roles (Spatie)
             $user->syncRoles($request->roles);

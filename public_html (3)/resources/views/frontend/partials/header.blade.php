@@ -95,8 +95,10 @@
                             <li class="menu-item menu-item-has-children">
                                 <a href="#">Insurance</a>
                                 <ul class="sub-menu">
+                                    <li class="menu-item"><a href="{{ route('insurance') }}">Insurance Support</a></li>
                                     <li class="menu-item"><a href="{{ route('insurance.claim-partners') }}">Insurance Claim Partner</a></li>
                                     <li class="menu-item"><a href="{{ route('insurance.renewal') }}">Insurance Renewal</a></li>
+                                    <li class="menu-item"><a href="{{ route('roadside-assistance') }}">Roadside Assistance</a></li>
                                 </ul>
                             </li>
                             <li class="menu-item"><a href="{{ route('gallery') }}">Gallery</a></li>
@@ -166,8 +168,10 @@
             <li class="menu-item menu-item-has-children">
                 <a href="#" aria-expanded="false">Insurance</a>
                 <ul class="sub-menu">
+                    <li class="menu-item"><a href="{{ route('insurance') }}">Insurance Support</a></li>
                     <li class="menu-item"><a href="{{ route('insurance.claim-partners') }}">Insurance Claim Partner</a></li>
                     <li class="menu-item"><a href="{{ route('insurance.renewal') }}">Insurance Renewal</a></li>
+                    <li class="menu-item"><a href="{{ route('roadside-assistance') }}">Roadside Assistance</a></li>
                 </ul>
             </li>
             <li class="menu-item"><a href="{{ route('gallery') }}">Gallery</a></li>

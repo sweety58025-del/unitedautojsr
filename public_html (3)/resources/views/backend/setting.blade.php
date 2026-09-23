@@ -47,10 +47,10 @@
                             <input type="file" class="form-control" name="favicon_icon">
                             <span class="text-danger">@error('favicon_icon') {{ $message }} @enderror</span>
                             {{-- Display Logo --}}
-                            @if($company && $company->logo)
+                            @if($company && $company->favicon_icon)
                                 <div class="mb-3">
                                     <img src="{{ asset('assets/images/company/' . $company->favicon_icon) }}"
-                                            alt="Company Logo"
+                                            alt="Favicon"
                                             style="max-width: 80px;">
                                 </div>
                             @endif

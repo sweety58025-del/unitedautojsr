@@ -1,7 +1,7 @@
 @extends('frontend.partials.master')
 
-@section('title', 'Insurance Claim Support | United Auto')
-@section('meta_description', 'Learn how United Auto supports vehicle insurance claim repair coordination through its workshop in Jamshedpur.')
+@section('title', $pageContent->meta_title ?: 'Insurance Claim Support | United Auto')
+@section('meta_description', $pageContent->meta_description ?: 'Learn how United Auto supports vehicle insurance claim repair coordination through its workshop in Jamshedpur.')
 
 @section('content')
 @include('frontend.partials.breadcumbs')
@@ -11,34 +11,17 @@
     <div class="container">
         <div class="wptb-heading insurance-directory__intro">
             <div class="wptb-item--inner">
-                <h6 class="wptb-item--subtitle">CLAIM SUPPORT</h6>
-                <h1 class="wptb-item--title">Insurance Claim Partner</h1>
+                <h6 class="wptb-item--subtitle">{{ $pageContent->eyebrow }}</h6>
+                <h1 class="wptb-item--title">{{ $pageContent->title }}</h1>
                 <div class="wptb-item--divider mx-auto"></div>
-                <p>Find the insurance companies supported for accident repair and claim-related assistance at United Auto.</p>
+                <p>{{ $pageContent->intro }}</p>
             </div>
         </div>
 
         <div class="insurance-directory__panel">
-            <h2>Our insurance claim partners</h2>
+            <h2>{{ $pageContent->section_one_title }}</h2>
             <ul class="insurance-directory__list">
-                        <li>SBI General</li>
-                        <li>Royal Sundaram</li>
-                        <li>Liberty</li>
-                        <li>Go Digit</li>
-                        <li>National Insurance</li>
-                        <li>Kotak</li>
-                        <li>Future</li>
-                        <li>Reliance</li>
-                        <li>Universal Sompo</li>
-                        <li>HDFC Ergo</li>
-                        <li>Oriental</li>
-                        <li>Chola MS</li>
-                        <li>Magma</li>
-                        <li>Bharti</li>
-                        <li>ACCO</li>
-                        <li>Bajaj Alliance</li>
-                        <li>New India</li>
-                        <li>Tata AIG</li>
+                @foreach($pageContent->list_items as $item)<li>{{ $item }}</li>@endforeach
             </ul>
             <div class="insurance-directory__action">
                 <a class="btn-two" href="{{ route('contact-us') }}"><span class="btn-wrap"><span class="text-first">Discuss a claim</span><span class="text-second"><i class="bi bi-arrow-right"></i></span></span></a>

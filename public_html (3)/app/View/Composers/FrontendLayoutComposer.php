@@ -18,7 +18,7 @@ class FrontendLayoutComposer
         $hasServices = Schema::hasTable('services');
         $hasBrands = Schema::hasTable('brands');
         $company = CompanySetting::firstRecord();
-        $serviceCatalog = collect(config('service-catalog', []))
+        $configuredServiceCatalog = collect(config('service-catalog', []))
             ->map(function ($group) {
                 $items = collect($group['items'] ?? [])
                     ->map(fn ($item) => [
@@ -36,7 +36,7 @@ class FrontendLayoutComposer
             ->values();
 
         $view->with([
-            'serviceCatalog' => $serviceCatalog,
+            'serviceCatalog' => $configuredServiceCatalog,
             'categories' => $hasCategories ? Category::query()
                 ->with('subcategories')
                 ->where('status', 'yes')

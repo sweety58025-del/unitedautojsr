@@ -54,9 +54,14 @@ class AboutWebsiteController extends Controller
 
         $about = AboutWebsite::firstRecord();
 
-        $imagePath = $about->about_image ?? null;
+        $imagePath = $about?->about_image;
 
         if ($request->hasFile('about_image')) {
+
+            $directory = public_path('front/assets/img/about');
+            if (! is_dir($directory)) {
+                mkdir($directory, 0755, true);
+            }
 
             $file = $request->file('about_image');
             $filename = time().'_'.$file->getClientOriginalName();
@@ -113,9 +118,14 @@ class AboutWebsiteController extends Controller
 
         $banner = HeroBanner::firstBanner();
 
-        $imagePath = $banner->banner_image ?? null;
+        $imagePath = $banner?->banner_image;
 
         if ($request->hasFile('banner_image')) {
+
+            $directory = public_path('front/assets/img/banner');
+            if (! is_dir($directory)) {
+                mkdir($directory, 0755, true);
+            }
 
             $file = $request->file('banner_image');
             $filename = time().'_'.$file->getClientOriginalName();

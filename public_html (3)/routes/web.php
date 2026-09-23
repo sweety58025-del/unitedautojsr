@@ -84,10 +84,6 @@ Route::get('/book-appointment', [AppointmentController::class, 'create'])->name(
 Route::post('/book-appointment', [AppointmentController::class, 'store'])->name('book-appointment.store');
 Route::get('/book-appointment/{appointment}/confirmation', [AppointmentController::class, 'confirmation'])->name('book-appointment.confirmation');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/backend', [AdminController::class, 'index'])->name('admindashboard.get');
-});
-
 Route::get('/fetch-subcategory/{category_id}',[SubCategoryController::class, 'fetch_subcategory'])->name('fetch-subcategory');
 
 // Route::get('/backend/login', function () {

@@ -7,7 +7,7 @@
     <div class="col-sm-12 col-md-12">
         <div class="card">
             <div class="card-header pb-0"><h4>Employee</h4></div>
-            <form class="form theme-form" method="post" action="{{ route('employee.store') }}">
+            <form class="form theme-form" method="post" action="{{ route('employee.store') }}" enctype="multipart/form-data">
                 @csrf
             <div class="card-body">
                 @if(session('message'))
@@ -38,6 +38,11 @@
                         <label class="form-label">State</label>
                         <input class="form-control" type="text" name="state" value="{{ old('state') }}" >
                         <span class="text-danger">@error('state'){{ $message }} @enderror</span>
+                    </div>
+                    <div class="col-6 form-group mb-3">
+                        <label class="form-label">Profile image</label>
+                        <input class="form-control" type="file" name="profile_image" accept="image/jpeg,image/png,image/webp">
+                        <span class="text-danger">@error('profile_image'){{ $message }} @enderror</span>
                     </div>
                     <div class="col-6 form-group mb-3">
                         <label class="form-label">Password<span class="text-danger">*</span></label>
