@@ -4,374 +4,342 @@
 @section('meta_description', 'View United Auto vehicle repair, detailing, paint protection, and workshop project photos from Jamshedpur.')
 
 @section('content')
+@include('frontend.partials.breadcumbs')
+
 @php
-    $galleryItems = $gallery->take(4);
-    $featuredImage = $gallery->first();
+    $galleryItems = $gallery ?? collect();
+    $repairProjects = $repairProjects ?? collect();
+    $featuredItems = $galleryItems->filter(fn ($item) => filled($item->image))->values();
 @endphp
 
 <style>
-    .google-results-shell {
-        background: #1f2329;
-        min-height: calc(100vh - 140px);
-        color: #e5e7eb;
-        padding: 40px 0 80px;
-        font-family: Arial, Helvetica, sans-serif;
+    .ua-gallery-page {
+        --gallery-ink: var(--color-navy, #101b31);
+        --gallery-red: var(--color-primary-red, #d70006);
+        --gallery-paper: var(--color-off-white, #f6f7f9);
+        --gallery-line: var(--color-border, #e3e7ed);
+        padding: 42px 0 110px;
+        background: var(--gallery-paper);
     }
 
-    .google-results-container {
-        width: min(1180px, calc(100% - 32px));
-        margin: 0 auto;
-    }
-
-    .google-topbar {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        background: rgba(92, 96, 104, 0.65);
-        border-radius: 30px;
-        padding: 14px 20px 14px 18px;
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        max-width: 1000px;
-        margin: 0 auto 18px;
-    }
-
-    .google-logo {
-        font-size: clamp(2rem, 2vw, 3rem);
-        font-weight: 700;
-        letter-spacing: -0.06em;
-        line-height: 1;
-        color: #f3f4f6;
-        white-space: nowrap;
-    }
-
-    .google-logo .g1 { color: #4285f4; }
-    .google-logo .g2 { color: #ea4335; }
-    .google-logo .g3 { color: #fbbc05; }
-    .google-logo .g4 { color: #4285f4; }
-    .google-logo .g5 { color: #34a853; }
-    .google-logo .g6 { color: #ea4335; }
-
-    .google-search {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        background: rgba(255,255,255,0.04);
-        border-radius: 999px;
-        padding: 10px 16px 10px 20px;
-        min-height: 44px;
-        border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .google-search input {
-        flex: 1;
-        border: 0;
-        background: transparent;
-        color: #f5f5f5;
-        font-size: 1.1rem;
-        outline: none;
-    }
-
-    .google-search input::placeholder {
-        color: rgba(255,255,255,0.7);
-    }
-
-    .search-actions {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        color: rgba(255,255,255,0.9);
-        font-size: 1.2rem;
-    }
-
-    .google-tabs {
-        display: flex;
-        align-items: center;
-        gap: 24px;
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 8px 0 18px;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-        color: rgba(255,255,255,0.7);
-        font-size: 0.95rem;
-        font-weight: 500;
-    }
-
-    .google-tabs a {
-        color: inherit;
-        text-decoration: none;
-        padding-bottom: 10px;
-        border-bottom: 2px solid transparent;
-    }
-
-    .google-tabs a.active {
-        color: #e5e7eb;
-        border-color: #e5e7eb;
-    }
-
-    .google-results-layout {
+    .ua-gallery-heading {
         display: grid;
-        grid-template-columns: minmax(0, 1.8fr) minmax(220px, 360px);
+        grid-template-columns: minmax(0, 1.15fr) minmax(260px, .85fr);
         gap: 32px;
-        max-width: 1000px;
-        margin: 28px auto 0;
+        align-items: end;
+        margin-bottom: 32px;
     }
 
-    .result-list {
+    .ua-gallery-heading h1 {
+        margin: 0;
+        color: var(--gallery-ink);
+        font-size: clamp(2.4rem, 5vw, 4.8rem);
+        line-height: .98;
+    }
+
+    .ua-gallery-heading p {
+        margin: 0;
+        color: #5d6878;
+        font-size: 1.08rem;
+        line-height: 1.7;
+    }
+
+    .ua-gallery-hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 480px;
+        background: #111927;
+        box-shadow: 0 22px 55px rgba(16, 27, 49, .18);
+    }
+
+    .ua-gallery-slide {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(260px, .8fr);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .45s ease;
+    }
+
+    .ua-gallery-slide.is-active {
+        position: relative;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .ua-gallery-slide img {
+        width: 100%;
+        height: 100%;
+        min-height: 480px;
+        object-fit: cover;
+    }
+
+    .ua-gallery-slide-copy {
         display: flex;
         flex-direction: column;
-        gap: 28px;
+        justify-content: end;
+        padding: 38px;
+        color: #fff;
+        background: linear-gradient(145deg, #17243a, #0e1420);
     }
 
-    .result-item {
+    .ua-gallery-kicker {
+        margin-bottom: 12px;
+        color: #ff5a5e;
+        font-size: .76rem;
+        font-weight: 800;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+    }
+
+    .ua-gallery-slide-copy h2 {
+        margin: 0 0 12px;
+        color: #fff;
+        font-size: clamp(1.8rem, 3vw, 3rem);
+        line-height: 1.05;
+    }
+
+    .ua-gallery-slide-copy p {
+        margin: 0;
+        color: rgba(255, 255, 255, .72);
+        line-height: 1.7;
+    }
+
+    .ua-gallery-controls {
+        position: absolute;
+        right: 28px;
+        bottom: 24px;
+        z-index: 2;
         display: flex;
-        gap: 16px;
-        align-items: flex-start;
+        gap: 8px;
     }
 
-    .result-favicon {
+    .ua-gallery-control {
+        display: grid;
         width: 42px;
         height: 42px;
-        border-radius: 50%;
-        display: grid;
         place-items: center;
-        font-weight: 700;
-        font-size: 1.2rem;
+        border: 1px solid rgba(255,255,255,.35);
+        border-radius: 50%;
+        background: rgba(10, 17, 29, .55);
         color: #fff;
-        background: linear-gradient(135deg, #111827, #374151);
-        border: 2px solid rgba(255,255,255,0.1);
-        flex-shrink: 0;
+        cursor: pointer;
     }
 
-    .result-content {
-        flex: 1;
-        min-width: 0;
+    .ua-gallery-control:hover,
+    .ua-gallery-control:focus-visible {
+        border-color: #fff;
+        background: var(--gallery-red);
     }
 
-    .result-site {
+    .ua-gallery-dots {
+        position: absolute;
+        right: 134px;
+        bottom: 39px;
+        z-index: 2;
         display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.95rem;
-        color: rgba(255,255,255,0.75);
-        margin-bottom: 6px;
+        gap: 7px;
     }
 
-    .result-site .site-name {
-        font-weight: 600;
-        color: #e5e7eb;
+    .ua-gallery-dot {
+        width: 7px;
+        height: 7px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: rgba(255,255,255,.45);
+        cursor: pointer;
     }
 
-    .result-title {
-        color: #bbdefb;
-        text-decoration: none;
-        font-size: clamp(1.6rem, 2vw, 2.4rem);
-        line-height: 1.25;
-        font-weight: 500;
-        letter-spacing: -0.04em;
-        display: inline-block;
-        margin-bottom: 8px;
-    }
+    .ua-gallery-dot.is-active { background: #fff; transform: scale(1.35); }
 
-    .result-title:hover {
-        text-decoration: underline;
-    }
-
-    .result-snippet {
-        color: rgba(255,255,255,0.8);
-        font-size: 1.06rem;
-        line-height: 1.6;
-        max-width: 680px;
-    }
-
-    .result-snippet .read-more {
-        color: #8ab4f8;
-        text-decoration: none;
-    }
-
-    .result-rating {
+    .ua-gallery-section-head {
         display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-top: 10px;
-        color: rgba(255,255,255,0.7);
-        font-size: 0.98rem;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: end;
+        margin: 72px 0 24px;
     }
 
-    .stars {
-        color: #fbbf24;
-        letter-spacing: 0.05em;
+    .ua-gallery-section-head h2 {
+        margin: 0;
+        color: var(--gallery-ink);
+        font-size: clamp(1.8rem, 3vw, 2.8rem);
     }
 
-    .side-panel {
-        margin-top: 30px;
+    .ua-gallery-section-head p { max-width: 520px; margin: 0; color: #667085; line-height: 1.65; }
+
+    .ua-gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
     }
 
-    .side-card {
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 20px;
+    .ua-gallery-card {
         overflow: hidden;
-        box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+        background: #fff;
+        border: 1px solid var(--gallery-line);
+        box-shadow: 0 12px 30px rgba(16, 27, 49, .07);
     }
 
-    .side-image {
-        width: 100%;
-        height: 230px;
-        object-fit: cover;
-        display: block;
-        background: #e5e7eb;
-    }
+    .ua-gallery-card-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #dfe4eb; }
+    .ua-gallery-card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .ua-gallery-card:hover img { transform: scale(1.05); }
+    .ua-gallery-card-body { padding: 20px 20px 22px; }
+    .ua-gallery-card-body h3 { margin: 0 0 7px; color: var(--gallery-ink); font-size: 1.2rem; }
+    .ua-gallery-card-body p { margin: 0; color: #6b7280; line-height: 1.55; }
+    .ua-gallery-card-tag { display: block; margin-bottom: 8px; color: var(--gallery-red); font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 
-    .side-body {
-        padding: 18px 18px 14px;
-    }
+    .ua-gallery-projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .ua-gallery-project { padding: 0; overflow: hidden; background: #fff; border: 1px solid var(--gallery-line); }
+    .ua-gallery-project-images { display: grid; grid-template-columns: repeat(2, 1fr); aspect-ratio: 16 / 10; background: #dfe4eb; }
+    .ua-gallery-project-images img { width: 100%; height: 100%; min-height: 0; object-fit: cover; }
+    .ua-gallery-project-images img:first-child { border-right: 2px solid #fff; }
+    .ua-gallery-project-body { padding: 18px 20px 22px; }
+    .ua-gallery-project-body h3 { margin: 0 0 6px; color: var(--gallery-ink); font-size: 1.15rem; }
+    .ua-gallery-project-body p { margin: 0; color: #687386; line-height: 1.5; }
 
-    .side-heading {
-        font-size: 2rem;
-        color: #f3f4f6;
-        margin: 0 0 10px;
-        font-weight: 500;
-    }
-
-    .side-meta {
-        color: rgba(255,255,255,0.72);
-        font-size: 1rem;
-        margin-bottom: 12px;
-    }
-
-    .side-actions {
-        display: flex;
-        gap: 12px;
-        margin-top: 18px;
-    }
-
-    .side-button {
-        flex: 1;
-        min-height: 46px;
-        border-radius: 999px;
-        border: 1px solid rgba(255,255,255,0.18);
-        background: rgba(255,255,255,0.03);
-        color: #f3f4f6;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-    }
-
-    .side-address {
-        margin-top: 20px;
-        border-top: 1px solid rgba(255,255,255,0.08);
-        padding-top: 18px;
-        color: rgba(255,255,255,0.8);
-        line-height: 1.6;
-        font-size: 0.96rem;
-    }
+    .ua-gallery-empty { padding: 48px 24px; text-align: center; color: #667085; background: #fff; border: 1px dashed var(--gallery-line); }
 
     @media (max-width: 900px) {
-        .google-results-layout {
-            grid-template-columns: 1fr;
-        }
-
-        .side-panel {
-            order: -1;
-            margin-top: 0;
-        }
+        .ua-gallery-heading, .ua-gallery-slide { grid-template-columns: 1fr; }
+        .ua-gallery-slide img { min-height: 330px; max-height: 430px; }
+        .ua-gallery-slide-copy { min-height: 230px; padding: 28px; }
+        .ua-gallery-grid, .ua-gallery-projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
-    @media (max-width: 640px) {
-        .google-topbar {
-            gap: 12px;
-            padding: 12px 12px 12px 14px;
-        }
-
-        .google-logo {
-            display: none;
-        }
-
-        .google-tabs {
-            gap: 12px;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding-bottom: 12px;
-        }
-
-        .result-item {
-            gap: 10px;
-        }
+    @media (max-width: 600px) {
+        .ua-gallery-page { padding: 20px 0 70px; }
+        .ua-gallery-heading { display: block; }
+        .ua-gallery-heading p { margin-top: 18px; }
+        .ua-gallery-hero { min-height: 580px; }
+        .ua-gallery-slide img { min-height: 270px; }
+        .ua-gallery-slide-copy { min-height: 280px; padding: 24px; }
+        .ua-gallery-grid, .ua-gallery-projects { grid-template-columns: 1fr; }
+        .ua-gallery-section-head { display: block; margin-top: 52px; }
+        .ua-gallery-section-head p { margin-top: 12px; }
+        .ua-gallery-controls { right: 20px; bottom: 20px; }
+        .ua-gallery-dots { left: 24px; right: auto; bottom: 39px; }
     }
 </style>
 
-<div class="google-results-shell">
-    <div class="google-results-container">
-        <div class="google-topbar" aria-label="Search box">
-            <div class="google-logo" aria-label="Google">
-                <span class="g1">G</span><span class="g2">o</span><span class="g3">o</span><span class="g4">g</span><span class="g5">l</span><span class="g6">e</span>
+<main class="ua-gallery-page">
+    <div class="container">
+        <header class="ua-gallery-heading">
+            <div>
+                <span class="ua-gallery-kicker">United Auto workshop journal</span>
+                <h1>Work that speaks<br>for itself.</h1>
             </div>
-            <div class="google-search">
-                <input type="text" value="united auto jsr" aria-label="Search United Auto Jamshedpur" readonly>
-                <div class="search-actions" aria-hidden="true">
-                    <span>✕</span>
-                    <span>🎙</span>
-                    <span>⌕</span>
-                </div>
-            </div>
-        </div>
+            <p>Explore real workshop images uploaded from the United Auto admin panel, from detailing and protection work to finished repair projects in Jamshedpur.</p>
+        </header>
 
-        <nav class="google-tabs" aria-label="Search filters">
-            <a href="#" class="active">All</a>
-            <a href="#">Images</a>
-            <a href="#">Videos</a>
-            <a href="#">Maps</a>
-            <a href="#">News</a>
-            <a href="#">More</a>
-        </nav>
-
-        <div class="google-results-layout">
-            <div class="result-list">
-                @foreach($galleryItems as $item)
-                    <article class="result-item">
-                        <div class="result-favicon" aria-hidden="true">{{ strtoupper(substr(preg_replace('/[^A-Za-z]/', '', $item->name ?: 'UA'), 0, 2) ?: 'UA') }}</div>
-                        <div class="result-content">
-                            <div class="result-site">
-                                <span class="site-name">unitedautojsr.in</span>
-                                <span>›</span>
-                            </div>
-                            <a class="result-title" href="{{ route('gallery') }}">{{ $item->name ?: 'United Auto Workshop Gallery' }}</a>
-                            <div class="result-snippet">
-                                {{ $item->name ?: 'United Auto workshop gallery' }} showcases repairs, detailing, paint protection, and workshop transformations from Jamshedpur.
-                            </div>
+        @if($featuredItems->isNotEmpty())
+            <section class="ua-gallery-hero" data-gallery-carousel aria-label="Featured workshop images">
+                @foreach($featuredItems->take(6) as $index => $item)
+                    <article class="ua-gallery-slide {{ $index === 0 ? 'is-active' : '' }}" data-gallery-slide>
+                        <img src="{{ asset($item->image) }}" alt="{{ $item->name ?: 'United Auto workshop image' }}" loading="{{ $index === 0 ? 'eager' : 'lazy' }}">
+                        <div class="ua-gallery-slide-copy">
+                            <span class="ua-gallery-kicker">Featured image {{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span>
+                            <h2>{{ $item->name ?: 'United Auto workshop work' }}</h2>
+                            <p>Real work from our workshop, carefully documented for the next United Auto visit.</p>
                         </div>
                     </article>
                 @endforeach
-            </div>
-
-            <aside class="side-panel">
-                <div class="side-card">
-                    @if($featuredImage && $featuredImage->image)
-                        <img class="side-image" src="{{ asset($featuredImage->image) }}" alt="{{ $featuredImage->name }}">
-                    @else
-                        <img class="side-image" src="{{ asset('front/assets/img/default-workshop.jpg') }}" alt="United Auto workshop">
-                    @endif
-                    <div class="side-body">
-                        <h2 class="side-heading">United Auto</h2>
-                        <div class="side-meta">4.2 ★★★★★ 77 Google reviews</div>
-                        <div class="side-actions">
-                            <a class="side-button" href="https://www.google.com/maps/search/?api=1&query=United+Auto+Jamshedpur" target="_blank" rel="noopener noreferrer">Directions</a>
-                            <a class="side-button" href="tel:+919876543210">Call</a>
-                        </div>
-                        <div class="side-address">
-                            Address: UNITED AUTO<br>
-                            GATE MILLS AND GODOWN ROAD<br>
-                            Jamshedpur, Jharkhand
-                        </div>
+                @if($featuredItems->count() > 1)
+                    <div class="ua-gallery-dots" aria-label="Choose featured image">
+                        @foreach($featuredItems->take(6) as $index => $item)
+                            <button class="ua-gallery-dot {{ $index === 0 ? 'is-active' : '' }}" type="button" data-gallery-dot="{{ $index }}" aria-label="Show featured image {{ $index + 1 }}" aria-pressed="{{ $index === 0 ? 'true' : 'false' }}"></button>
+                        @endforeach
                     </div>
-                </div>
-            </aside>
-        </div>
-    </div>
-</div>
+                    <div class="ua-gallery-controls">
+                        <button class="ua-gallery-control" type="button" data-gallery-prev aria-label="Previous image"><i class="bi bi-arrow-left"></i></button>
+                        <button class="ua-gallery-control" type="button" data-gallery-next aria-label="Next image"><i class="bi bi-arrow-right"></i></button>
+                    </div>
+                @endif
+            </section>
+        @else
+            <div class="ua-gallery-empty">Gallery images will appear here after they are uploaded from the admin panel.</div>
+        @endif
 
+        <section aria-labelledby="gallery-images-title">
+            <div class="ua-gallery-section-head">
+                <div><span class="ua-gallery-kicker">Workshop archive</span><h2 id="gallery-images-title">Gallery images</h2></div>
+                <p>Browse the latest images uploaded through Website Content &gt; Gallery Images.</p>
+            </div>
+            @if($galleryItems->isNotEmpty())
+                <div class="ua-gallery-grid">
+                    @foreach($galleryItems as $item)
+                        <article class="ua-gallery-card">
+                            <a class="ua-gallery-card-media" href="{{ asset($item->image) }}" data-fancybox="united-auto-gallery" data-caption="{{ $item->name ?: 'United Auto workshop image' }}">
+                                <img src="{{ asset($item->image) }}" alt="{{ $item->name ?: 'United Auto workshop image' }}" loading="lazy">
+                            </a>
+                            <div class="ua-gallery-card-body">
+                                <span class="ua-gallery-card-tag">United Auto archive</span>
+                                <h3>{{ $item->name ?: 'Workshop image' }}</h3>
+                                <p>Vehicle care and workshop service from Jamshedpur.</p>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            @else
+                <div class="ua-gallery-empty">No gallery images have been uploaded yet.</div>
+            @endif
+        </section>
+
+        @if($repairProjects->isNotEmpty())
+            <section aria-labelledby="gallery-projects-title">
+                <div class="ua-gallery-section-head">
+                    <div><span class="ua-gallery-kicker">Before to finished</span><h2 id="gallery-projects-title">Repair projects</h2></div>
+                    <p>Compare real project progress managed from the Repair Projects section in Admin.</p>
+                </div>
+                <div class="ua-gallery-projects">
+                    @foreach($repairProjects->take(6) as $project)
+                        @php
+                            $before = $project->images->firstWhere('stage', 'before');
+                            $after = $project->images->firstWhere('stage', 'after');
+                            $fallback = $project->images->first();
+                        @endphp
+                        <article class="ua-gallery-project">
+                            <div class="ua-gallery-project-images">
+                                @if($before)<img src="{{ asset($before->image) }}" alt="{{ $project->title }} before repair" loading="lazy">@endif
+                                @if($after)<img src="{{ asset($after->image) }}" alt="{{ $project->title }} after repair" loading="lazy">@elseif($fallback)<img src="{{ asset($fallback->image) }}" alt="{{ $project->title }} workshop image" loading="lazy">@endif
+                            </div>
+                            <div class="ua-gallery-project-body">
+                                <h3>{{ $project->title }}</h3>
+                                <p>{{ $project->brand?->name ?: 'United Auto' }}{{ $project->vehicle_name ? ' · ' . $project->vehicle_name : '' }}</p>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </section>
+        @endif
+    </div>
+</main>
+
+@if($featuredItems->count() > 1)
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const carousel = document.querySelector('[data-gallery-carousel]');
+        if (!carousel) return;
+        const slides = Array.from(carousel.querySelectorAll('[data-gallery-slide]'));
+        const dots = Array.from(carousel.querySelectorAll('[data-gallery-dot]'));
+        let activeIndex = 0;
+
+        function showSlide(index) {
+            activeIndex = (index + slides.length) % slides.length;
+            slides.forEach((slide, slideIndex) => slide.classList.toggle('is-active', slideIndex === activeIndex));
+            dots.forEach((dot, dotIndex) => {
+                const active = dotIndex === activeIndex;
+                dot.classList.toggle('is-active', active);
+                dot.setAttribute('aria-pressed', active ? 'true' : 'false');
+            });
+        }
+
+        carousel.querySelector('[data-gallery-prev]').addEventListener('click', () => showSlide(activeIndex - 1));
+        carousel.querySelector('[data-gallery-next]').addEventListener('click', () => showSlide(activeIndex + 1));
+        dots.forEach((dot) => dot.addEventListener('click', () => showSlide(Number(dot.dataset.galleryDot))));
+    });
+</script>
+@endif
 @endsection
