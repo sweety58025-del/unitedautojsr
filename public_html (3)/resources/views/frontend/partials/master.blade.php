@@ -124,7 +124,7 @@
         <link rel="stylesheet" href="{{ asset('front/assets/css/footer.css') }}">
         <link rel="stylesheet" href="{{ asset('front/assets/css/preloader.css') }}">
         <link rel="stylesheet" href="{{ asset('front/assets/css/shop.css') }}">
-        <link rel="stylesheet" href="{{ asset('front/assets/css/components.css') }}">
+        <link rel="stylesheet" href="{{ asset('front/assets/css/components.css') }}?v={{ filemtime(public_path('front/assets/css/components.css')) }}">
         <link rel="stylesheet" href="{{ asset('front/assets/css/contact.css') }}">
         <link rel="stylesheet" href="{{ asset('front/assets/css/blog.css') }}">
         <link rel="stylesheet" href="{{ asset('front/assets/css/sidebar.css') }}">
