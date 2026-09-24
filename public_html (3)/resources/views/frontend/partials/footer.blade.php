@@ -109,11 +109,9 @@
                                     <div class="footer-nav">
                                         <ul>
                                             @foreach($serviceCatalog as $group)
-                                                @foreach($group['items'] as $item)
-                                                    <li class="menu-item">
-                                                        <a href="{{ route('service.topic', \Illuminate\Support\Str::slug($item['name'])) }}">{{ strtoupper($item['name']) }}</a>
-                                                    </li>
-                                                @endforeach
+                                                <li class="menu-item">
+                                                    <a href="{{ route('service-price') }}">{{ strtoupper($group['name']) }}</a>
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
