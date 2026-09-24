@@ -2181,8 +2181,8 @@ body {
 
 @media screen and (min-width: 1200px) {
     .wptb-slider.style3 .hero-content-column {
-        margin-left: clamp(12px, 2vw, 40px);
-        transform: none;
+        margin-left: 0;
+        transform: translate(-48px, -42px);
     }
 
     @media screen and (max-width: 1399.9px) {
