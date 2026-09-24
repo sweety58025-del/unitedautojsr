@@ -56,22 +56,6 @@
                             @endif
                         </div>
 
-                        <div class="col-md-12 form-group">
-                            <span>Homepage Popup Image</span>
-                            <input type="file" class="form-control" name="popup_image" accept="image/jpeg,image/png,image/webp">
-                            <span class="text-muted">Upload a new image to replace the current homepage popup.</span>
-                            <span class="text-danger">@error('popup_image') {{ $message }} @enderror</span>
-                            @if($company && $company->popup_image)
-                                <div class="mb-2 mt-2">
-                                    <img src="{{ asset($company->popup_image) }}" alt="Homepage popup" style="max-width: 180px; max-height: 180px; object-fit: contain;">
-                                </div>
-                                <label class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="delete_popup_image" value="1">
-                                    <span class="form-check-label">Delete homepage popup image</span>
-                                </label>
-                            @endif
-                        </div>
-
                         <div class="col-md-6 form-group mb-2">
                             <span>Company Name<span class="text-danger">*</span></span>
                             <input type="text" class="form-control" name="company_name" value="{{ old('company_name',$company->company_name ?? '') }}">

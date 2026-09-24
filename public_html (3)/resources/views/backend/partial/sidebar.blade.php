@@ -84,6 +84,9 @@
                                 <a href="{{ route('website_content.hero_banner') }}" class="tp-link">Hero Banner</a>
                             </li>
                             <li>
+                                <a href="{{ route('website_content.popup') }}" class="tp-link">Homepage Popup</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('page-content.edit', 'offers') }}" class="tp-link">Static Pages</a>
                             </li>
                             <li>

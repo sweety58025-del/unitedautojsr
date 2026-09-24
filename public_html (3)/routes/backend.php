@@ -24,6 +24,8 @@ Route::middleware(['auth'])->prefix('backend')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admindashboard.get');
     Route::get('/setting', [AdminController::class, 'setting'])->name('admin.setting');
     Route::post('/store-company', [AdminController::class, 'storeCompany'])->name('admin.store-company');
+    Route::get('/website-content/popup', [AdminController::class, 'popup'])->name('website_content.popup');
+    Route::post('/website-content/popup', [AdminController::class, 'storePopup'])->name('website_content.popup.store');
     Route::post('/change-password', [AdminController::class, 'changePassword'])->name('admin.change-password');
 
     Route::get('/roles', [PermissionController::class, 'roles'])->name('roles');
