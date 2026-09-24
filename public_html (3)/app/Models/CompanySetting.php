@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 class CompanySetting extends Model
 {
     protected $fillable = [
-        'logo','favicon_icon','company_name','phone','email','city','state',
+        'logo','favicon_icon','popup_image','company_name','phone','email','city','state',
         'pincode','address','pan','gst'
     ];
 
@@ -27,6 +27,7 @@ class CompanySetting extends Model
         return new self([
             'logo' => 'logo.png',
             'favicon_icon' => 'favicon.png',
+            'popup_image' => 'images/viswakarma-puja-poster.webp',
             'company_name' => 'United Auto',
             'phone' => '7992278199 / 6201161384',
             'email' => 'hello@unitedauto.in',

@@ -49,7 +49,9 @@ class AdminController extends Controller
             'pan'          => 'required',
             'gst'          => 'required',
             'logo'         => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
-            'favicon_icon' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
+            'favicon_icon' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'popup_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'delete_popup_image' => 'nullable|boolean',
         ]);
     
         if ($request->hasFile('logo')) {
@@ -92,6 +94,34 @@ class AdminController extends Controller
             $request->file('favicon_icon')->move($favicon_path, $faviconfilename);
     
             $data->favicon_icon = $faviconfilename;
+        }
+
+        $popupPath = public_path('front/assets/img/popup');
+        if ($request->boolean('delete_popup_image')) {
+            if ($data->popup_image && str_starts_with($data->popup_image, 'front/assets/img/popup/')) {
+                $oldPopup = public_path($data->popup_image);
+                if (is_file($oldPopup)) {
+                    unlink($oldPopup);
+                }
+            }
+            $data->popup_image = null;
+        }
+
+        if ($request->hasFile('popup_image')) {
+            if (! is_dir($popupPath)) {
+                mkdir($popupPath, 0777, true);
+            }
+
+            if ($data->popup_image && str_starts_with($data->popup_image, 'front/assets/img/popup/')) {
+                $oldPopup = public_path($data->popup_image);
+                if (is_file($oldPopup)) {
+                    unlink($oldPopup);
+                }
+            }
+
+            $popupFilename = Str::uuid()->toString() . '.' . $request->file('popup_image')->extension();
+            $request->file('popup_image')->move($popupPath, $popupFilename);
+            $data->popup_image = 'front/assets/img/popup/' . $popupFilename;
         }
     
         // Save fields

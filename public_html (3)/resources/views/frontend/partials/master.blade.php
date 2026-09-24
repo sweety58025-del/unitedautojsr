@@ -225,12 +225,14 @@
     <body>
 
         @if (request()->routeIs('home'))
-            <div class="viswakarma-popup is-open" id="viswakarmaPopup" role="dialog" aria-modal="true" aria-label="Viswakarma Puja greeting">
+            @if($company?->popup_image)
+            <div class="viswakarma-popup is-open" id="viswakarmaPopup" role="dialog" aria-modal="true" aria-label="Homepage announcement">
                 <div class="viswakarma-popup__dialog">
-                    <button class="viswakarma-popup__close" type="button" id="viswakarmaPopupClose" aria-label="Close poster">&times;</button>
-                    <img class="viswakarma-popup__image" src="{{ asset('images/viswakarma-puja-poster.webp') }}" alt="United Auto Viswakarma Puja greeting poster">
+                    <button class="viswakarma-popup__close" type="button" id="viswakarmaPopupClose" aria-label="Close announcement">&times;</button>
+                    <img class="viswakarma-popup__image" src="{{ asset($company->popup_image) }}" alt="United Auto homepage announcement">
                 </div>
             </div>
+            @endif
         @endif
 
         @include('frontend.partials.header')
