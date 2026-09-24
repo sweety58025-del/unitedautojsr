@@ -105,12 +105,15 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-6 mb-5 mb-md-0">
                                 <div class="footer-widget footer-links">
-                                    
                                     <h5 class="widget-title">Our Services</h5>
                                     <div class="footer-nav">
                                         <ul>
-                                            @foreach($categories as $category)
-                                            <li class="menu-item"><a href="{{ route('service.details', $category->slug) }}">{{ strtoupper($category->name) }}</a></li>
+                                            @foreach($serviceCatalog as $group)
+                                                @foreach($group['items'] as $item)
+                                                    <li class="menu-item">
+                                                        <a href="{{ route('service.topic', \Illuminate\Support\Str::slug($item['name'])) }}">{{ strtoupper($item['name']) }}</a>
+                                                    </li>
+                                                @endforeach
                                             @endforeach
                                         </ul>
                                     </div>
