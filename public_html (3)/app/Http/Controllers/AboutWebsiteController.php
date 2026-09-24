@@ -110,7 +110,6 @@ class AboutWebsiteController extends Controller
     public function heroBannerStore(Request $request)
     {
         $request->validate([
-            'banner_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'sub_title' => 'nullable|string|max:255',
             'main_title' => 'required|string|max:255',
             'sort_paragraph' => 'nullable|string|max:500'
@@ -118,24 +117,8 @@ class AboutWebsiteController extends Controller
 
         $banner = HeroBanner::firstBanner();
 
-        $imagePath = $banner?->banner_image;
-
-        if ($request->hasFile('banner_image')) {
-
-            $directory = public_path('front/assets/img/banner');
-            if (! is_dir($directory)) {
-                mkdir($directory, 0755, true);
-            }
-
-            $file = $request->file('banner_image');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('front/assets/img/banner'), $filename);
-
-            $imagePath = 'front/assets/img/banner/'.$filename;
-        }
-
         $data = [
-            'banner_image' => $imagePath,
+            'banner_image' => 'front/assets/img/banner/1.png',
             'sub_title' => $request->sub_title,
             'main_title' => $request->main_title,
             'sort_paragraph' => $request->sort_paragraph,

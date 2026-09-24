@@ -1,26 +1,10 @@
 @php
-    $showcaseItems = [
-        [
-            'image' => 'images/showcase/heritage.jpg',
-            'title' => 'Heritage Car of Tata Steel - Renovated by Us',
-            'description' => 'Description of the car renovation, highlighting the details of the restoration work.',
-        ],
-        [
-            'image' => 'images/showcase/awooden.jpg',
-            'title' => 'All Wooden Interior Repaired & Polished',
-            'description' => 'Description of wooden interior repair and polish services offered.',
-        ],
-        [
-            'image' => 'images/showcase/tata.jpg',
-            'title' => 'Tata Steel Vintage & Classic Car & Bike Rally',
-            'description' => 'Description of the rally event where your company participated and contributed.',
-        ],
-        [
-            'image' => 'images/showcase/award.png',
-            'title' => 'A Great Achievement - Vendor of Jusco',
-            'description' => "A description of this significant milestone in your company's journey.",
-        ],
-    ];
+    $homeContent = $homeContent ?? \App\Models\PageContent::forPage('home');
+    $showcaseItems = collect($homeContent->showcase_items)->map(fn (array $item) => [
+        'image' => $item[0] ?? '',
+        'title' => $item[1] ?? '',
+        'description' => $item[2] ?? '',
+    ])->filter(fn (array $item) => $item['image'] !== '' && $item['title'] !== '')->values();
 @endphp
 
 @if(count($showcaseItems))

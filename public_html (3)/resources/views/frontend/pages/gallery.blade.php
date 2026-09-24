@@ -238,10 +238,10 @@
             <section class="ua-gallery-hero" data-gallery-carousel aria-label="Featured workshop images">
                 @foreach($featuredItems->take(6) as $index => $item)
                     <article class="ua-gallery-slide {{ $index === 0 ? 'is-active' : '' }}" data-gallery-slide>
-                        <img src="{{ asset($item->image) }}" alt="{{ $item->name ?: 'United Auto workshop image' }}" loading="{{ $index === 0 ? 'eager' : 'lazy' }}">
+                        <img src="{{ asset($item->image) }}" alt="United Auto workshop image" loading="{{ $index === 0 ? 'eager' : 'lazy' }}">
                         <div class="ua-gallery-slide-copy">
                             <span class="ua-gallery-kicker">Featured image {{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span>
-                            <h2>{{ $item->name ?: 'United Auto workshop work' }}</h2>
+                            <h2>United Auto workshop work</h2>
                             <p>Real work from our workshop, carefully documented for the next United Auto visit.</p>
                         </div>
                     </article>
@@ -271,12 +271,12 @@
                 <div class="ua-gallery-grid">
                     @foreach($galleryItems as $item)
                         <article class="ua-gallery-card">
-                            <a class="ua-gallery-card-media" href="{{ asset($item->image) }}" data-fancybox="united-auto-gallery" data-caption="{{ $item->name ?: 'United Auto workshop image' }}">
-                                <img src="{{ asset($item->image) }}" alt="{{ $item->name ?: 'United Auto workshop image' }}" loading="lazy">
+                            <a class="ua-gallery-card-media" href="{{ asset($item->image) }}" data-fancybox="united-auto-gallery" data-caption="United Auto workshop image">
+                                <img src="{{ asset($item->image) }}" alt="United Auto workshop image" loading="lazy">
                             </a>
                             <div class="ua-gallery-card-body">
                                 <span class="ua-gallery-card-tag">United Auto archive</span>
-                                <h3>{{ $item->name ?: 'Workshop image' }}</h3>
+                                <h3>Workshop image</h3>
                                 <p>Vehicle care and workshop service from Jamshedpur.</p>
                             </div>
                         </article>

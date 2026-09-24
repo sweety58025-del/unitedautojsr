@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 class PageContentController extends Controller
 {
     private const PAGES = [
+        'home' => 'Homepage',
         'offers' => 'Offers',
         'insurance' => 'Insurance',
         'insurance-claim-partners' => 'Insurance Claim Partners',
@@ -53,6 +54,11 @@ class PageContentController extends Controller
             'meta_title' => ['nullable', 'string', 'max:255'],
             'meta_description' => ['nullable', 'string', 'max:500'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'trust_items' => ['nullable', 'string'],
+            'hero_stats' => ['nullable', 'string'],
+            'faq_items' => ['nullable', 'string'],
+            'why_choose_items' => ['nullable', 'string'],
+            'showcase_items' => ['nullable', 'string'],
         ]);
 
         $content = PageContent::query()->firstOrNew(['page_key' => $page]);
@@ -68,6 +74,12 @@ class PageContentController extends Controller
                 ->values()
                 ->all();
         }
+
+            $validated['trust_items'] = $this->lines($validated['trust_items'] ?? '');
+            $validated['hero_stats'] = $this->pairs($validated['hero_stats'] ?? '');
+            $validated['faq_items'] = $this->pairs($validated['faq_items'] ?? '');
+            $validated['why_choose_items'] = $this->pairs($validated['why_choose_items'] ?? '');
+            $validated['showcase_items'] = $this->triples($validated['showcase_items'] ?? '');
 
         if (! $request->hasFile('image')) {
             unset($validated['image']);
@@ -87,5 +99,32 @@ class PageContentController extends Controller
         $content->fill($validated)->save();
 
         return redirect()->route('page-content.edit', $page)->with('success', $page . ' content saved successfully.');
+    }
+
+    private function lines(string $value): array
+    {
+        return collect(preg_split('/\r\n|\r|\n/', $value))
+            ->map(fn (string $item) => trim($item))
+            ->filter()
+            ->values()
+            ->all();
+    }
+
+    private function pairs(string $value): array
+    {
+        return collect($this->lines($value))
+            ->map(fn (string $item) => array_pad(array_map('trim', explode('|', $item, 2)), 2, ''))
+            ->filter(fn (array $item) => $item[0] !== '')
+            ->values()
+            ->all();
+    }
+
+    private function triples(string $value): array
+    {
+        return collect($this->lines($value))
+            ->map(fn (string $item) => array_pad(array_map('trim', explode('|', $item, 3)), 3, ''))
+            ->filter(fn (array $item) => $item[0] !== '')
+            ->values()
+            ->all();
     }
 }

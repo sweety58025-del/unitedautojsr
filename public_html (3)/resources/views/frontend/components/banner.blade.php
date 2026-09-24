@@ -2,12 +2,14 @@
     use App\Models\HeroBanner;
 
     $banner = HeroBanner::firstBanner();
-    $preferredBannerFile = public_path('front/assets/img/banner/1.png');
-    $banner_image = $banner?->banner_image
-        ?: (file_exists($preferredBannerFile) ? 'front/assets/img/banner/1.png' : '');
-    $banner_subtitle = $banner?->sub_title ?: 'AFFORDABLE & RELIABLE';
-    $banner_title = $banner?->main_title ?: 'Comprehensive Car Care Solutions';
-    $banner_paragraph = $banner?->sort_paragraph ?: 'Expert care for your car with genuine parts, clear estimates & customer satisfaction.';
+    $homeContent = $homeContent ?? \App\Models\PageContent::forPage('home');
+    $banner_image = 'front/assets/img/banner/1.png';
+    $banner_subtitle = $banner?->sub_title ?: $homeContent->eyebrow;
+    $banner_title = $banner?->main_title ?: $homeContent->title;
+    $banner_paragraph = $banner?->sort_paragraph ?: $homeContent->intro;
+    $trustItems = $homeContent->trust_items;
+    $heroStats = $homeContent->hero_stats;
+    $heroStatIcons = ['bi-briefcase-fill', 'bi-hand-thumbs-up-fill', 'bi-people-fill', 'bi-award-fill'];
 @endphp
 
 <!-- Slider Section -->
@@ -29,10 +31,9 @@
                             </div>
 
                             <div class="hero-trust-strip" aria-label="Trust highlights">
-                                <div class="hero-trust-item"><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>Experienced Technicians</span></div>
-                                <div class="hero-trust-item"><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>Genuine Parts</span></div>
-                                <div class="hero-trust-item"><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>Clear Estimates</span></div>
-                                <div class="hero-trust-item"><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>Customer Satisfaction</span></div>
+                                @foreach($trustItems as $trustItem)
+                                    <div class="hero-trust-item"><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>{{ $trustItem }}</span></div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -47,26 +48,13 @@
     <div class="hero-parallax__layer hero-parallax__tunnel" aria-hidden="true"></div>
 
     <div class="hero-parallax__stats">
+        @foreach($heroStats as $heroIndex => $heroStat)
         <div class="hero-parallax__stat">
-            <div class="hero-parallax__stat-icon"><i class="bi bi-briefcase-fill" aria-hidden="true"></i></div>
-            <div class="hero-parallax__stat-value" data-count="46800">0+</div>
-            <div class="hero-parallax__stat-label">Hours of Works</div>
+            <div class="hero-parallax__stat-icon"><i class="bi {{ $heroStatIcons[$heroIndex] ?? 'bi-bar-chart-fill' }}" aria-hidden="true"></i></div>
+            <div class="hero-parallax__stat-value" data-count="{{ $heroStat[1] ?? 0 }}">0+</div>
+            <div class="hero-parallax__stat-label">{{ $heroStat[0] ?? '' }}</div>
         </div>
-        <div class="hero-parallax__stat">
-            <div class="hero-parallax__stat-icon"><i class="bi bi-hand-thumbs-up-fill" aria-hidden="true"></i></div>
-            <div class="hero-parallax__stat-value" data-count="1500">0+</div>
-            <div class="hero-parallax__stat-label">Happy Customers</div>
-        </div>
-        <div class="hero-parallax__stat">
-            <div class="hero-parallax__stat-icon"><i class="bi bi-people-fill" aria-hidden="true"></i></div>
-            <div class="hero-parallax__stat-value" data-count="20">0+</div>
-            <div class="hero-parallax__stat-label">No. of Employees</div>
-        </div>
-        <div class="hero-parallax__stat">
-            <div class="hero-parallax__stat-icon"><i class="bi bi-award-fill" aria-hidden="true"></i></div>
-            <div class="hero-parallax__stat-value" data-count="15">0+</div>
-            <div class="hero-parallax__stat-label">Years of Experience</div>
-        </div>
+        @endforeach
     </div>
 
     <div class="hero-parallax__car">

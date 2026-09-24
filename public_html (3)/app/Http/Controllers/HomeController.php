@@ -20,11 +20,19 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $homeContent = PageContent::forPage('home');
+        $faqItems = collect($homeContent->faq_items)->map(fn (array $item) => [
+            'question' => $item[0] ?? '',
+            'answer' => $item[1] ?? '',
+        ])->filter(fn (array $item) => $item['question'] !== '')->values()->all();
+
         return view('frontend.index', [
             'articles' => Schema::hasTable('articles') ? Article::published()->take(3)->get() : collect(),
             'repairProjects' => Schema::hasTable('repair_projects')
                 ? RepairProject::publicQuery()->get()
                 : collect(),
+            'homeContent' => $homeContent,
+            'faqItems' => $faqItems,
         ]);
     }
 

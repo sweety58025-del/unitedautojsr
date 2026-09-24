@@ -6,15 +6,13 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header"><h4 class="m-0 card-title">Hero Banner</h4></div>
-            <form action="{{ route('hero-banner.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('hero-banner.store') }}" method="post">
                 @csrf
             <div class="card-body">
                 <div class="mb-3">
-                    <label for="banner_image" class="form-label">Banner Image</label>
-                    <input type="file" name="banner_image" class="form-control" id="banner_image">
-                    @if($hero_banner && $hero_banner->banner_image)
-                        <img src="{{ asset($hero_banner->banner_image) }}" alt="Current Banner" class="mt-2" style="max-width: 200px;">
-                    @endif
+                    <label class="form-label">Banner Image</label>
+                    <p class="form-control-plaintext mb-0">Fixed asset: <code>public/front/assets/img/banner/1.png</code></p>
+                    <img src="{{ asset('front/assets/img/banner/1.png') }}" alt="Current hero banner" class="mt-2" style="max-width: 200px;">
                 </div>
                 <div class="mb-3">
                     <label for="sub_title" class="form-label">Sub Title</label>
