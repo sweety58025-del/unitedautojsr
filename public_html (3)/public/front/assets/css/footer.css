@@ -1,3 +1,8 @@
+/*
+ * Footer CSS audit fixes: tightened responsive columns and safer spacing.
+ * Why: prevents collapsed columns and keeps the footer aligned on small devices.
+ */
+
 /* Footer Section  */
 .footer {
     position: relative;
@@ -16,6 +21,13 @@
     position: relative;
     padding-top: 180px;
     padding-bottom: 90px;
+}
+
+.footer .footer--inner > .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 2.2fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+    align-items: start;
 }
   
 .footer ul {

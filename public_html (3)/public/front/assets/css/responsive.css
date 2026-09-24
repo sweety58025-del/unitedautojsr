@@ -1,3 +1,8 @@
+/*
+ * Responsive CSS audit fixes: fill breakpoint gaps and improve mobile-safe defaults.
+ * Why: avoids layout collapse and overflow across common viewport sizes.
+ */
+
 @media screen and (max-width: 1400px) {
     .wptb-slider .wptb-swiper-dots {
         margin-top: -40px;
@@ -220,6 +225,25 @@
         align-items: flex-start;
         text-align: left;
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 991.98px) {
+    .container,
+    .container-fluid {
+        width: min(100% - 1rem, 1200px);
+    }
+}
+
+@media screen and (max-width: 767.98px) {
+    .container,
+    .container-fluid {
+        width: min(100% - 0.75rem, 1200px);
+    }
+
+    .footer .footer--inner > .row,
+    .footer .footer--inner > .row > .col-xl-8.offset-xl-1 {
+        display: block;
     }
 }
 
