@@ -3,9 +3,11 @@
 
     $banner = HeroBanner::firstBanner();
     $preferredBannerFile = public_path('front/assets/img/banner/1.png');
-    $banner_image = file_exists($preferredBannerFile)
-        ? 'front/assets/img/banner/1.png'
-        : ($banner?->banner_image ?? '');
+    $banner_image = $banner?->banner_image
+        ?: (file_exists($preferredBannerFile) ? 'front/assets/img/banner/1.png' : '');
+    $banner_subtitle = $banner?->sub_title ?: 'AFFORDABLE & RELIABLE';
+    $banner_title = $banner?->main_title ?: 'Comprehensive Car Care Solutions';
+    $banner_paragraph = $banner?->sort_paragraph ?: 'Expert care for your car with genuine parts, clear estimates & customer satisfaction.';
 @endphp
 
 <!-- Slider Section -->
@@ -17,9 +19,9 @@
                 <div class="hero-content-column">
                     <div class="wptb-heading">
                         <div class="wptb-item--inner">
-                            <h6 class="wptb-item--subtitle"><span class="text-one">AFFORDABLE &amp; RELIABLE</span></h6>
-                            <h1 class="wptb-item--title">Comprehensive<br>Car Care Solutions</h1>
-                                <p class="hero-description">Expert care for your car with genuine parts, clear estimates &amp; customer satisfaction.</p>
+                            <h6 class="wptb-item--subtitle"><span class="text-one">{{ $banner_subtitle }}</span></h6>
+                            <h1 class="wptb-item--title">{!! nl2br(e($banner_title)) !!}</h1>
+                                <p class="hero-description">{{ $banner_paragraph }}</p>
 
                             <div class="hero-cta-row" aria-label="Hero actions">
                                 <a href="{{ route('book-appointment') }}" class="hero-cta hero-cta-primary">Book Appointment</a>

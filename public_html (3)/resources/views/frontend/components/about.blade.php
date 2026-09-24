@@ -1,7 +1,7 @@
 @php
     use App\Models\AboutWebsite;
     $about = AboutWebsite::firstRecord();
-    $about_image = 'images/misc/award.jpg';
+    $about_image = $about?->about_image ?: 'images/misc/award.jpg';
 @endphp
 <section class="wptb-about-company-one bg-image-2" style="background-image: url('{{ asset('front/assets/img/background/bg-2.png') }}');">
     <div class="container">

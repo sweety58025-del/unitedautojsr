@@ -69,6 +69,10 @@ class PageContentController extends Controller
                 ->all();
         }
 
+        if (! $request->hasFile('image')) {
+            unset($validated['image']);
+        }
+
         if ($request->hasFile('image')) {
             $directory = public_path('front/assets/img/page-content');
             if (! is_dir($directory)) {
