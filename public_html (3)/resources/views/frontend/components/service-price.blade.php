@@ -70,6 +70,10 @@
         text-align: center;
     }
 
+    .pricing-page .table-responsive {
+        display: none !important;
+    }
+
     @media (max-width: 767px) {
         .pricing-page {
             padding: 16px 0 80px;
