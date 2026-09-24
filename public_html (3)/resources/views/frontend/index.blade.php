@@ -1,7 +1,9 @@
 @extends('frontend.partials.master')
-@section('title', 'United Auto | Car Service & Detailing in Jamshedpur')
-@section('meta_description', 'United Auto provides premium car servicing, detailing, paint protection, and maintenance in Jamshedpur with reliable repair and workshop solutions.')
-@section('og_title', 'United Auto | Car Service & Detailing in Jamshedpur')
+@section('title', 'United Auto JSR | Car Service, Repair & Detailing in Jamshedpur')
+@section('meta_description', 'United Auto JSR is a trusted car service and repair workshop in Jamshedpur for Bosch servicing, detailing, paint protection, maintenance, and reliable vehicle care.')
+@section('og_title', 'United Auto JSR | Car Service, Repair & Detailing in Jamshedpur')
+@section('og_description', 'Trusted car servicing, repair, detailing, paint protection, and maintenance from United Auto JSR in Jamshedpur, Jharkhand.')
+@section('og_image', asset('front/assets/img/banner/1.png'))
 @section('content')
 
 @include('frontend.components.banner')

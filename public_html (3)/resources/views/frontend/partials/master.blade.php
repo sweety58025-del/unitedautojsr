@@ -2,8 +2,8 @@
     use App\Models\CompanySetting;
     $company = CompanySetting::firstRecord();
     $favicon_icon = $company?->favicon_icon ?? 'favicon.png';
-    $pageTitle = trim($__env->yieldContent('title')) ?: 'United Auto | Car Service & Detailing in Jamshedpur';
-    $pageDescription = trim($__env->yieldContent('meta_description')) ?: 'United Auto provides car servicing, detailing, paint protection, and maintenance in Jamshedpur.';
+    $pageTitle = trim($__env->yieldContent('title')) ?: 'United Auto JSR | Car Service, Repair & Detailing in Jamshedpur';
+    $pageDescription = trim($__env->yieldContent('meta_description')) ?: 'United Auto JSR is a trusted car service and repair workshop in Jamshedpur for servicing, detailing, paint protection, maintenance, and reliable vehicle care.';
     $pageRobots = trim($__env->yieldContent('robots')) ?: 'index, follow';
     $configuredAppUrl = rtrim((string) config('app.url'), '/');
     $canonicalBase = $configuredAppUrl && ! str_contains($configuredAppUrl, 'localhost')
@@ -21,6 +21,8 @@
         '@type' => 'AutoRepair',
         '@id' => $businessId,
         'name' => $company?->company_name ?: 'United Auto',
+        'alternateName' => 'United Auto JSR',
+        'description' => $pageDescription,
         'url' => $canonicalBase . '/',
     ];
     if ($company?->logo) {
@@ -53,7 +55,9 @@
         '@type' => 'WebSite',
         '@id' => $websiteId,
         'name' => $company?->company_name ?: 'United Auto',
+        'alternateName' => 'United Auto JSR',
         'url' => $canonicalBase . '/',
+        'inLanguage' => 'en-IN',
         'publisher' => ['@id' => $businessId],
     ];
 @endphp

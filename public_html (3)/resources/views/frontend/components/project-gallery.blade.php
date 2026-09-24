@@ -199,10 +199,18 @@
     .compare-card {
         grid-column: span 1;
         min-width: 0;
-        padding: 0;
-        border: 0;
-        background: transparent;
-        box-shadow: none;
+        padding: 1rem;
+        border: 1px solid var(--work-steel);
+        border-radius: 8px;
+        background: var(--color-white);
+        box-shadow: 0 10px 28px rgba(16, 27, 49, 0.06);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .compare-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(215, 0, 6, 0.35);
+        box-shadow: 0 16px 34px rgba(16, 27, 49, 0.12);
     }
 
     .compare-card-heading {
@@ -210,30 +218,35 @@
         align-items: flex-start;
         justify-content: space-between;
         gap: 1rem;
-        min-height: 62px;
-        margin-bottom: 0.85rem;
+        min-height: 68px;
+        margin: 0 0 0.9rem;
+        padding: 0 0.15rem;
     }
 
     .compare-eyebrow {
         display: block;
-        margin-bottom: 0.35rem;
+        margin-bottom: 0.45rem;
         color: var(--work-red);
-        font-size: 0.7rem;
+        font-size: 0.64rem;
         font-weight: 700;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.1em;
+        line-height: 1.35;
         text-transform: uppercase;
     }
 
     .compare-stage {
         flex: 0 0 auto;
-        padding: 0.35rem 0.55rem;
-        border: 1px solid var(--work-steel);
-        border-radius: 3px;
-        color: var(--work-steel-dark);
+        padding: 0.4rem 0.6rem;
+        border: 1px solid rgba(215, 0, 6, 0.18);
+        border-radius: 999px;
+        background: rgba(215, 0, 6, 0.06);
+        color: var(--work-red);
         font-size: 0.68rem;
         font-weight: 700;
         letter-spacing: 0.08em;
+        line-height: 1;
         text-transform: uppercase;
+        white-space: nowrap;
     }
 
     .compare-card.featured {
@@ -251,7 +264,9 @@
         overflow: hidden;
         background: var(--work-ink);
         user-select: none;
-        border-radius: 6px;
+        border: 1px solid rgba(16, 27, 49, 0.12);
+        border-radius: 5px;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
     }
 
     .compare-img {
@@ -391,7 +406,7 @@
         color: var(--work-ink);
         font-size: 1.05rem;
         font-weight: var(--font-weight-semibold, 600);
-        line-height: 1.3;
+        line-height: 1.25;
     }
 
     .project-progress-gallery {
@@ -423,12 +438,17 @@
     }
 
     .process-caption {
-        margin: 0.75rem 0 0;
+        margin: 0.9rem 0 0;
+        padding: 0 0.15rem 0.1rem;
         color: var(--work-muted);
         font-size: 0.86rem;
+        line-height: 1.55;
     }
 
-    .process-caption strong { color: var(--work-ink); }
+    .process-caption strong {
+        color: var(--work-ink);
+        font-weight: 700;
+    }
 
     /* Achievement / community cards — "ticket stub" layout */
     .achievement-card {
